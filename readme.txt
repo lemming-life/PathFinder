@@ -1,10 +1,13 @@
-PathFinder is a folder and file navigator with path text box.
+PathFinder is a folder and file navigator with path/address textbox.
 
 Author contact:
 email@lemming.life
 
 Platforms:
 It is designed to work on Mac OS X, but can work with Windows.
+
+Compilation:
+Use BlitzMax to compile the pathfinder.bmx source file.
 
 License:
 PathFinder is released under the zlib/libpng license.
