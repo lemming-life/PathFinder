@@ -124,9 +124,11 @@
 	.globl	__bb_TGui_Delete
 	.globl	__bb_TGui_DetermineType
 	.globl	__bb_TGui_DoCloseActiveWindow
+	.globl	__bb_TGui_DoCopy
 	.globl	__bb_TGui_DoGo
 	.globl	__bb_TGui_DoGoWithItem
 	.globl	__bb_TGui_DoLeft
+	.globl	__bb_TGui_DoPaste
 	.globl	__bb_TGui_DoRight
 	.globl	__bb_TGui_DoSelect
 	.globl	__bb_TGui_DoSelectAction
@@ -147,17 +149,16 @@ __bb_main:
 	push	%ebp
 	mov	%esp,%ebp
 	sub	$8,%esp
-	cmpl	$0,_232
-	je	_233
+	cmpl	$0,_240
+	je	_241
 	mov	$0,%eax
 	mov	%ebp,%esp
 	pop	%ebp
 	ret
-_233:
-	movl	$1,_232
+_241:
+	movl	$1,_240
 	call	___bb_blitz_blitz
 	call	___bb_drivers_drivers
-	call	___bb_freeprocess_freeprocess
 	call	___bb_appstub_appstub
 	call	___bb_audio_audio
 	call	___bb_basic_basic
@@ -186,6 +187,7 @@ _233:
 	call	___bb_timer_timer
 	call	___bb_wavloader_wavloader
 	call	___bb_freejoy_freejoy
+	call	___bb_freeprocess_freeprocess
 	call	___bb_glew_glew
 	call	___bb_win32_win32
 	movl	$_bb_TBox,(%esp)
@@ -203,8 +205,8 @@ _233:
 	movl	(%eax),%eax
 	calll	*52(%eax)
 	mov	$0,%eax
-	jmp	_117
-_117:
+	jmp	_119
+_119:
 	mov	%ebp,%esp
 	pop	%ebp
 	ret
@@ -227,8 +229,8 @@ __bb_TBox_New:
 	incl	4(%eax)
 	movl	%eax,16(%ebx)
 	mov	$0,%eax
-	jmp	_120
-_120:
+	jmp	_122
+_122:
 	add	$4,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -240,28 +242,28 @@ __bb_TBox_Delete:
 	push	%ebx
 	sub	$4,%esp
 	movl	8(%ebp),%ebx
-_123:
+_125:
 	movl	16(%ebx),%eax
 	decl	4(%eax)
-	jnz	_239
+	jnz	_247
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_239:
+_247:
 	movl	12(%ebx),%eax
 	decl	4(%eax)
-	jnz	_241
+	jnz	_249
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_241:
+_249:
 	movl	8(%ebx),%eax
 	decl	4(%eax)
-	jnz	_243
+	jnz	_251
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_243:
+_251:
 	mov	$0,%eax
-	jmp	_237
-_237:
+	jmp	_245
+_245:
 	add	$4,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -278,6 +280,8 @@ __bb_TBox_Create:
 	movl	$_bb_TBox,(%esp)
 	call	_bbObjectNew
 	mov	%eax,%ebx
+	mov	$24,%edi
+	movl	$4,-4(%ebp)
 	movl	$15,24(%esp)
 	movl	$_bbNullObject,20(%esp)
 	call	_maxgui_maxgui_Desktop
@@ -310,17 +314,15 @@ __bb_TBox_Create:
 	mov	%eax,%esi
 	movl	8(%ebx),%eax
 	decl	4(%eax)
-	jnz	_248
+	jnz	_258
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_248:
+_258:
 	movl	%esi,8(%ebx)
-	mov	$24,%esi
-	mov	$4,%edi
 	movl	$0,20(%esp)
 	movl	8(%ebx),%eax
 	movl	%eax,16(%esp)
-	movl	%esi,12(%esp)
+	movl	%edi,12(%esp)
 	movl	8(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_ClientWidth
@@ -329,15 +331,14 @@ _248:
 	movl	$0,(%esp)
 	call	_maxgui_maxgui_CreateTextField
 	incl	4(%eax)
-	movl	%eax,-4(%ebp)
+	mov	%eax,%esi
 	movl	12(%ebx),%eax
 	decl	4(%eax)
-	jnz	_254
+	jnz	_262
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_254:
-	movl	-4(%ebp),%eax
-	movl	%eax,12(%ebx)
+_262:
+	movl	%esi,12(%ebx)
 	movl	$0,16(%esp)
 	movl	$1,12(%esp)
 	movl	$1,8(%esp)
@@ -356,15 +357,15 @@ _254:
 	movl	8(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_ClientHeight
-	sub	%esi,%eax
 	sub	%edi,%eax
+	subl	-4(%ebp),%eax
 	movl	%eax,12(%esp)
 	movl	8(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_ClientWidth
 	movl	%eax,8(%esp)
-	mov	%esi,%eax
-	add	%edi,%eax
+	mov	%edi,%eax
+	addl	-4(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	$0,(%esp)
 	call	_maxgui_maxgui_CreateTextArea
@@ -372,10 +373,10 @@ _254:
 	mov	%eax,%esi
 	movl	16(%ebx),%eax
 	decl	4(%eax)
-	jnz	_258
+	jnz	_266
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_258:
+_266:
 	movl	%esi,16(%ebx)
 	movl	$1,16(%esp)
 	movl	$1,12(%esp)
@@ -395,8 +396,8 @@ _258:
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SetTextAreaText
 	mov	%ebx,%eax
-	jmp	_127
-_127:
+	jmp	_129
+_129:
 	add	$40,%esp
 	pop	%edi
 	pop	%esi
@@ -441,8 +442,8 @@ __bb_TGui_New:
 	incl	4(%eax)
 	movl	%eax,40(%ebx)
 	mov	$0,%eax
-	jmp	_130
-_130:
+	jmp	_132
+_132:
 	add	$4,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -454,64 +455,64 @@ __bb_TGui_Delete:
 	push	%ebx
 	sub	$4,%esp
 	movl	8(%ebp),%ebx
-_133:
+_135:
 	movl	40(%ebx),%eax
-	decl	4(%eax)
-	jnz	_270
-	movl	%eax,(%esp)
-	call	_bbGCFree
-_270:
-	movl	36(%ebx),%eax
-	decl	4(%eax)
-	jnz	_272
-	movl	%eax,(%esp)
-	call	_bbGCFree
-_272:
-	movl	32(%ebx),%eax
-	decl	4(%eax)
-	jnz	_274
-	movl	%eax,(%esp)
-	call	_bbGCFree
-_274:
-	movl	28(%ebx),%eax
-	decl	4(%eax)
-	jnz	_276
-	movl	%eax,(%esp)
-	call	_bbGCFree
-_276:
-	movl	24(%ebx),%eax
 	decl	4(%eax)
 	jnz	_278
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _278:
-	movl	20(%ebx),%eax
+	movl	36(%ebx),%eax
 	decl	4(%eax)
 	jnz	_280
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _280:
-	movl	16(%ebx),%eax
+	movl	32(%ebx),%eax
 	decl	4(%eax)
 	jnz	_282
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _282:
-	movl	12(%ebx),%eax
+	movl	28(%ebx),%eax
 	decl	4(%eax)
 	jnz	_284
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _284:
-	movl	8(%ebx),%eax
+	movl	24(%ebx),%eax
 	decl	4(%eax)
 	jnz	_286
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _286:
+	movl	20(%ebx),%eax
+	decl	4(%eax)
+	jnz	_288
+	movl	%eax,(%esp)
+	call	_bbGCFree
+_288:
+	movl	16(%ebx),%eax
+	decl	4(%eax)
+	jnz	_290
+	movl	%eax,(%esp)
+	call	_bbGCFree
+_290:
+	movl	12(%ebx),%eax
+	decl	4(%eax)
+	jnz	_292
+	movl	%eax,(%esp)
+	call	_bbGCFree
+_292:
+	movl	8(%ebx),%eax
+	decl	4(%eax)
+	jnz	_294
+	movl	%eax,(%esp)
+	call	_bbGCFree
+_294:
 	mov	$0,%eax
-	jmp	_268
-_268:
+	jmp	_276
+_276:
 	add	$4,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -559,10 +560,10 @@ __bb_TGui_Create:
 	mov	%eax,%ebx
 	movl	8(%edi),%eax
 	decl	4(%eax)
-	jnz	_296
+	jnz	_304
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_296:
+_304:
 	movl	%ebx,8(%edi)
 	movl	$15,24(%esp)
 	movl	$_bbNullObject,20(%esp)
@@ -584,10 +585,10 @@ _296:
 	mov	%eax,%ebx
 	movl	16(%edi),%eax
 	decl	4(%eax)
-	jnz	_300
+	jnz	_308
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_300:
+_308:
 	movl	%ebx,16(%edi)
 	mov	$38,%ebx
 	movl	$8,24(%esp)
@@ -604,10 +605,10 @@ _300:
 	mov	%eax,%esi
 	movl	20(%edi),%eax
 	decl	4(%eax)
-	jnz	_305
+	jnz	_313
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_305:
+_313:
 	movl	%esi,20(%edi)
 	movl	$0,16(%esp)
 	movl	$1,12(%esp)
@@ -633,10 +634,10 @@ _305:
 	mov	%eax,%ebx
 	movl	24(%edi),%eax
 	decl	4(%eax)
-	jnz	_309
+	jnz	_317
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_309:
+_317:
 	movl	%ebx,24(%edi)
 	movl	$0,16(%esp)
 	movl	$1,12(%esp)
@@ -664,10 +665,10 @@ _309:
 	mov	%eax,%esi
 	movl	28(%edi),%eax
 	decl	4(%eax)
-	jnz	_314
+	jnz	_322
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_314:
+_322:
 	movl	%esi,28(%edi)
 	movl	$0,16(%esp)
 	movl	$1,12(%esp)
@@ -726,10 +727,10 @@ _314:
 	mov	%eax,%ebx
 	movl	32(%edi),%eax
 	decl	4(%eax)
-	jnz	_319
+	jnz	_327
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_319:
+_327:
 	movl	%ebx,32(%edi)
 	movl	$0,16(%esp)
 	movl	$1,12(%esp)
@@ -765,10 +766,10 @@ _319:
 	mov	%eax,%ebx
 	movl	36(%edi),%eax
 	decl	4(%eax)
-	jnz	_323
+	jnz	_331
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_323:
+_331:
 	movl	%ebx,36(%edi)
 	movl	$1,16(%esp)
 	movl	$1,12(%esp)
@@ -793,10 +794,10 @@ _323:
 	mov	%eax,%ebx
 	movl	12(%edi),%eax
 	decl	4(%eax)
-	jnz	_327
+	jnz	_335
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_327:
+_335:
 	movl	%ebx,12(%edi)
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
@@ -828,19 +829,29 @@ _327:
 	movl	$8,4(%esp)
 	movl	$87,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
+	movl	$0,12(%esp)
+	movl	$_bbNullObject,8(%esp)
+	movl	$8,4(%esp)
+	movl	$67,(%esp)
+	call	_maxgui_maxgui_SetHotKeyEvent
+	movl	$0,12(%esp)
+	movl	$_bbNullObject,8(%esp)
+	movl	$8,4(%esp)
+	movl	$86,(%esp)
+	call	_maxgui_maxgui_SetHotKeyEvent
 	call	_brl_linkedlist_CreateList
 	incl	4(%eax)
 	mov	%eax,%ebx
 	movl	40(%edi),%eax
 	decl	4(%eax)
-	jnz	_331
+	jnz	_339
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_331:
+_339:
 	movl	%ebx,40(%edi)
 	mov	%edi,%eax
-	jmp	_135
-_135:
+	jmp	_137
+_137:
 	add	$32,%esp
 	pop	%edi
 	pop	%esi
@@ -860,21 +871,21 @@ _15:
 	call	_brl_eventqueue_WaitEvent
 	call	_brl_eventqueue_EventID
 	cmp	$16387,%eax
-	je	_334
+	je	_342
 	cmp	$8193,%eax
-	je	_335
+	je	_343
 	cmp	$8195,%eax
-	je	_336
+	je	_344
 	cmp	$4097,%eax
-	je	_337
-	jmp	_333
-_334:
+	je	_345
+	jmp	_341
+_342:
 	call	_brl_eventqueue_EventSource
 	movl	8(%ebp),%edx
 	cmpl	16(%edx),%eax
-	jne	_338
+	jne	_346
 	call	_bbEnd
-_338:
+_346:
 	movl	8(%ebp),%eax
 	movl	40(%eax),%esi
 	mov	%esi,%eax
@@ -896,7 +907,7 @@ _18:
 	je	_16
 	call	_brl_eventqueue_EventSource
 	cmpl	8(%ebx),%eax
-	jne	_345
+	jne	_353
 	movl	8(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_FreeGadget
@@ -906,7 +917,7 @@ _18:
 	movl	%eax,(%esp)
 	call	_brl_linkedlist_ListRemove
 	jmp	_17
-_345:
+_353:
 _16:
 	mov	%edi,%eax
 	movl	%eax,(%esp)
@@ -915,35 +926,35 @@ _16:
 	cmp	$0,%eax
 	jne	_18
 _17:
-	jmp	_333
-_335:
+	jmp	_341
+_343:
 	call	_brl_eventqueue_EventSource
 	movl	8(%ebp),%edx
 	cmpl	20(%edx),%eax
-	je	_348
+	je	_356
 	movl	8(%ebp),%edx
 	cmpl	24(%edx),%eax
-	je	_349
+	je	_357
 	movl	8(%ebp),%edx
 	cmpl	28(%edx),%eax
-	je	_350
+	je	_358
 	movl	8(%ebp),%edx
 	cmpl	36(%edx),%eax
-	je	_351
-	jmp	_347
-_348:
+	je	_359
+	jmp	_355
+_356:
 	movl	8(%ebp),%eax
 	movl	%eax,(%esp)
 	movl	(%eax),%eax
-	calll	*80(%eax)
-	jmp	_347
-_349:
+	calll	*88(%eax)
+	jmp	_355
+_357:
 	movl	8(%ebp),%eax
 	movl	%eax,(%esp)
 	movl	(%eax),%eax
-	calll	*76(%eax)
-	jmp	_347
-_350:
+	calll	*84(%eax)
+	jmp	_355
+_358:
 	movl	8(%ebp),%ebx
 	movl	8(%ebp),%eax
 	movl	32(%eax),%eax
@@ -952,112 +963,144 @@ _350:
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*72(%eax)
-	jmp	_347
-_351:
+	calll	*80(%eax)
+	jmp	_355
+_359:
 	movl	8(%ebp),%eax
 	movl	%eax,(%esp)
 	movl	(%eax),%eax
-	calll	*64(%eax)
-	jmp	_347
-_347:
-	jmp	_333
-_336:
+	calll	*72(%eax)
+	jmp	_355
+_355:
+	jmp	_341
+_344:
 	call	_brl_eventqueue_EventSource
 	movl	8(%ebp),%edx
 	cmpl	36(%edx),%eax
-	jne	_356
-	movl	8(%ebp),%eax
-	movl	%eax,(%esp)
-	movl	(%eax),%eax
-	calll	*60(%eax)
-_356:
-	jmp	_333
-_337:
-	call	_brl_eventqueue_EventMods
-	cmp	$1,%eax
-	jne	_358
-	call	_brl_eventqueue_EventData
-	cmp	$68,%eax
-	je	_361
-	cmp	$75,%eax
-	je	_362
-	cmp	$70,%eax
-	je	_363
-	cmp	$74,%eax
-	je	_364
-	cmp	$72,%eax
-	je	_365
-	jmp	_360
-_361:
-	movl	8(%ebp),%eax
-	movl	%eax,(%esp)
-	movl	(%eax),%eax
-	calll	*80(%eax)
-	jmp	_360
-_362:
-	movl	8(%ebp),%eax
-	movl	%eax,(%esp)
-	movl	(%eax),%eax
-	calll	*76(%eax)
-	jmp	_360
-_363:
-	movl	8(%ebp),%eax
-	movl	$0,4(%esp)
-	movl	%eax,(%esp)
-	movl	(%eax),%eax
-	calll	*84(%eax)
-	jmp	_360
-_364:
-	movl	8(%ebp),%eax
-	movl	$1,4(%esp)
-	movl	%eax,(%esp)
-	movl	(%eax),%eax
-	calll	*84(%eax)
-	jmp	_360
-_365:
+	jne	_364
 	movl	8(%ebp),%eax
 	movl	%eax,(%esp)
 	movl	(%eax),%eax
 	calll	*68(%eax)
-	jmp	_360
-_360:
-	jmp	_371
-_358:
+_364:
+	jmp	_341
+_345:
+	call	_brl_eventqueue_EventMods
+	cmp	$1,%eax
+	jne	_366
+	call	_brl_eventqueue_EventData
+	cmp	$68,%eax
+	je	_369
+	cmp	$75,%eax
+	je	_370
+	cmp	$70,%eax
+	je	_371
+	cmp	$74,%eax
+	je	_372
+	cmp	$72,%eax
+	je	_373
+	jmp	_368
+_369:
+	movl	8(%ebp),%eax
+	movl	%eax,(%esp)
+	movl	(%eax),%eax
+	calll	*88(%eax)
+	jmp	_368
+_370:
+	movl	8(%ebp),%eax
+	movl	%eax,(%esp)
+	movl	(%eax),%eax
+	calll	*84(%eax)
+	jmp	_368
+_371:
+	movl	8(%ebp),%eax
+	movl	$0,4(%esp)
+	movl	%eax,(%esp)
+	movl	(%eax),%eax
+	calll	*92(%eax)
+	jmp	_368
+_372:
+	movl	8(%ebp),%eax
+	movl	$1,4(%esp)
+	movl	%eax,(%esp)
+	movl	(%eax),%eax
+	calll	*92(%eax)
+	jmp	_368
+_373:
+	movl	8(%ebp),%eax
+	movl	%eax,(%esp)
+	movl	(%eax),%eax
+	calll	*76(%eax)
+	jmp	_368
+_368:
+	jmp	_379
+_366:
 	call	_brl_eventqueue_EventMods
 	cmp	$8,%eax
-	jne	_372
+	jne	_380
 	call	_brl_eventqueue_EventData
 	cmp	$87,%eax
-	je	_375
-	jmp	_374
-_375:
+	je	_383
+	cmp	$67,%eax
+	je	_384
+	cmp	$86,%eax
+	je	_385
+	jmp	_382
+_383:
+	movl	8(%ebp),%eax
+	movl	%eax,(%esp)
+	movl	(%eax),%eax
+	calll	*64(%eax)
+	jmp	_382
+_384:
 	movl	8(%ebp),%eax
 	movl	%eax,(%esp)
 	movl	(%eax),%eax
 	calll	*56(%eax)
-	cmp	$0,%eax
-	je	_377
-	call	_bbEnd
-_377:
-	jmp	_374
-_374:
-_372:
-_371:
-	jmp	_333
-_333:
+	jmp	_382
+_385:
+	movl	8(%ebp),%eax
+	movl	%eax,(%esp)
+	movl	(%eax),%eax
+	calll	*60(%eax)
+	jmp	_382
+_382:
+_380:
+_379:
+	jmp	_341
+_341:
 _13:
 	mov	$1,%eax
 	cmp	$0,%eax
 	jne	_15
 _14:
 	mov	$0,%eax
-	jmp	_138
-_138:
+	jmp	_140
+_140:
 	add	$12,%esp
 	pop	%edi
 	pop	%esi
 	pop	%ebx
+	mov	%ebp,%esp
+	pop	%ebp
+	ret
+__bb_TGui_DoCopy:
+	push	%ebp
+	mov	%esp,%ebp
+	sub	$8,%esp
+	mov	$0,%eax
+	jmp	_143
+_143:
+	mov	%ebp,%esp
+	pop	%ebp
+	ret
+__bb_TGui_DoPaste:
+	push	%ebp
+	mov	%esp,%ebp
+	sub	$8,%esp
+	mov	$0,%eax
+	jmp	_146
+_146:
 	mov	%ebp,%esp
 	pop	%ebp
 	ret
@@ -1087,7 +1130,7 @@ _19:
 _20:
 	movl	8(%ebp),%eax
 	cmpl	16(%eax),%esi
-	jne	_379
+	jne	_390
 	movl	8(%ebp),%eax
 	movl	40(%eax),%esi
 	mov	%esi,%eax
@@ -1123,9 +1166,13 @@ _22:
 	cmp	$0,%eax
 	jne	_24
 _23:
-	mov	$1,%eax
-	jmp	_141
-_379:
+	movl	8(%ebp),%eax
+	movl	16(%eax),%eax
+	movl	%eax,(%esp)
+	call	_maxgui_maxgui_FreeGadget
+	mov	$0,%eax
+	jmp	_149
+_390:
 	movl	8(%ebp),%eax
 	movl	40(%eax),%edi
 	mov	%edi,%eax
@@ -1146,7 +1193,7 @@ _27:
 	cmp	$_bbNullObject,%ebx
 	je	_25
 	cmpl	8(%ebx),%esi
-	jne	_392
+	jne	_403
 	movl	8(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_FreeGadget
@@ -1155,8 +1202,9 @@ _27:
 	movl	40(%eax),%eax
 	movl	%eax,(%esp)
 	call	_brl_linkedlist_ListRemove
-	jmp	_26
-_392:
+	mov	$0,%eax
+	jmp	_149
+_403:
 _25:
 	movl	-4(%ebp),%eax
 	movl	%eax,(%esp)
@@ -1166,8 +1214,8 @@ _25:
 	jne	_27
 _26:
 	mov	$0,%eax
-	jmp	_141
-_141:
+	jmp	_149
+_149:
 	add	$8,%esp
 	pop	%edi
 	pop	%esi
@@ -1185,16 +1233,16 @@ __bb_TGui_DoSelect:
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
 	cmp	$-1,%eax
-	jne	_393
+	jne	_404
 	mov	$0,%eax
-	jmp	_144
-_393:
+	jmp	_152
+_404:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*88(%eax)
+	calll	*96(%eax)
 	mov	$0,%eax
-	jmp	_144
-_144:
+	jmp	_152
+_152:
 	add	$4,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -1207,10 +1255,10 @@ __bb_TGui_DoSelectAction:
 	movl	8(%ebp),%eax
 	movl	%eax,(%esp)
 	movl	(%eax),%eax
-	calll	*68(%eax)
+	calll	*76(%eax)
 	mov	$0,%eax
-	jmp	_147
-_147:
+	jmp	_155
+_155:
 	mov	%ebp,%esp
 	pop	%ebp
 	ret
@@ -1225,10 +1273,10 @@ __bb_TGui_DoGoWithItem:
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
 	cmp	$-1,%eax
-	jne	_396
+	jne	_407
 	mov	$0,%eax
-	jmp	_150
-_396:
+	jmp	_158
+_407:
 	movl	36(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
@@ -1248,18 +1296,18 @@ _396:
 	movl	%esi,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$2,%eax
-	jne	_398
+	jne	_409
 	mov	%ebx,%eax
 	movl	%esi,4(%esp)
 	movl	%eax,(%esp)
 	movl	(%eax),%eax
-	calll	*72(%eax)
-	jmp	_400
-_398:
+	calll	*80(%eax)
+	jmp	_411
+_409:
 	movl	%esi,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$1,%eax
-	jne	_401
+	jne	_412
 	movl	16(%ebx),%eax
 	movl	%eax,4(%esp)
 	movl	%esi,(%esp)
@@ -1268,11 +1316,11 @@ _398:
 	movl	40(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_linkedlist_ListAddLast
-_401:
-_400:
+_412:
+_411:
 	mov	$0,%eax
-	jmp	_150
-_150:
+	jmp	_158
+_158:
 	add	$16,%esp
 	pop	%esi
 	pop	%ebx
@@ -1309,8 +1357,8 @@ __bb_TGui_DoGo:
 	movl	(%esi),%eax
 	calll	*52(%eax)
 	mov	$0,%eax
-	jmp	_154
-_154:
+	jmp	_162
+_162:
 	add	$16,%esp
 	pop	%esi
 	pop	%ebx
@@ -1328,7 +1376,7 @@ __bb_TGui_DoRight:
 	movl	(%eax),%eax
 	calll	*60(%eax)
 	cmp	$0,%eax
-	je	_405
+	je	_416
 	movl	12(%ebx),%eax
 	movl	%eax,(%esp)
 	movl	(%eax),%eax
@@ -1344,10 +1392,10 @@ __bb_TGui_DoRight:
 	call	_maxgui_maxgui_GadgetText
 	movl	%eax,(%esp)
 	call	_bb_PopulateList
-_405:
+_416:
 	mov	$0,%eax
-	jmp	_157
-_157:
+	jmp	_165
+_165:
 	add	$20,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -1371,7 +1419,7 @@ __bb_TGui_DoLeft:
 	movl	8(%edi),%eax
 	sub	$1,%eax
 	movl	%eax,-4(%ebp)
-	jmp	_410
+	jmp	_421
 _30:
 	movl	$1,8(%esp)
 	movl	%ebx,4(%esp)
@@ -1381,20 +1429,20 @@ _30:
 	movl	%eax,(%esp)
 	call	_bbStringCompare
 	cmp	$0,%eax
-	jne	_412
+	jne	_423
 	cmp	%ebx,%esi
-	jge	_413
+	jge	_424
 	mov	%ebx,%esi
-_413:
-_412:
+_424:
+_423:
 _28:
 	add	$1,%ebx
-_410:
+_421:
 	cmpl	-4(%ebp),%ebx
 	jle	_30
 _29:
 	cmp	$0,%esi
-	jle	_414
+	jle	_425
 	movl	%esi,4(%esp)
 	movl	%edi,(%esp)
 	call	_brl_retro_Left
@@ -1422,10 +1470,10 @@ _29:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*52(%eax)
-_414:
+_425:
 	mov	$0,%eax
-	jmp	_160
-_160:
+	jmp	_168
+_168:
 	add	$24,%esp
 	pop	%edi
 	pop	%esi
@@ -1445,24 +1493,24 @@ __bb_TGui_GoDirectionInList:
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
 	cmp	$-1,%eax
-	jne	_416
+	jne	_427
 	mov	$0,%eax
-	jmp	_164
-_416:
+	jmp	_172
+_427:
 	cmp	$0,%ebx
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	je	_418
+	je	_429
 	movl	36(%esi),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
 	cmp	$0,%eax
 	setg	%al
 	movzbl	%al,%eax
-_418:
+_429:
 	cmp	$0,%eax
-	je	_420
+	je	_431
 	movl	36(%esi),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
@@ -1471,13 +1519,13 @@ _418:
 	movl	36(%esi),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectGadgetItem
-	jmp	_421
-_420:
+	jmp	_432
+_431:
 	cmp	$1,%ebx
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	je	_422
+	je	_433
 	movl	36(%esi),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
@@ -1489,9 +1537,9 @@ _420:
 	cmp	%eax,%ebx
 	setl	%al
 	movzbl	%al,%eax
-_422:
+_433:
 	cmp	$0,%eax
-	je	_424
+	je	_435
 	movl	36(%esi),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
@@ -1500,15 +1548,15 @@ _422:
 	movl	36(%esi),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectGadgetItem
-_424:
-_421:
+_435:
+_432:
 	mov	%esi,%eax
 	movl	%eax,(%esp)
 	movl	(%eax),%eax
-	calll	*88(%eax)
+	calll	*96(%eax)
 	mov	$0,%eax
-	jmp	_164
-_164:
+	jmp	_172
+_172:
 	add	$16,%esp
 	pop	%esi
 	pop	%ebx
@@ -1526,10 +1574,10 @@ __bb_TGui_DetermineType:
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
 	cmp	$-1,%eax
-	jne	_426
+	jne	_437
 	mov	$0,%eax
-	jmp	_167
-_426:
+	jmp	_175
+_437:
 	movl	12(%esi),%ebx
 	movl	36(%esi),%eax
 	movl	%eax,(%esp)
@@ -1549,19 +1597,19 @@ _426:
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$2,%eax
-	jne	_429
+	jne	_440
 	mov	$_32,%eax
-	jmp	_430
-_429:
+	jmp	_441
+_440:
 	mov	$_33,%eax
-_430:
+_441:
 	movl	%eax,4(%esp)
 	movl	16(%esi),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SetStatusText
 	mov	$0,%eax
-	jmp	_167
-_167:
+	jmp	_175
+_175:
 	add	$16,%esp
 	pop	%esi
 	pop	%ebx
@@ -1588,8 +1636,8 @@ __bb_Settings_New:
 	incl	4(%eax)
 	movl	%eax,28(%ebx)
 	mov	$0,%eax
-	jmp	_170
-_170:
+	jmp	_178
+_178:
 	add	$4,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -1601,22 +1649,22 @@ __bb_Settings_Delete:
 	push	%ebx
 	sub	$4,%esp
 	movl	8(%ebp),%ebx
-_173:
+_181:
 	movl	28(%ebx),%eax
 	decl	4(%eax)
-	jnz	_435
+	jnz	_446
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_435:
+_446:
 	movl	24(%ebx),%eax
 	decl	4(%eax)
-	jnz	_437
+	jnz	_448
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_437:
+_448:
 	mov	$0,%eax
-	jmp	_433
-_433:
+	jmp	_444
+_444:
 	add	$4,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -1645,14 +1693,14 @@ __bb_Settings_Create:
 	mov	%eax,%esi
 	movl	28(%ebx),%eax
 	decl	4(%eax)
-	jnz	_442
+	jnz	_453
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_442:
+_453:
 	movl	%esi,28(%ebx)
 	mov	%ebx,%eax
-	jmp	_179
-_179:
+	jmp	_187
+_187:
 	add	$12,%esp
 	pop	%edi
 	pop	%esi
@@ -1677,7 +1725,7 @@ __bb_Settings_LoadAssociations:
 	setne	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	jne	_444
+	jne	_455
 	movl	%ebx,(%esp)
 	call	_brl_filesystem_WriteFile
 	mov	%eax,%esi
@@ -1685,28 +1733,28 @@ __bb_Settings_LoadAssociations:
 	setne	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	jne	_445
+	jne	_456
 	movl	%ebx,4(%esp)
 	movl	$_34,(%esp)
 	call	_bbStringConcat
 	movl	%eax,(%esp)
 	call	_brl_blitz_RuntimeError
-_445:
+_456:
 	movl	%esi,(%esp)
 	call	_brl_stream_CloseStream
 	mov	$0,%eax
-	jmp	_183
-_444:
+	jmp	_191
+_455:
 	call	_brl_map_CreateMap
 	incl	4(%eax)
 	mov	%eax,%ebx
 	movl	8(%ebp),%eax
 	movl	28(%eax),%eax
 	decl	4(%eax)
-	jnz	_449
+	jnz	_460
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_449:
+_460:
 	movl	8(%ebp),%eax
 	movl	%ebx,28(%eax)
 	mov	$_bbEmptyString,%edi
@@ -1714,15 +1762,15 @@ _449:
 	jmp	_35
 _37:
 	cmp	$0,%ebx
-	jne	_453
+	jne	_464
 	mov	$1,%ebx
 	movl	%esi,(%esp)
 	call	_brl_stream_ReadLine
 	mov	%eax,%edi
-	jmp	_454
-_453:
+	jmp	_465
+_464:
 	cmp	$1,%ebx
-	jne	_455
+	jne	_466
 	mov	$0,%ebx
 	movl	%esi,(%esp)
 	call	_brl_stream_ReadLine
@@ -1732,8 +1780,8 @@ _453:
 	movl	28(%eax),%eax
 	movl	%eax,(%esp)
 	call	_brl_map_MapInsert
-_455:
-_454:
+_466:
+_465:
 _35:
 	movl	%esi,(%esp)
 	call	_brl_stream_Eof
@@ -1743,8 +1791,8 @@ _36:
 	movl	%esi,(%esp)
 	call	_brl_stream_CloseStream
 	mov	$0,%eax
-	jmp	_183
-_183:
+	jmp	_191
+_191:
 	add	$12,%esp
 	pop	%edi
 	pop	%esi
@@ -1769,13 +1817,13 @@ __bb_Settings_SaveAssociations:
 	setne	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	jne	_457
+	jne	_468
 	movl	%ebx,4(%esp)
 	movl	$_38,(%esp)
 	call	_bbStringConcat
 	movl	%eax,(%esp)
 	call	_brl_blitz_RuntimeError
-_457:
+_468:
 	movl	8(%ebp),%eax
 	movl	28(%eax),%eax
 	movl	%eax,(%esp)
@@ -1799,9 +1847,9 @@ _41:
 	movl	%ebx,(%esp)
 	call	_bbObjectDowncast
 	cmp	$_bbNullObject,%eax
-	jne	_465
+	jne	_476
 	mov	$_bbEmptyString,%eax
-_465:
+_476:
 	movl	%eax,4(%esp)
 	movl	-4(%ebp),%eax
 	movl	%eax,(%esp)
@@ -1815,9 +1863,9 @@ _465:
 	movl	%eax,(%esp)
 	call	_bbObjectDowncast
 	cmp	$_bbNullObject,%eax
-	jne	_467
+	jne	_478
 	mov	$_bbEmptyString,%eax
-_467:
+_478:
 	movl	%eax,4(%esp)
 	movl	-4(%ebp),%eax
 	movl	%eax,(%esp)
@@ -1834,8 +1882,8 @@ _40:
 	movl	%eax,(%esp)
 	call	_brl_filesystem_CloseFile
 	mov	$0,%eax
-	jmp	_187
-_187:
+	jmp	_195
+_195:
 	add	$8,%esp
 	pop	%edi
 	pop	%esi
@@ -1862,8 +1910,8 @@ __bb_Node_New:
 	incl	4(%eax)
 	movl	%eax,16(%ebx)
 	mov	$0,%eax
-	jmp	_190
-_190:
+	jmp	_198
+_198:
 	add	$4,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -1875,28 +1923,28 @@ __bb_Node_Delete:
 	push	%ebx
 	sub	$4,%esp
 	movl	8(%ebp),%ebx
-_193:
+_201:
 	movl	16(%ebx),%eax
 	decl	4(%eax)
-	jnz	_473
+	jnz	_484
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_473:
+_484:
 	movl	12(%ebx),%eax
 	decl	4(%eax)
-	jnz	_475
+	jnz	_486
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_475:
+_486:
 	movl	8(%ebx),%eax
 	decl	4(%eax)
-	jnz	_477
+	jnz	_488
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_477:
+_488:
 	mov	$0,%eax
-	jmp	_471
-_471:
+	jmp	_482
+_482:
 	add	$4,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -1915,8 +1963,8 @@ __bb_NavigationManager_New:
 	incl	4(%eax)
 	movl	%eax,8(%ebx)
 	mov	$0,%eax
-	jmp	_196
-_196:
+	jmp	_204
+_204:
 	add	$4,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -1927,16 +1975,16 @@ __bb_NavigationManager_Delete:
 	mov	%esp,%ebp
 	sub	$8,%esp
 	movl	8(%ebp),%eax
-_199:
+_207:
 	movl	8(%eax),%eax
 	decl	4(%eax)
-	jnz	_481
+	jnz	_492
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_481:
+_492:
 	mov	$0,%eax
-	jmp	_479
-_479:
+	jmp	_490
+_490:
 	mov	%ebp,%esp
 	pop	%ebp
 	ret
@@ -1957,10 +2005,10 @@ __bb_NavigationManager_Create:
 	mov	%eax,%esi
 	movl	8(%ebx),%eax
 	decl	4(%eax)
-	jnz	_486
+	jnz	_497
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_486:
+_497:
 	movl	%esi,8(%ebx)
 	mov	%edi,%eax
 	incl	4(%eax)
@@ -1968,15 +2016,15 @@ _486:
 	movl	8(%ebx),%eax
 	movl	8(%eax),%eax
 	decl	4(%eax)
-	jnz	_490
+	jnz	_501
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_490:
+_501:
 	movl	8(%ebx),%eax
 	movl	%esi,8(%eax)
 	mov	%ebx,%eax
-	jmp	_202
-_202:
+	jmp	_210
+_210:
 	add	$12,%esp
 	pop	%edi
 	pop	%esi
@@ -2000,10 +2048,10 @@ __bb_NavigationManager_GoLeft:
 	movl	8(%edi),%eax
 	movl	12(%eax),%eax
 	decl	4(%eax)
-	jnz	_494
+	jnz	_505
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_494:
+_505:
 	movl	8(%edi),%eax
 	movl	%ebx,12(%eax)
 	mov	%esi,%eax
@@ -2013,10 +2061,10 @@ _494:
 	movl	12(%eax),%eax
 	movl	8(%eax),%eax
 	decl	4(%eax)
-	jnz	_498
+	jnz	_509
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_498:
+_509:
 	movl	8(%edi),%eax
 	movl	12(%eax),%eax
 	movl	%ebx,8(%eax)
@@ -2027,10 +2075,10 @@ _498:
 	movl	12(%eax),%eax
 	movl	16(%eax),%eax
 	decl	4(%eax)
-	jnz	_502
+	jnz	_513
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_502:
+_513:
 	movl	8(%edi),%eax
 	movl	12(%eax),%eax
 	movl	%ebx,16(%eax)
@@ -2040,14 +2088,14 @@ _502:
 	mov	%eax,%ebx
 	movl	8(%edi),%eax
 	decl	4(%eax)
-	jnz	_506
+	jnz	_517
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_506:
+_517:
 	movl	%ebx,8(%edi)
 	mov	$0,%eax
-	jmp	_206
-_206:
+	jmp	_214
+_214:
 	add	$12,%esp
 	pop	%edi
 	pop	%esi
@@ -2071,10 +2119,10 @@ __bb_NavigationManager_GoInside:
 	movl	8(%edi),%eax
 	movl	16(%eax),%eax
 	decl	4(%eax)
-	jnz	_510
+	jnz	_521
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_510:
+_521:
 	movl	8(%edi),%eax
 	movl	%ebx,16(%eax)
 	mov	%esi,%eax
@@ -2084,10 +2132,10 @@ _510:
 	movl	16(%eax),%eax
 	movl	8(%eax),%eax
 	decl	4(%eax)
-	jnz	_514
+	jnz	_525
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_514:
+_525:
 	movl	8(%edi),%eax
 	movl	16(%eax),%eax
 	movl	%ebx,8(%eax)
@@ -2098,10 +2146,10 @@ _514:
 	movl	16(%eax),%eax
 	movl	12(%eax),%eax
 	decl	4(%eax)
-	jnz	_518
+	jnz	_529
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_518:
+_529:
 	movl	8(%edi),%eax
 	movl	16(%eax),%eax
 	movl	%ebx,12(%eax)
@@ -2111,14 +2159,14 @@ _518:
 	mov	%eax,%ebx
 	movl	8(%edi),%eax
 	decl	4(%eax)
-	jnz	_522
+	jnz	_533
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_522:
+_533:
 	movl	%ebx,8(%edi)
 	mov	$0,%eax
-	jmp	_210
-_210:
+	jmp	_218
+_218:
 	add	$12,%esp
 	pop	%edi
 	pop	%esi
@@ -2135,24 +2183,24 @@ __bb_NavigationManager_GoRight:
 	movl	8(%ebp),%ebx
 	movl	8(%ebx),%eax
 	cmpl	$_bbNullObject,16(%eax)
-	je	_523
+	je	_534
 	movl	8(%ebx),%eax
 	movl	16(%eax),%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	8(%ebx),%eax
 	decl	4(%eax)
-	jnz	_527
+	jnz	_538
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_527:
+_538:
 	movl	%esi,8(%ebx)
 	mov	$1,%eax
-	jmp	_213
-_523:
+	jmp	_221
+_534:
 	mov	$0,%eax
-	jmp	_213
-_213:
+	jmp	_221
+_221:
 	add	$16,%esp
 	pop	%esi
 	pop	%ebx
@@ -2166,8 +2214,8 @@ __bb_NavigationManager_Path:
 	movl	8(%ebp),%eax
 	movl	8(%eax),%eax
 	movl	8(%eax),%eax
-	jmp	_216
-_216:
+	jmp	_224
+_224:
 	mov	%ebp,%esp
 	pop	%ebp
 	ret
@@ -2186,15 +2234,15 @@ _bb_EnsurePath:
 	movl	%eax,(%esp)
 	call	_bbStringCompare
 	cmp	$0,%eax
-	jne	_529
+	jne	_540
 	mov	%ebx,%eax
-	jmp	_219
-_529:
+	jmp	_227
+_540:
 	movl	$_31,4(%esp)
 	movl	%ebx,(%esp)
 	call	_bbStringConcat
-	jmp	_219
-_219:
+	jmp	_227
+_227:
 	add	$20,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -2215,10 +2263,10 @@ _bb_PopulateList:
 	movl	%ebx,(%esp)
 	call	_bbStringCompare
 	cmp	$0,%eax
-	jne	_532
+	jne	_543
 	mov	$0,%eax
-	jmp	_223
-_532:
+	jmp	_231
+_543:
 	movl	%esi,(%esp)
 	call	_maxgui_maxgui_ClearGadgetItems
 	movl	$2,8(%esp)
@@ -2232,14 +2280,14 @@ _532:
 	movl	%esi,(%esp)
 	call	_maxgui_maxgui_CountGadgetItems
 	cmp	$0,%eax
-	jle	_533
+	jle	_544
 	movl	$0,4(%esp)
 	movl	%esi,(%esp)
 	call	_maxgui_maxgui_SelectGadgetItem
-_533:
+_544:
 	mov	$0,%eax
-	jmp	_223
-_223:
+	jmp	_231
+_231:
 	add	$16,%esp
 	pop	%esi
 	pop	%ebx
@@ -2258,10 +2306,10 @@ _bb_PopulateListWithType:
 	call	_brl_filesystem_ReadDir
 	mov	%eax,%esi
 	cmp	$0,%esi
-	jne	_535
+	jne	_546
 	mov	$0,%eax
-	jmp	_228
-_535:
+	jmp	_236
+_546:
 _44:
 _42:
 	movl	%esi,(%esp)
@@ -2271,9 +2319,9 @@ _42:
 	movl	%ebx,(%esp)
 	call	_bbStringCompare
 	cmp	$0,%eax
-	jne	_537
+	jne	_548
 	jmp	_43
-_537:
+_548:
 	movl	$_45,4(%esp)
 	movl	%ebx,(%esp)
 	call	_bbStringCompare
@@ -2281,25 +2329,25 @@ _537:
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	jne	_538
+	jne	_549
 	movl	$_46,4(%esp)
 	movl	%ebx,(%esp)
 	call	_bbStringCompare
 	cmp	$0,%eax
 	sete	%al
 	movzbl	%al,%eax
-_538:
+_549:
 	cmp	$0,%eax
-	je	_540
+	je	_551
 	jmp	_42
-_540:
+_551:
 	movl	%ebx,4(%esp)
 	movl	%edi,(%esp)
 	call	_bbStringConcat
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmpl	16(%ebp),%eax
-	jne	_541
+	jne	_552
 	movl	$_bbNullObject,20(%esp)
 	movl	$_1,16(%esp)
 	movl	$-1,12(%esp)
@@ -2308,14 +2356,14 @@ _540:
 	movl	12(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_AddGadgetItem
-_541:
+_552:
 	jmp	_44
 _43:
 	movl	%esi,(%esp)
 	call	_brl_filesystem_CloseDir
 	mov	$0,%eax
-	jmp	_228
-_228:
+	jmp	_236
+_236:
 	add	$28,%esp
 	pop	%edi
 	pop	%esi
@@ -2325,7 +2373,7 @@ _228:
 	ret
 	.data	
 	.align	4
-_232:
+_240:
 	.long	0
 _48:
 	.asciz	"TBox"
@@ -2438,26 +2486,30 @@ _76:
 _77:
 	.asciz	"Run"
 _78:
-	.asciz	"DoCloseActiveWindow"
+	.asciz	"DoCopy"
 _79:
-	.asciz	"DoSelect"
+	.asciz	"DoPaste"
 _80:
-	.asciz	"DoSelectAction"
+	.asciz	"DoCloseActiveWindow"
 _81:
-	.asciz	"DoGoWithItem"
+	.asciz	"DoSelect"
 _82:
-	.asciz	"DoGo"
+	.asciz	"DoSelectAction"
 _83:
-	.asciz	"($)i"
+	.asciz	"DoGoWithItem"
 _84:
-	.asciz	"DoRight"
+	.asciz	"DoGo"
 _85:
-	.asciz	"DoLeft"
+	.asciz	"($)i"
 _86:
-	.asciz	"GoDirectionInList"
+	.asciz	"DoRight"
 _87:
-	.asciz	"(i)i"
+	.asciz	"DoLeft"
 _88:
+	.asciz	"GoDirectionInList"
+_89:
+	.asciz	"(i)i"
+_90:
 	.asciz	"DetermineType"
 	.align	4
 _58:
@@ -2541,24 +2593,32 @@ _58:
 	.long	68
 	.long	6
 	.long	_82
-	.long	_83
+	.long	_54
 	.long	72
 	.long	6
-	.long	_84
+	.long	_83
 	.long	_54
 	.long	76
 	.long	6
+	.long	_84
 	.long	_85
-	.long	_54
 	.long	80
 	.long	6
 	.long	_86
-	.long	_87
+	.long	_54
 	.long	84
 	.long	6
-	.long	_88
+	.long	_87
 	.long	_54
 	.long	88
+	.long	6
+	.long	_88
+	.long	_89
+	.long	92
+	.long	6
+	.long	_90
+	.long	_54
+	.long	96
 	.long	0
 	.align	4
 _bb_TGui:
@@ -2576,6 +2636,8 @@ _bb_TGui:
 	.long	_bbObjectReserved
 	.long	__bb_TGui_Create
 	.long	__bb_TGui_Run
+	.long	__bb_TGui_DoCopy
+	.long	__bb_TGui_DoPaste
 	.long	__bb_TGui_DoCloseActiveWindow
 	.long	__bb_TGui_DoSelect
 	.long	__bb_TGui_DoSelectAction
@@ -2585,57 +2647,57 @@ _bb_TGui:
 	.long	__bb_TGui_DoLeft
 	.long	__bb_TGui_GoDirectionInList
 	.long	__bb_TGui_DetermineType
-_90:
-	.asciz	"Settings"
-_91:
-	.asciz	"x"
 _92:
-	.asciz	"y"
+	.asciz	"Settings"
 _93:
-	.asciz	"width"
+	.asciz	"x"
 _94:
-	.asciz	"height"
+	.asciz	"y"
 _95:
-	.asciz	"lastPath"
+	.asciz	"width"
 _96:
-	.asciz	"$"
+	.asciz	"height"
 _97:
-	.asciz	"map"
+	.asciz	"lastPath"
 _98:
-	.asciz	":TMap"
+	.asciz	"$"
 _99:
-	.asciz	"(i,i,i,i):Settings"
+	.asciz	"map"
 _100:
-	.asciz	"LoadAssociations"
+	.asciz	":TMap"
 _101:
+	.asciz	"(i,i,i,i):Settings"
+_102:
+	.asciz	"LoadAssociations"
+_103:
 	.asciz	"SaveAssociations"
 	.align	4
-_89:
+_91:
 	.long	2
-	.long	_90
-	.long	3
-	.long	_91
-	.long	_61
-	.long	8
-	.long	3
 	.long	_92
-	.long	_61
-	.long	12
 	.long	3
 	.long	_93
 	.long	_61
-	.long	16
+	.long	8
 	.long	3
 	.long	_94
 	.long	_61
-	.long	20
+	.long	12
 	.long	3
 	.long	_95
+	.long	_61
+	.long	16
+	.long	3
 	.long	_96
-	.long	24
+	.long	_61
+	.long	20
 	.long	3
 	.long	_97
 	.long	_98
+	.long	24
+	.long	3
+	.long	_99
+	.long	_100
 	.long	28
 	.long	6
 	.long	_53
@@ -2647,22 +2709,22 @@ _89:
 	.long	20
 	.long	7
 	.long	_56
-	.long	_99
+	.long	_101
 	.long	48
 	.long	6
-	.long	_100
-	.long	_83
+	.long	_102
+	.long	_85
 	.long	52
 	.long	6
-	.long	_101
-	.long	_83
+	.long	_103
+	.long	_85
 	.long	56
 	.long	0
 	.align	4
 _bb_Settings:
 	.long	_bbObjectClass
 	.long	_bbObjectFree
-	.long	_89
+	.long	_91
 	.long	32
 	.long	__bb_Settings_New
 	.long	__bb_Settings_Delete
@@ -2675,31 +2737,31 @@ _bb_Settings:
 	.long	__bb_Settings_Create
 	.long	__bb_Settings_LoadAssociations
 	.long	__bb_Settings_SaveAssociations
-_103:
-	.asciz	"Node"
-_104:
-	.asciz	"path"
 _105:
-	.asciz	"leftNode"
+	.asciz	"Node"
 _106:
-	.asciz	":Node"
+	.asciz	"path"
 _107:
+	.asciz	"leftNode"
+_108:
+	.asciz	":Node"
+_109:
 	.asciz	"rightNode"
 	.align	4
-_102:
+_104:
 	.long	2
-	.long	_103
+	.long	_105
 	.long	3
-	.long	_104
-	.long	_96
+	.long	_106
+	.long	_98
 	.long	8
 	.long	3
-	.long	_105
-	.long	_106
+	.long	_107
+	.long	_108
 	.long	12
 	.long	3
-	.long	_107
-	.long	_106
+	.long	_109
+	.long	_108
 	.long	16
 	.long	6
 	.long	_53
@@ -2714,7 +2776,7 @@ _102:
 _bb_Node:
 	.long	_bbObjectClass
 	.long	_bbObjectFree
-	.long	_102
+	.long	_104
 	.long	20
 	.long	__bb_Node_New
 	.long	__bb_Node_Delete
@@ -2724,29 +2786,29 @@ _bb_Node:
 	.long	_bbObjectReserved
 	.long	_bbObjectReserved
 	.long	_bbObjectReserved
-_109:
-	.asciz	"NavigationManager"
-_110:
-	.asciz	"currentNode"
 _111:
-	.asciz	"($):NavigationManager"
+	.asciz	"NavigationManager"
 _112:
-	.asciz	"GoLeft"
+	.asciz	"currentNode"
 _113:
-	.asciz	"GoInside"
+	.asciz	"($):NavigationManager"
 _114:
-	.asciz	"GoRight"
+	.asciz	"GoLeft"
 _115:
-	.asciz	"Path"
+	.asciz	"GoInside"
 _116:
+	.asciz	"GoRight"
+_117:
+	.asciz	"Path"
+_118:
 	.asciz	"()$"
 	.align	4
-_108:
+_110:
 	.long	2
-	.long	_109
+	.long	_111
 	.long	3
-	.long	_110
-	.long	_106
+	.long	_112
+	.long	_108
 	.long	8
 	.long	6
 	.long	_53
@@ -2758,30 +2820,30 @@ _108:
 	.long	20
 	.long	7
 	.long	_56
-	.long	_111
+	.long	_113
 	.long	48
 	.long	6
-	.long	_112
-	.long	_83
+	.long	_114
+	.long	_85
 	.long	52
 	.long	6
-	.long	_113
-	.long	_83
+	.long	_115
+	.long	_85
 	.long	56
 	.long	6
-	.long	_114
+	.long	_116
 	.long	_54
 	.long	60
 	.long	6
-	.long	_115
-	.long	_116
+	.long	_117
+	.long	_118
 	.long	64
 	.long	0
 	.align	4
 _bb_NavigationManager:
 	.long	_bbObjectClass
 	.long	_bbObjectFree
-	.long	_108
+	.long	_110
 	.long	12
 	.long	__bb_NavigationManager_New
 	.long	__bb_NavigationManager_Delete

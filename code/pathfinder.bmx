@@ -1,15 +1,12 @@
 ' Info: http://www.lemming.life
-' Author: email@lemming.life
 
 ' ToDo
-' - Create a GUI type, with callable functions for actions
+' - Need to code copy/paste functionality.
+' - New file, new folder, renaming.
 
 SuperStrict
 
 Import MaxGui.Drivers
-Import PUB.FreeProcess
-
-
 
 Type TBox
 	Field window:TGadget
@@ -17,9 +14,10 @@ Type TBox
 	Field txtArea:TGadget
 	Function Create:TBox(path:String, parent:TGadget)
 		Local g:TBox = New TBox
-		g.window = CreateWindow(StripDir(path), ClientWidth(Desktop())/4, 0, ClientWidth(Desktop())/2, ClientHeight(Desktop()))
 		Local txtPathHeight:Int = 24
 		Local txtPadding:Int = 4
+		
+		g.window = CreateWindow(StripDir(path), ClientWidth(Desktop())/4, 0, ClientWidth(Desktop())/2, ClientHeight(Desktop()))
 		g.txtPath = CreateTextField(0, 0, ClientWidth(g.window), txtPathHeight, g.window)
 			SetGadgetLayout(g.txtPath, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_CENTERED)
 			SetGadgetText(g.txtPath, path)
@@ -27,6 +25,7 @@ Type TBox
 			SetGadgetLayout(g.txtArea, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED)	
 			SetTextAreaText(g.txtArea, LoadText(path))
 		Return g
+		
 	End Function
 End Type
 
@@ -42,18 +41,13 @@ Type TGui
 	Field btnRight:TGadget
 	Field btnGo:TGadget
 	Field txtPath:TGadget
-	'Field lstFileTypes:TGadget
 	Field lstFiles:TGadget
 	
 	Const UP:Int = 0
 	Const DOWN:Int = 1
-	
 	Field tBoxes:TList
 	
-	'Field proc:TProcess 
-	
 	Function Create:TGui()
-		
 		Local g:TGui = New TGui
 		
 		Local padding:Int = 5
@@ -61,7 +55,6 @@ Type TGui
 		Local txtPadding:Int = 8
 		Local txtFieldHeight:Int = btnHeight - txtPadding
 		Local topButtonsCount:Int = 1
-		
 		
 		g.winSettings:Settings = Settings.Create(ClientWidth(Desktop())/4, 0, ClientWidth(Desktop())/2, ClientHeight(Desktop()))
 		g.winMain:TGadget = CreateWindow("PathFinder", g.winSettings.x, g.winSettings.y, g.winSettings.width, g.winSettings.height)
@@ -79,27 +72,25 @@ Type TGui
 		g.txtPath:TGadget = CreateTextField(txtPathX, 2 + txtPadding/2, ClientWidth(g.winMain) - (btnGoWidth + txtPathX + txtPadding/2), txtFieldHeight - txtPadding/2, g.winMain)
 			SetGadgetLayout(g.txtPath, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_CENTERED)
 			SetGadgetText(g.txtPath, CurrentDir())
-			
-		'g.lstFileTypes:TGadget = CreateListBox(0, btnHeight, 15, ClientHeight(g.winMain) - (btnHeight*2), g.winMain)
-		'	SetGadgetLayout(g.lstFileTypes, EDGE_ALIGNED, EDGE_CENTERED, EDGE_ALIGNED, EDGE_ALIGNED)
-		'	DisableGadget(g.lstFileTypes)
-			
+					
 		g.lstFiles:TGadget = CreateListBox(0, btnHeight, ClientWidth(g.winMain), ClientHeight(g.winMain) - (btnHeight*2), g.winMain)
 			SetGadgetLayout(g.lstFiles, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED)
 			PopulateList(GadgetText(g.txtPath), g.lstFiles)
-			'SetGadgetSensitivity(g.lstFiles, SENSITIZE_KEYS)
 			
 		g.navManager:NavigationManager = NavigationManager.Create(GadgetText(g.txtPath))
 		
-		SetHotKeyEvent(KEY_F, MODIFIER_SHIFT)
-		SetHotKeyEvent(KEY_J, MODIFIER_SHIFT)
-		SetHotKeyEvent(KEY_D, MODIFIER_SHIFT)
-		SetHotKeyEvent(KEY_K, MODIFIER_SHIFT)
-		SetHotKeyEvent(KEY_H, MODIFIER_SHIFT)
-		SetHotKeyEvent(Key_W, MODIFIER_COMMAND)
+		SetHotKeyEvent(KEY_F, MODIFIER_SHIFT)	' For up operations
+		SetHotKeyEvent(KEY_J, MODIFIER_SHIFT)	' For down operations
+		SetHotKeyEvent(KEY_D, MODIFIER_SHIFT)	' For left operations
+		SetHotKeyEvent(KEY_K, MODIFIER_SHIFT)	' For right operations
+		SetHotKeyEvent(KEY_H, MODIFIER_SHIFT)	' For opening
 		
-		SetHotKeyEvent(Key_C, MODIFIER_COMMAND)
-		SetHotKeyEvent(Key_V, MODIFIER_COMMAND)
+		SetHotKeyEvent(KEY_W, MODIFIER_COMMAND) ' For closing windows
+		SetHotKeyEvent(KEY_C, MODIFIER_COMMAND) ' For copying operations
+		SetHotKeyEvent(KEY_V, MODIFIER_COMMAND) ' For pasting operations
+		SetHotKeyEvent(KEY_R, MODIFIER_COMMAND) ' For renaming
+		SetHotKeyEvent(KEY_N, MODIFIER_COMMAND) ' For new file
+		SetHotKeyEvent(KEY_M, MODIFIER_COMMAND) ' For new folder
 		
 		g.tBoxes = CreateList()
 		
@@ -147,10 +138,21 @@ Type TGui
 							Case Key_W 	DoCloseActiveWindow()
 							Case KEY_C	DoCopy()
 							Case KEY_V	DoPaste()
+							Case KEY_R	DoRename()
+							Case KEY_N	DoNewFile()
+							Case KEY_M	DoNewFolder()
 						End Select
 					EndIf
 		    End Select
 		Wend
+	End Method
+	
+	Method DoNewFolder()
+	
+	End Method
+	
+	Method DoNewFile()
+	
 	End Method
 	
 	Method DoCopy()
@@ -162,7 +164,7 @@ Type TGui
 	End Method
 	
 	
-	Method DoCloseActiveWindow:Int()
+	Method DoCloseActiveWindow()
 		Local theActiveGadget:TGadget = ActiveGadget()
 		While(Not(GadgetClass(theActiveGadget) = GADGET_WINDOW))
 			theActiveGadget = GadgetGroup(theActiveGadget)
@@ -174,19 +176,17 @@ Type TGui
 				ListRemove(tBoxes, tempBox)
 			Next
 		
-			'FreeGadget(winMain)
-			Return 1
-			End
+			FreeGadget(winMain)
+			Return
 		EndIf
 		
 		For Local tempBox:TBox = EachIn tBoxes
 			If (theActiveGadget = tempBox.window)
 				FreeGadget(tempBox.window)
 				ListRemove(tBoxes, tempBox)
-				Exit
+				Return
 			EndIf
 		Next
-		Return 0
 	End Method
 	
 	Method DoSelect()
@@ -223,10 +223,8 @@ Type TGui
 			ListAddLast(tBoxes, TBox.Create(path, winMain))
 		EndIf
 	End Method
-	'Method DoGo(absolutePath:String)
 	
 	Method DoGo(absolutePath:String)
-		'Local path:String = EnsurePath(GadgetText(txtPath))
 		Local path:String = EnsurePath(absolutePath)
 		SetGadgetText(txtPath, path)
 		PopulateList(GadgetText(txtPath), lstFiles)				
@@ -254,7 +252,7 @@ Type TGui
 		Next
 		
 		If (lastIndex>0)
-			SetGadgetText(txtPath, Left(path, lastIndex)) 'Mid(path, 1, Len(path)-lastIndex))
+			SetGadgetText(txtPath, Left(path, lastIndex))
 			PopulateList(GadgetText(txtPath), lstFiles)
 			navManager.GoLeft(GadgetText(txtPath))
 		EndIf
@@ -270,8 +268,6 @@ Type TGui
 			SelectGadgetItem(lstFiles, SelectedGadgetItem(lstFiles)+1)
 		EndIf
 		
-		'Print EnsurePath(navManager.path()) + GadgetItemText(lstFiles, SelectedGadgetItem(lstFiles))
-	
 		DetermineType()
 	End Method
 	
@@ -406,8 +402,6 @@ Function EnsurePath:String(aPath:String)
 		Return aPath + "/"	
 	EndIf
 End Function
-
-
 
 Function PopulateList(aPath:String, lstGadget:TGadget)
 	Local path:String = EnsurePath(aPath)
