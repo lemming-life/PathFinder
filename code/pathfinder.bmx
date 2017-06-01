@@ -155,6 +155,10 @@ Type TGui
 	
 	End Method
 	
+	Method DoRename()
+	
+	End Method
+	
 	Method DoCopy()
 	
 	End Method
