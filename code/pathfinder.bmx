@@ -1,12 +1,16 @@
 ' Info: http://www.lemming.life
+' Modified: June 1, 2017
 
 ' ToDo
-' - Need to code copy/paste functionality.
+' - Need to code copy/paste functionality of files.
 ' - New file, new folder, renaming.
 
 SuperStrict
 
 Import MaxGui.Drivers
+
+Local program:TGui = TGui.Create()
+program.Run()
 
 Type TBox
 	Field window:TGadget
@@ -30,9 +34,6 @@ Type TBox
 	End Function
 End Type
 
-Local program:TGui = TGui.Create()
-program.Run()
-
 Type TGui
 	Field winSettings:Settings
 	Field navManager:NavigationManager
@@ -43,15 +44,18 @@ Type TGui
 	Field btnGo:TGadget
 	Field txtPath:TGadget
 	Field lstFiles:TGadget
-	Field tmpOriginal:TGadget
-	Field txtHiddenArea:TGadget
 		
 	Const UP:Int = 0
 	Const DOWN:Int = 1
 	Field tBoxes:TList
+	Field slash:String
 	
 	Function Create:TGui()
 		Local g:TGui = New TGui
+		g.slash = "/"
+		?win32
+			slash = "\"
+		?
 		
 		Local padding:Int = 5
 		Local btnHeight:Int = 34
@@ -73,17 +77,12 @@ Type TGui
 			SetGadgetLayout(g.btnGo, EDGE_CENTERED, EDGE_ALIGNED , EDGE_ALIGNED, EDGE_CENTERED)
 		Local txtPathX:Int = GadgetWidth(g.btnLeft) + GadgetHeight(g.btnRight) + txtPadding
 		g.txtPath:TGadget = CreateTextField(txtPathX, 2 + txtPadding/2, ClientWidth(g.winMain) - (btnGoWidth + txtPathX + txtPadding/2), txtFieldHeight - txtPadding/2, g.winMain)
-		'g.txtPath:TGadget = CreateTextArea(txtPathX, 2 + txtPadding/2, ClientWidth(g.winMain) - (btnGoWidth + txtPathX + txtPadding/2), txtFieldHeight - txtPadding/2, g.winMain)
 			SetGadgetLayout(g.txtPath, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_CENTERED)
 			SetGadgetText(g.txtPath, CurrentDir())
-			'SetGadgetSensitivity(g.txtPath, SENSITIZE_KEYS)
 					
 		g.lstFiles:TGadget = CreateListBox(0, btnHeight, ClientWidth(g.winMain), ClientHeight(g.winMain) - (btnHeight*2), g.winMain)
 			SetGadgetLayout(g.lstFiles, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED)
-			PopulateList(GadgetText(g.txtPath), g.lstFiles)
-			
-		g.txtHiddenArea = CreateTextArea(0,0, 1, 1, g.winMain)
-			HideGadget(g.txtHiddenArea)
+			g.PopulateList(GadgetText(g.txtPath))
 		
 		g.navManager:NavigationManager = NavigationManager.Create(GadgetText(g.txtPath))
 		
@@ -93,7 +92,6 @@ Type TGui
 		SetHotKeyEvent(KEY_L, MODIFIER_COMMAND)	' For right operations
 		SetHotKeyEvent(KEY_SEMICOLON, MODIFIER_COMMAND)	' For opening preview
 		SetHotKeyEvent(KEY_RETURN, MODIFIER_SHIFT)	' For opening preview
-		'SetHotKeyEvent(KEY_C, MODIFIER_SHIFT)	' For copying the path of the file/folder
 		
 		SetHotKeyEvent(KEY_E, MODIFIER_COMMAND) ' For Executing
 		SetHotKeyEvent(Key_S, MODIFIER_COMMAND) ' For saving
@@ -106,8 +104,6 @@ Type TGui
 		SetHotKeyEvent(KEY_N, MODIFIER_COMMAND) ' For new file
 		SetHotKeyEvent(KEY_M, MODIFIER_COMMAND) ' For new folder
 		SetHotKeyEvent(KEY_BACKSPACE, MODIFIER_COMMAND) ' For deleting
-		
-		'SetHotKeyEvent(KEY_H, MODIFIER_COMMAND)
 		
 		g.tBoxes = CreateList()
 		Return g
@@ -140,8 +136,6 @@ Type TGui
 					End Select
 				Case EVENT_GADGETSELECT
 					If (EventSource() = lstFiles) DoSelect()
-				Case EVENT_MENUACTION
-					'If (EventData() = MENU_NOTHING)
 				Case EVENT_HOTKEYHIT
 					If (EventMods() = MODIFIER_COMMAND)
 						Select EventData()
@@ -163,7 +157,6 @@ Type TGui
 							Case KEY_I				GoDirectionInList(UP)
 							Case KEY_K				GoDirectionInList(DOWN)
 							
-							
 							Case KEY_ENTER
 								If (ActiveGadget() = txtPath)
 									DoGo(GadgetText(txtPath))
@@ -183,17 +176,19 @@ Type TGui
 		Wend
 	End Method
 	
-	Method DoNewFolder()
 	
+	Method DoNewFolder()
+		
 	End Method
 	
 	Method DoNewFile()
-	
+		
 	End Method
 	
 	Method DoRename()
-	
+		
 	End Method
+	
 	
 	Method DoExecute()
 		Local index:Int = SelectedGadgetItem(lstFiles)
@@ -229,14 +224,8 @@ Type TGui
 		Select GadgetClass(theActiveGadget)
 			Case GADGET_TEXTAREA
 				SelectTextAreaText(theActiveGadget)
-				GadgetCopy(theActiveGadget)
 			Case GADGET_TEXTFIELD
 				ActivateGadget(theActiveGadget)
-				'SetGadgetColor(theActiveGadget, Rnd(0,255), Rnd(0,255), Rnd(0,255), False)
-				'SetGadgetColor(theActiveGadget, Rnd(0,255), Rnd(0, 255), Rnd(0, 255), True)
-				'SetGadgetText(txtHiddenArea, GadgetText(theActiveGadget))
-				'SelectTextAreaText(txtHiddenArea)
-				'tmpOriginal = theActiveGadget
 		End Select
 	End Method
 	
@@ -244,25 +233,11 @@ Type TGui
 		Local theActiveGadget:TGadget = ActiveGadget()
 		If (theActiveGadget = Null) theActiveGadget = lstFiles
 		Select GadgetClass(theActiveGadget)
-			Case GADGET_TEXTAREA
+			Case GADGET_TEXTAREA, GADGET_TEXTFIELD
 				GadgetCopy(theActiveGadget)
-			
-			Case GADGET_TEXTFIELD
-				GadgetCopy(theActiveGadget)
-				Rem
-				If (Not tmpOriginal = Null)
-					Print "From hidden"
-					GadgetCopy(txtHiddenArea)
-				Else
-					Print "From the gadget"
-					GadgetCopy(theActiveGadget)
-				EndIf
-				EndRem
 			Case GADGET_LISTBOX
 				Local item:Int = SelectedGadgetItem(lstFiles)
 				If (item = -1) Return
-				tmpOriginal = Null
-				
 				Local tempGadget:TGadget = theActiveGadget
 				SetGadgetText(txtPath, EnsurePath(navManager.Path()) + GadgetItemText(lstFiles, item))
 				ActivateGadget(txtPath)
@@ -272,20 +247,11 @@ Type TGui
 	End Method
 	
 	Method DoCut()
-		'Local theActiveGadget:TGadget
-		'If (Not tmpOriginal = Null) theActiveGadget = tmpOriginal
-		
 		Local theActiveGadget:TGadget = ActiveGadget()
 		If (theActiveGadget = Null) theActiveGadget = lstFiles
 		Select GadgetClass(theActiveGadget)
-			Case GADGET_TEXTAREA
+			Case GADGET_TEXTAREA, GADGET_TEXTFIELD
 				GadgetCut(theActiveGadget)
-			Case GADGET_TEXTFIELD
-				If (Not tmpOriginal = Null)
-					GadgetCut(txtHiddenArea)
-				Else
-					GadgetCut(theActiveGadget)
-				EndIf 
 		End Select
 	End Method
 	
@@ -318,7 +284,6 @@ Type TGui
 			If (theActiveGadget = tempBox.window)
 				FreeGadget(tempBox.window)
 				ListRemove(tBoxes, tempBox)
-				tmpOriginal = Null
 				Return
 			EndIf
 		Next
@@ -331,22 +296,6 @@ Type TGui
 	
 	Method DoSelectAction()
 		DoGoWithItem()
-		Rem
-		If (SelectedGadgetItem(lstFiles) = -1) Return
-		
-		Local file:String = GadgetItemText(lstFiles, SelectedGadgetItem(lstFiles))
-		Local path:String = EnsurePath(GadgetText(txtPath))
-		If (FileType(path + file) = FILETYPE_DIR)
-			SetGadgetText(txtPath, path + file + "/")			
-			navManager.GoInside(GadgetText(txtPath))
-			PopulateList(GadgetText(txtPath), lstFiles)
-			If (CountGadgetItems(lstFiles)>0) SelectGadgetItem(lstFiles, 0)
-		Else
-			
-		EndIf
-		EndRem 
-		
-		'DetermineType()
 	End Method
 	
 	Method DoGoWithItem()
@@ -357,7 +306,7 @@ Type TGui
 		If (FileType(path) = FILETYPE_DIR)
 			SetGadgetText(txtPath, path)			
 			navManager.GoInside(GadgetText(txtPath))
-			PopulateList(GadgetText(txtPath), lstFiles)
+			PopulateList(GadgetText(txtPath))
 			If (CountGadgetItems(lstFiles)>0) SelectGadgetItem(lstFiles, 0)
 			DetermineType()
 		Else If(FileType(path) = FILETYPE_FILE)
@@ -375,7 +324,7 @@ Type TGui
 	Method DoGo(absolutePath:String)
 		Local path:String = EnsurePath(absolutePath)
 		SetGadgetText(txtPath, path)
-		PopulateList(GadgetText(txtPath), lstFiles)				
+		PopulateList(GadgetText(txtPath))				
 		navManager.GoLeft(GadgetText(txtPath))
 		DetermineType()
 	End Method
@@ -388,7 +337,7 @@ Type TGui
 	Method DoRight()
 		If (navManager.GoRight())
 			SetGadgetText(txtPath, navManager.Path())
-			PopulateList(GadgetText(txtPath), lstFiles)
+			PopulateList(GadgetText(txtPath))
 		EndIf
 		DetermineType()
 	End Method
@@ -403,7 +352,7 @@ Type TGui
 		Local lastIndex:Int = -1
 		Local i:Int = 1
 		For i = 1 To Len(path) -1
-			If (Mid(path,i,1) = "/")
+			If (Mid(path,i,1) = slash)
 				If (lastIndex < i)
 					lastIndex = i
 				EndIf
@@ -412,7 +361,7 @@ Type TGui
 		
 		If (lastIndex>0)
 			SetGadgetText(txtPath, Left(path, lastIndex))
-			PopulateList(GadgetText(txtPath), lstFiles)
+			PopulateList(GadgetText(txtPath))
 			navManager.GoLeft(GadgetText(txtPath))
 		EndIf
 		
@@ -447,6 +396,44 @@ Type TGui
 		SetStatusText(winMain, selectedFileType)
 	End Method
 	
+	
+	' Ensures that we have the trailing slash
+	Method EnsurePath:String(aPath:String)
+		Local path:String
+		If (Mid(aPath, Len(aPath), 1) = slash)
+			Return aPath
+		Else
+			Return aPath + slash
+		EndIf
+	End Method
+	
+	Method PopulateList(aPath:String)
+		Local path:String = EnsurePath(aPath)
+		If (path = Null) Return
+		ClearGadgetItems(lstFiles)
+		
+		PopulateListWithType(path, FILETYPE_DIR)
+		PopulateListWithType(path, FILETYPE_FILE)
+		
+		If (CountGadgetItems(lstFiles)>0)
+			SelectGadgetItem(lstFiles, 0)
+		EndIf
+	End Method
+	
+	Method PopulateListWithType(path:String, specifiedType:Int)
+		Local dir:Int = ReadDir(path)
+		If (Not dir) Return
+		Repeat
+			Local file:String = NextFile(dir)
+			If (file = "") Exit
+			If (file = "." Or file = "..") Continue
+			
+			If (FileType(path + file) = specifiedType)
+				AddGadgetItem(lstFiles, file, 0, -1)
+			EndIf
+		Forever
+		CloseDir(dir)
+	End Method
 	
 EndType
  
@@ -553,49 +540,5 @@ Type NavigationManager
 		Return currentNode.path
 	End Method
 End Type
-
-
-
-' Ensures that we have the trailing "/"
-Function EnsurePath:String(aPath:String)
-	Local path:String
-	If (Mid(aPath, Len(aPath), 1) = "/")
-		Return aPath
-	Else
-		Return aPath + "/"	
-	EndIf
-End Function
-
-Function PopulateList(aPath:String, lstGadget:TGadget)
-	Local path:String = EnsurePath(aPath)
-	If (path = Null) Return
-	
-	ClearGadgetItems(lstGadget)
-	
-	PopulateListWithType(path, lstGadget, FILETYPE_DIR)
-	PopulateListWithType(path, lstGadget, FILETYPE_FILE)
-	
-	If (CountGadgetItems(lstGadget)>0)
-		SelectGadgetItem(lstGadget, 0)
-	EndIf
-End Function
-
-
-Function PopulateListWithType(path:String, lstGadget:TGadget, specifiedType:Int)
-	Local dir:Int = ReadDir(path)
-	If (Not dir) Return
-	Repeat
-		Local file:String = NextFile(dir)
-		If (file = "") Exit
-		If (file = "." Or file = "..") Continue
-		
-		If (FileType(path + file) = specifiedType)
-			AddGadgetItem(lstGadget, file, 0, -1)
-		EndIf
-	Forever
-	CloseDir(dir)
-End Function
-
-
 
 
