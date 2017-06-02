@@ -54,7 +54,7 @@ Type TGui
 		Local g:TGui = New TGui
 		g.slash = "/"
 		?win32
-			slash = "\"
+			g.slash = "\"
 		?
 		
 		Local padding:Int = 5
