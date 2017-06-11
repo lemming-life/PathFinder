@@ -490,6 +490,36 @@ Type TGui
 			
 		EndIf
 		
+		
+		Rem
+		If (FileType(navManager.Path() + name) = FILETYPE_FILE)
+			DoGoWithItem()
+		Else If(FileType(navManager.Path() + name) = FILETYPE_DIR)
+			'Print navManager.currentNode.rightNode.path
+			
+			'If (navManager.currentNode.rightNode <> Null And (navManager.Path() + EnsurePath(name) = navManager.currentNode.rightNode.path))
+			'	navManager.GoRight()
+			'	SetGadget
+			'	SelectFile(StripDir(StripSlash(navManager.currentNode.rightNode.path)))
+			'EndIf
+			'DoGoWithItem()
+			
+			 
+			If (navManager.currentNode.rightNode <> Null And (navManager.Path() + EnsurePath(name) = navManager.currentNode.rightNode.path))
+				navManager.GoRight()
+				SetGadgetText(txtPath, navManager.Path())
+				PopulateList(GadgetText(txtPath))
+				
+				If (navManager.currentNode.rightNode <> Null)
+					SelectFile(StripDir(StripSlash(navManager.currentNode.rightNode.path)))
+				EndIf
+			Else
+				DoGoWithItem()
+			EndIf
+			
+		EndIf
+		EndRem
+		
 		DetermineType()
 	End Method
 	
