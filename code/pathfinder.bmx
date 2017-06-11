@@ -1,15 +1,18 @@
 ' Info: http://www.lemming.life
-' Modified: June 1, 2017
+' Modified: June 10, 2017
 
 ' ToDo
 ' - Need to code copy/paste functionality of files.
-' - New file, new folder, renaming.
+' - Renaming of files/folders
 
 SuperStrict
 Import MaxGui.Drivers
+Import "import/input_window.bmx"
 
 Local program:TGui = TGui.Create()
 program.Run()
+Print "Quitting"
+End
 
 Type TBox
 	Field window:TGadget
@@ -77,7 +80,7 @@ Type TGui
 		Local txtPathX:Int = GadgetWidth(g.btnLeft) + GadgetHeight(g.btnRight) + txtPadding
 		g.txtPath:TGadget = CreateTextField(txtPathX, 2 + txtPadding/2, ClientWidth(g.winMain) - (btnGoWidth + txtPathX + txtPadding/2), txtFieldHeight - txtPadding/2, g.winMain)
 			SetGadgetLayout(g.txtPath, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_CENTERED)
-			SetGadgetText(g.txtPath, CurrentDir())
+			SetGadgetText(g.txtPath, g.EnsurePath(CurrentDir()))
 					
 		g.lstFiles:TGadget = CreateListBox(0, btnHeight, ClientWidth(g.winMain), ClientHeight(g.winMain) - (btnHeight*2), g.winMain)
 			SetGadgetLayout(g.lstFiles, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED)
@@ -101,8 +104,9 @@ Type TGui
 		SetHotKeyEvent(KEY_V, MODIFIER_COMMAND) ' For pasting operations
 		SetHotKeyEvent(KEY_R, MODIFIER_COMMAND) ' For renaming
 		SetHotKeyEvent(KEY_N, MODIFIER_COMMAND) ' For new file
-		SetHotKeyEvent(KEY_M, MODIFIER_COMMAND) ' For new folder
+		SetHotKeyEvent(KEY_F, MODIFIER_COMMAND) ' For new folder
 		SetHotKeyEvent(KEY_BACKSPACE, MODIFIER_COMMAND) ' For deleting
+		SetHotKeyEvent(KEY_W, MODIFIER_COMMAND)
 		
 		g.tBoxes = CreateList()
 		Return g
@@ -110,20 +114,28 @@ Type TGui
 	
 	
 	Method Run()
-		While Not AppTerminate()
+		While (True)
+			'Not AppTerminate()
 		    WaitEvent()
+			'If (AppTerminate()) Return
 		
 		    Select EventID()
+				
 		        Case EVENT_WINDOWCLOSE
-					If (EventSource() = winMain) End
-					
+					'If (EventSource() = winMain) Return
+					Local isMainWindow:Int = 1
 		           	For Local tempBox:TBox = EachIn tBoxes
 						If (EventSource() = tempBox.window)
 							FreeGadget(tempBox.window)
 							ListRemove(tBoxes, tempBox)
+							isMainWindow = 0
 							Exit
 						EndIf
 					Next
+					
+					If (isMainWindow)
+						Return
+					EndIf
 					
 					
 				Case EVENT_GADGETACTION
@@ -146,25 +158,31 @@ Type TGui
 							Case KEY_V	DoPaste()
 							Case KEY_R	DoRename()
 							Case KEY_N	DoNewFile()
-							Case KEY_M	DoNewFolder()
+							Case KEY_F	DoNewFolder()
 							Case KEY_BACKSPACE	DoDelete()
 							
 							Case KEY_E				DoExecute()
 							Case KEY_J				DoLeftViaKeys()
-							Case KEY_SEMICOLON		DoRightViaKeys()
-							Case KEY_L				DoGoWithItem() 'DoRight()
+							'Case KEY_SEMICOLON		DoRightViaKeys()
+							'Case KEY_L				DoGoWithItem() 'DoRight()
+							Case KEY_L				DoRightViaKeys()
 							Case KEY_I				GoDirectionInList(UP)
 							Case KEY_K				GoDirectionInList(DOWN)
 							
 							Case KEY_ENTER
+								DoRightViaKeys()
+								Rem
 								If (ActiveGadget() = txtPath)
 									DoGo(GadgetText(txtPath))
 								Else
 									DoGoWithItem()
 								EndIf
+								EndRem
 							Case KEY_H
 								ActivateGadget(winMain)
 								ShowGadget(winMain)
+								
+							Case KEY_W		Return
 						End Select
 					EndIf
 				Case EVENT_KEYDOWN
@@ -176,14 +194,66 @@ Type TGui
 	End Method
 	
 	
-	Method DoNewFolder()
+	
+	
+	Method SelectFile(name:String)
+		Local index:Int = 0
 		
+		While(True)
+			If (GadgetItemText(lstFiles, index) = name)
+				SelectGadgetItem(lstFiles, index)
+				Exit
+			EndIf
+			index = index + 1
+		Wend
+	End Method
+	
+	' Use FILETYPE_FILE or FILETYPE_DIR
+	Method DoNewFileFolder(which:Int)
+		Local typeString:String = "file"
+		
+		If (which = FILETYPE_DIR)
+			typeString = "folder"
+		EndIf
+		
+		Local name:String = TInputWindow.Run("Name of " + typeString, winMain)
+		If (name = "") Return
+		
+		Local path:String = EnsurePath(navManager.path())
+		Local pathName:String = path + name
+		
+		Local fileState:Int = FileType(pathName)
+		If (fileState > 0 And Confirm(name + " exists, replace?") = 0) Return
+		
+		Local created:Int
+		If (which = FILETYPE_FILE)
+			created = CreateFile(pathName)
+		Else If(which = FILETYPE_DIR)
+			created = CreateDir(pathName)
+		EndIf
+		
+		If (Not created)
+			statusError = "Could not create " + typeString + " " + name
+		Else
+			DoGo(path)
+			SelectFile(name)
+		EndIf
+		
+		UpdateStatusBar()
+	End Method
+	
+	
+	
+	Method DoNewFolder()
+		DoNewFileFolder(FILETYPE_DIR)				
 	End Method
 	
 	Method DoNewFile()
-		
+		DoNewFileFolder(FILETYPE_FILE)
 	End Method
 	
+	
+	'todo
 	Method DoRename()
 		
 	End Method
@@ -193,13 +263,18 @@ Type TGui
 		Local index:Int = SelectedGadgetItem(lstFiles)
 		If (index = -1) Return
 		Local pathExe:String = EnsurePath(navManager.path()) + GadgetItemText(lstFiles, index)
+		Local openStr:String = "open "
 		
 		?win32
-			system_(Chr(34) + pathExe + Chr(34))
+			If (Instr(Lower(pathExe), ".exe") > -1)
+				system_(openStr + Chr(34) + pathExe + Chr(34))
+			Else
+				system_(Chr(34) + pathExe + Chr(34))
+			EndIf
 		?macos
-			system_("open " + Chr(34) + pathExe + Chr(34))
+			system_(openStr + Chr(34) + pathExe + Chr(34))
 		?linux
-			system_("open " + Chr(34) + pathExe + Chr(34))
+			system_(openStr + Chr(34) + pathExe + Chr(34))
 		?
 	End Method
 	
@@ -216,11 +291,59 @@ Type TGui
 		EndIf
 	End Method
 	
+	
+	Method DeleteThisFile:Int(item:String)
+		Local pathName:String = EnsurePath(navManager.Path()) + item
+		
+		Print pathName
+		
+		Local deleted:Int = 0
+		If (FileType(pathName) = FILETYPE_FILE)
+			deleted = DeleteFile(pathName)
+		Else If (FileType(pathName) = FILETYPE_DIR)
+			If (Confirm("Delete " + item + " folder and its contents?"))
+				deleted = DeleteDir(pathName, True)
+			EndIf
+		EndIf
+		
+		If (deleted)
+			Return 1
+		Else
+			Return 0
+		EndIf
+	End Method
+	
+	
 	Method DoDelete()
+		'Print "DoDelete"
 		Local theActiveGadget:TGadget = ActiveGadget()
+		If (theActiveGadget = Null) theActiveGadget = lstFiles
+		
 		Select GadgetClass(theActiveGadget)
 			Case GADGET_TEXTFIELD
+				'Print "In text field"
 				SetGadgetText(theActiveGadget, "")
+				
+				
+			Case GADGET_LISTBOX
+			
+				Local index:Int = SelectedGadgetItem(lstFiles)
+				If (index = -1) Return
+				
+				Local nextIndex:Int
+				
+				If (index = 0)
+					nextIndex = 0
+				Else If (index > 0)
+					nextIndex = index - 1
+				EndIf
+				
+				Local name:String = GadgetItemText(lstFiles, index)
+				If (DeleteThisFile(name) = 0) Return
+				RemoveGadgetItem(lstFiles, index)
+				If (CountGadgetItems(lstFiles)>0) SelectGadgetItem(lstFiles, nextIndex)
+				navManager.RemoveIfRight(EnsurePath(navManager.Path()) + EnsurePath(name))
+				DetermineType()
 		End Select
 	End Method
 	
@@ -310,6 +433,7 @@ Type TGui
 		If (SelectedGadgetItem(lstFiles) = -1) Return
 		Local path:String = EnsurePath(navManager.path()) + GadgetItemText(lstFiles, SelectedGadgetItem(lstFiles))
 		If (FileType(path) = FILETYPE_DIR)
+			path = EnsurePath(path)
 			SetGadgetText(txtPath, path)			
 			navManager.GoInside(GadgetText(txtPath))
 			PopulateList(GadgetText(txtPath))
@@ -329,9 +453,11 @@ Type TGui
 	
 	Method DoGo(absolutePath:String)
 		Local path:String = EnsurePath(absolutePath)
+		
 		SetGadgetText(txtPath, path)
-		PopulateList(GadgetText(txtPath))				
-		navManager.GoLeft(GadgetText(txtPath))
+		PopulateList(GadgetText(txtPath))
+		
+		If (Not(path = navManager.Path())) navManager.GoLeft(GadgetText(txtPath))
 		DetermineType()
 	End Method
 	
@@ -340,11 +466,31 @@ Type TGui
 		DoRight()
 	End Method
 	
+	
+	
 	Method DoRight()
-		If (navManager.GoRight())
-			SetGadgetText(txtPath, navManager.Path())
-			PopulateList(GadgetText(txtPath))
+		If (navManager.currentNode.rightNode = Null) DoGoWithItem()
+		
+		Local index:Int = SelectedGadgetItem(lstFiles)
+		If (index = -1) Return
+		Local name:String = GadgetItemText(lstFiles, index)
+		
+		If (FileType(navManager.Path() + name) = FILETYPE_FILE)
+			DoGoWithItem()
+		Else If(FileType(navManager.Path() + name) = FILETYPE_DIR)
+			If (navManager.Path() + EnsurePath(name) = navManager.currentNode.rightNode.path)
+				navManager.GoRight()
+				SetGadgetText(txtPath, navManager.Path())
+				PopulateList(GadgetText(txtPath))
+				
+				If (navManager.currentNode.rightNode <> Null)
+					SelectFile(StripDir(StripSlash(navManager.currentNode.rightNode.path)))
+				EndIf
+			Else
+				DoGoWithItem()
+			EndIf
 		EndIf
+		
 		DetermineType()
 	End Method
 	
@@ -354,7 +500,29 @@ Type TGui
 	End Method
 	
 	Method DoLeft()
-		Local path:String = GadgetText(txtPath)
+		' Consider if there was a selected item!
+		Local index:Int = SelectedGadgetItem(lstFiles)
+		
+		
+		If (index>-1)
+			
+			Local pathName:String = EnsurePath(navManager.Path()) + GadgetItemText(lstFiles, index)
+			If (FileType(pathName) = FILETYPE_DIR) pathName = EnsurePath(pathName)
+			
+			
+			
+			Local node:Node = New Node
+			node.path = pathName
+			node.leftNode = navManager.currentNode
+			
+			If ( (navManager.currentNode.rightNode <> Null) And Not(navManager.currentNode.rightNode.path = pathName))
+				navManager.currentNode.rightNode = node
+			EndIf
+		EndIf
+		
+	
+		Local path:String = navManager.Path()
+		'Local path:String = GadgetText(txtPath)
 		Local lastIndex:Int = -1
 		Local i:Int = 1
 		For i = 1 To Len(path) -1
@@ -368,7 +536,8 @@ Type TGui
 		If (lastIndex>0)
 			SetGadgetText(txtPath, Left(path, lastIndex))
 			PopulateList(GadgetText(txtPath))
-			navManager.GoLeft(GadgetText(txtPath))
+			navManager.GoLeft(EnsurePath(GadgetText(txtPath)))
+			SelectFile(StripDir(StripSlash(navManager.currentNode.rightNode.path))) ' New
 		EndIf
 		
 		DetermineType()
@@ -391,15 +560,29 @@ Type TGui
 	
 	Method DetermineType()
 		If (SelectedGadgetItem(lstFiles) = -1) Return
-		Local selectedFileType:String
+		
 		
 		If (FileType(EnsurePath(navManager.path()) + GadgetItemText(lstFiles, SelectedGadgetItem(lstFiles))) = FILETYPE_DIR)
-			selectedFileType = "Directory"
+			statusFileType = "Directory"
+			
 		Else 
-			selectedFileType = "File"
+			statusFileType = "File"
 		EndIf
 		
-		SetStatusText(winMain, selectedFileType)
+		'SetStatusText(winMain, selectedFileType)
+		
+		UpdateStatusBar()
+		
+	End Method
+	
+	
+	Field statusFileType:String
+	Field statusError:String
+	Method UpdateStatusBar()
+		Local cumulative:String = ""
+		If (Len(statusFileType)>0) cumulative = cumulative + "Selected Type: " + statusFileType
+		cumulative = cumulative + statusError
+		SetStatusText(winMain, cumulative)
 	End Method
 	
 	
@@ -432,7 +615,8 @@ Type TGui
 		Repeat
 			Local file:String = NextFile(dir)
 			If (file = "") Exit
-			If (file = "." Or file = "..") Continue
+			If (file = "." Or file = ".." Or file = ".DS_Store") Continue
+			
 			
 			If (FileType(path + file) = specifiedType)
 				AddGadgetItem(lstFiles, file, 0, -1)
@@ -540,6 +724,14 @@ Type NavigationManager
 			Return True
 		EndIf
 		Return False
+	End Method
+	
+	Method RemoveIfRight(pathName:String)
+		If (currentNode.rightNode = Null) Return
+		
+		If (currentNode.rightNode.path = pathName)
+			currentNode.rightNode = Null
+		EndIf
 	End Method
 	
 	Method Path:String()
