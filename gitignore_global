@@ -1,2 +1,5 @@
-*.bmx.bak
+code/*.bmx.bak
 .DS_Store
+code/.bmx
+code/import/.bmx
+code/pathfinder.app
