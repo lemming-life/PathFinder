@@ -71,14 +71,14 @@ ___bb_import_input_window:
 	push	%ebp
 	mov	%esp,%ebp
 	sub	$8,%esp
-	cmpl	$0,_48
-	je	_49
+	cmpl	$0,_50
+	je	_51
 	mov	$0,%eax
 	mov	%ebp,%esp
 	pop	%ebp
 	ret
-_49:
-	movl	$1,_48
+_51:
+	movl	$1,_50
 	call	___bb_blitz_blitz
 	call	___bb_drivers_drivers
 	call	___bb_appstub_appstub
@@ -160,31 +160,31 @@ __bb_TInputWindow_Delete:
 _38:
 	movl	28(%ebx),%eax
 	decl	4(%eax)
-	jnz	_56
-	movl	%eax,(%esp)
-	call	_bbGCFree
-_56:
-	movl	24(%ebx),%eax
-	decl	4(%eax)
 	jnz	_58
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _58:
-	movl	20(%ebx),%eax
+	movl	24(%ebx),%eax
 	decl	4(%eax)
 	jnz	_60
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _60:
-	movl	16(%ebx),%eax
+	movl	20(%ebx),%eax
 	decl	4(%eax)
 	jnz	_62
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _62:
+	movl	16(%ebx),%eax
+	decl	4(%eax)
+	jnz	_64
+	movl	%eax,(%esp)
+	call	_bbGCFree
+_64:
 	mov	$0,%eax
-	jmp	_54
-_54:
+	jmp	_56
+_56:
 	add	$4,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -199,19 +199,21 @@ __bb_TInputWindow_Run:
 	push	%edi
 	sub	$40,%esp
 	movl	8(%ebp),%esi
-	movl	12(%ebp),%edi
+	movl	16(%ebp),%edi
 	movl	$_bb_TInputWindow,(%esp)
 	call	_bbObjectNew
 	mov	%eax,%ebx
 	movl	12(%ebx),%eax
 	movl	%eax,-4(%ebp)
 	fildl	-4(%ebp)
-	fmuls	_98
+	fmuls	_100
 	fstpl	(%esp)
 	call	_bbFloatToInt
+	mov	%eax,%edx
 	movl	$529,24(%esp)
-	movl	%edi,20(%esp)
-	movl	%eax,16(%esp)
+	movl	12(%ebp),%eax
+	movl	%eax,20(%esp)
+	movl	%edx,16(%esp)
 	movl	$350,12(%esp)
 	movl	$0,8(%esp)
 	movl	$0,4(%esp)
@@ -221,10 +223,10 @@ __bb_TInputWindow_Run:
 	mov	%eax,%esi
 	movl	16(%ebx),%eax
 	decl	4(%eax)
-	jnz	_68
+	jnz	_70
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_68:
+_70:
 	movl	%esi,16(%ebx)
 	movl	$0,20(%esp)
 	movl	16(%ebx),%eax
@@ -246,10 +248,10 @@ _68:
 	mov	%eax,%esi
 	movl	20(%ebx),%eax
 	decl	4(%eax)
-	jnz	_72
+	jnz	_74
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_72:
+_74:
 	movl	%esi,20(%ebx)
 	movl	$4,24(%esp)
 	movl	16(%ebx),%eax
@@ -264,16 +266,16 @@ _72:
 	call	_maxgui_maxgui_GadgetWidth
 	add	$8,%eax
 	movl	%eax,4(%esp)
-	movl	$_10,(%esp)
+	movl	%edi,(%esp)
 	call	_maxgui_maxgui_CreateButton
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	24(%ebx),%eax
 	decl	4(%eax)
-	jnz	_76
+	jnz	_78
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_76:
+_78:
 	movl	%esi,24(%ebx)
 	movl	$5,24(%esp)
 	movl	16(%ebx),%eax
@@ -288,18 +290,20 @@ _76:
 	call	_maxgui_maxgui_ClientWidth
 	subl	8(%ebx),%eax
 	movl	%eax,4(%esp)
-	movl	$_11,(%esp)
+	movl	20(%ebp),%eax
+	movl	%eax,(%esp)
 	call	_maxgui_maxgui_CreateButton
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	28(%ebx),%eax
 	decl	4(%eax)
-	jnz	_80
+	jnz	_82
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_80:
+_82:
 	movl	%esi,28(%ebx)
-	movl	%edi,(%esp)
+	movl	12(%ebp),%eax
+	movl	%eax,(%esp)
 	call	_maxgui_maxgui_DisableGadget
 	movl	16(%ebx),%eax
 	movl	%eax,(%esp)
@@ -312,60 +316,63 @@ _14:
 	call	_brl_eventqueue_WaitEvent
 	call	_brl_eventqueue_EventID
 	cmp	$16387,%eax
-	je	_83
+	je	_85
 	cmp	$8193,%eax
-	je	_84
-	jmp	_82
-_83:
+	je	_86
+	jmp	_84
+_85:
 	call	_brl_eventqueue_EventSource
 	cmpl	16(%ebx),%eax
-	jne	_85
-	movl	%edi,4(%esp)
+	jne	_87
+	movl	12(%ebp),%eax
+	movl	%eax,4(%esp)
 	movl	16(%ebx),%eax
 	movl	%eax,(%esp)
 	calll	*_bb_TInputWindow+52
 	mov	$_1,%eax
-	jmp	_42
-_85:
-	jmp	_82
-_84:
+	jmp	_44
+_87:
+	jmp	_84
+_86:
 	call	_brl_eventqueue_EventSource
 	cmpl	24(%ebx),%eax
-	je	_88
+	je	_90
 	cmpl	28(%ebx),%eax
-	je	_89
-	jmp	_87
-_88:
+	je	_91
+	jmp	_89
+_90:
 	movl	20(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetText
 	movl	%eax,(%esp)
 	call	_brl_retro_Trim
 	mov	%eax,%esi
-	movl	%edi,4(%esp)
+	movl	12(%ebp),%eax
+	movl	%eax,4(%esp)
 	movl	16(%ebx),%eax
 	movl	%eax,(%esp)
 	calll	*_bb_TInputWindow+52
 	mov	%esi,%eax
-	jmp	_42
-_89:
-	movl	%edi,4(%esp)
+	jmp	_44
+_91:
+	movl	12(%ebp),%eax
+	movl	%eax,4(%esp)
 	movl	16(%ebx),%eax
 	movl	%eax,(%esp)
 	calll	*_bb_TInputWindow+52
 	mov	$_1,%eax
-	jmp	_42
-_87:
-	jmp	_82
-_82:
+	jmp	_44
+_89:
+	jmp	_84
+_84:
 _12:
 	mov	$1,%eax
 	cmp	$0,%eax
 	jne	_14
 _13:
 	mov	$_bbEmptyString,%eax
-	jmp	_42
-_42:
+	jmp	_44
+_44:
 	add	$40,%esp
 	pop	%edi
 	pop	%esi
@@ -389,8 +396,8 @@ __bb_TInputWindow_CloseThisWindow:
 	movl	%ebx,(%esp)
 	call	_maxgui_maxgui_ActivateGadget
 	mov	$0,%eax
-	jmp	_46
-_46:
+	jmp	_48
+_48:
 	add	$4,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -398,7 +405,7 @@ _46:
 	ret
 	.data	
 	.align	4
-_48:
+_50:
 	.long	0
 _16:
 	.asciz	"TInputWindow"
@@ -427,7 +434,7 @@ _27:
 _28:
 	.asciz	"Run"
 _29:
-	.asciz	"($,:TGadget)$"
+	.asciz	"($,:TGadget,$,$)$"
 _30:
 	.asciz	"CloseThisWindow"
 _31:
@@ -494,20 +501,8 @@ _bb_TInputWindow:
 	.long	__bb_TInputWindow_Run
 	.long	__bb_TInputWindow_CloseThisWindow
 	.align	4
-_98:
+_100:
 	.long	0x3fe00000
-	.align	4
-_10:
-	.long	_bbStringClass
-	.long	2147483647
-	.long	6
-	.short	67,114,101,97,116,101
-	.align	4
-_11:
-	.long	_bbStringClass
-	.long	2147483647
-	.long	6
-	.short	67,97,110,99,101,108
 	.align	4
 _1:
 	.long	_bbStringClass

@@ -40,6 +40,6 @@ TInputWindow^Object{
 .btnCancel:TGadget&
 -New%()="_bb_TInputWindow_New"
 -Delete%()="_bb_TInputWindow_Delete"
-+Run$(title$,parent:TGadget)="_bb_TInputWindow_Run"
++Run$(title$,parent:TGadget,createBtnText$=$"Create",cancelBtnText$=$"Cancel")="_bb_TInputWindow_Run"
 +CloseThisWindow%(thisWindow:TGadget,parent:TGadget)="_bb_TInputWindow_CloseThisWindow"
 }="bb_TInputWindow"

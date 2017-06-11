@@ -3,7 +3,6 @@
 
 ' ToDo
 ' - Need to code copy/paste functionality of files.
-' - Renaming.
 
 SuperStrict
 Import MaxGui.Drivers
@@ -234,10 +233,32 @@ Type TGui
 		DoNewFileFolder(FILETYPE_FILE)
 	End Method
 	
-	
-	'todo
 	Method DoRename()
+		Local index:Int = SelectedGadgetItem(lstFiles)
+		If (index = -1) Return
+		Local oldName:String = GadgetItemText(lstFiles, index)
+		Local newName:String = TInputWindow.Run("Rename '" + oldName + "'", winMain, "Confirm")
+		If (newName = "") Return
 		
+		Local oldPathName:String = navManager.Path() + oldName
+		Local newPathName:String = navManager.Path() + newName
+		
+		Local result:Int = 0
+		If (navManager.currentNode.rightNode <> Null)
+			If (FileType(oldPathName) = FILETYPE_DIR)
+				newPathName = EnsurePath(newPathName)
+			EndIf
+			
+			result = RenameFile(oldPathName, newPathName)
+			
+			If (result = 0) Return
+			ModifyGadgetItem(lstFiles, index, newName)
+			Local node:Node = navManager.currentNode.rightNode
+			While(node <> Null)
+				node.path = Replace(node.path, oldPathName, newPathName)
+				node = node.rightNode
+			Wend	
+		EndIf
 	End Method
 	
 	
@@ -295,8 +316,6 @@ Type TGui
 					navManager.currentNode.rightNode = Null
 				EndIf
 			EndIf
-		
-		
 			Return 1
 		Else
 			Return 0

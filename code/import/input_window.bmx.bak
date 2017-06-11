@@ -37,36 +37,69 @@ Type TInputWindow
 		ShowGadget(ti.window)
 		ActivateGadget(ti.txtInput)
 
+		
+
 		While True
+
 			WaitEvent()
 
+	
+
 		    Select EventID()
+
 		        Case EVENT_WINDOWCLOSE
+
 					If (EventSource() = ti.window)
+
 						CloseThisWindow(ti.window, parent)
+
 						Return ""
+
 		            EndIf
 
 				Case EVENT_GADGETACTION
+
 					Select EventSource()
+
 						Case ti.btnCreate
+
 							Local txt:String = Trim(GadgetText(ti.txtInput))
+
 							CloseThisWindow(ti.window, parent)
+
+
+
 							Return txt
+
 						Case ti.btnCancel
+
 							CloseThisWindow(ti.window, parent)
+
 							Return ""
+
 					EndSelect
+
 			End Select
+
 		Wend
+
 	EndFunction
 
+	
+
 	Function CloseThisWindow(thisWindow:TGadget, parent:TGadget)
+
 		FreeGadget(thisWindow)
+
 		EnableGadget(parent)
+
 		ShowGadget(parent)
+
 		ActivateGadget(parent)
+
 	End Function
+
+
 
 EndType
 
