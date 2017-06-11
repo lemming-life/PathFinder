@@ -1263,6 +1263,10 @@ _24:
 	movl	40(%eax),%eax
 	movl	%eax,(%esp)
 	call	_brl_linkedlist_ListRemove
+	movl	8(%ebp),%eax
+	movl	36(%eax),%eax
+	movl	%eax,(%esp)
+	call	_maxgui_maxgui_ActivateGadget
 	mov	$0,%eax
 	jmp	_190
 _528:
@@ -1445,6 +1449,9 @@ _547:
 	movl	%eax,(%esp)
 	movl	(%eax),%eax
 	calll	*60(%eax)
+	movl	36(%edi),%eax
+	movl	%eax,(%esp)
+	call	_maxgui_maxgui_ActivateGadget
 _552:
 	mov	%edi,%eax
 	movl	%eax,(%esp)

@@ -96,7 +96,7 @@ Type TGui
 		SetHotKeyEvent(Key_S, MODIFIER_COMMAND) ' For saving
 		SetHotKeyEvent(KEY_A, MODIFIER_COMMAND) ' For select all
 		SetHotKeyEvent(KEY_W, MODIFIER_COMMAND) ' For closing windows
-		SetHotKeyEvent(KEY_X, MODIFIER_COMMAND) ' For cutting
+		SetHotKeyEvent(KEY_X, MODIFIER_COMMAND) ' For cutting operations
 		SetHotKeyEvent(KEY_C, MODIFIER_COMMAND) ' For copying operations
 		SetHotKeyEvent(KEY_V, MODIFIER_COMMAND) ' For pasting operations
 		SetHotKeyEvent(KEY_R, MODIFIER_COMMAND) ' For renaming
@@ -169,6 +169,7 @@ Type TGui
 			If (theActiveGadget = tempBox.window)
 				FreeGadget(tempBox.window)
 				ListRemove(tBoxes, tempBox)
+				ActivateGadget(lstFiles)
 				Return 0
 			EndIf
 		Next
@@ -218,6 +219,7 @@ Type TGui
 		Else
 			DoGo(path)
 			SelectFile(name)
+			ActivateGadget(lstFiles)
 		EndIf
 		
 		UpdateStatusBar()
@@ -381,6 +383,9 @@ Type TGui
 				ActivateGadget(txtPath)
 				GadgetCopy(txtPath)
 				ActivateGadget(tempGadget)
+				
+				
+				
 		End Select
 	End Method
 	
