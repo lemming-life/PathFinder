@@ -1,9 +1,9 @@
 ' Info: http://www.lemming.life
-' Modified: June 1, 2017
+' Modified: June 10, 2017
 
 ' ToDo
 ' - Need to code copy/paste functionality of files.
-' - New file, new folder, renaming.
+' - Renaming of files/folders
 
 SuperStrict
 Import MaxGui.Drivers
@@ -11,7 +11,6 @@ Import "import/input_window.bmx"
 
 Local program:TGui = TGui.Create()
 program.Run()
-Print "Quitting"
 End
 
 Type TBox
@@ -170,11 +169,14 @@ Type TGui
 							Case KEY_K				GoDirectionInList(DOWN)
 							
 							Case KEY_ENTER
+								DoRightViaKeys()
+								Rem
 								If (ActiveGadget() = txtPath)
 									DoGo(GadgetText(txtPath))
 								Else
 									DoGoWithItem()
 								EndIf
+								EndRem
 							Case KEY_H
 								ActivateGadget(winMain)
 								ShowGadget(winMain)

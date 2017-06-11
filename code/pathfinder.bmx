@@ -3,7 +3,7 @@
 
 ' ToDo
 ' - Need to code copy/paste functionality of files.
-' - Renaming of files/folders
+' - New file, new folder, renaming.
 
 SuperStrict
 Import MaxGui.Drivers
@@ -11,7 +11,6 @@ Import "import/input_window.bmx"
 
 Local program:TGui = TGui.Create()
 program.Run()
-Print "Quitting"
 End
 
 Type TBox
