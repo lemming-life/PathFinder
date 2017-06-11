@@ -3,7 +3,7 @@
 
 ' ToDo
 ' - Need to code copy/paste functionality of files.
-' - New file, new folder, renaming.
+' - Renaming.
 
 SuperStrict
 Import MaxGui.Drivers
