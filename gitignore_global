@@ -3,3 +3,4 @@ code/*.bmx.bak
 code/.bmx
 code/import/.bmx
 code/pathfinder.app
+code/.DS_Store
