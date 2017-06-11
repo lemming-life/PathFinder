@@ -292,7 +292,7 @@ Type TGui
 			If (navManager.currentNode.rightNode <> Null)
 				If (FileType(pathName) = FILETYPE_DIR) pathName = EnsurePath(pathName)
 				If (navManager.currentNode.rightNode.path = pathName)
-					navManager.currentNode.rightNode = Null
+					navManager.rightNode = Null
 				EndIf
 			EndIf
 		
