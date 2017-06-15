@@ -1,38 +1,27 @@
-' Info: http://www.lemming.life
-' Modified: June 11, 2017
+Rem
+Project: PathFinder
+Author: http://lemming.life
+Updated: June 15, 2017
+License: zlib/libpng
+Notes:
+- Allows quick navigation of folders/directories and files.
+- Allows creation and deletion of files and folders.
+- Allows editing of files.
+- Allows execution of programs and files.
 
-' ToDo
-' - Need to code copy/paste functionality of files.
+To do:
+- Need to code copy/paste functionality of files and folders.
+
+EndRem
 
 SuperStrict
 Import MaxGui.Drivers
-Import "import/input_window.bmx"
+Import "import/inputWindow.bmx"
+Import "import/textWindow.bmx"
 
 Local program:TGui = TGui.Create()
 program.Run()
 End
-
-Type TBox
-	Field window:TGadget
-	Field txtPath:TGadget
-	Field txtArea:TGadget
-	Field path:String
-	Function Create:TBox(path:String, parent:TGadget)
-		Local g:TBox = New TBox
-		Local txtPathHeight:Int = 24
-		Local txtPadding:Int = 4
-		g.path = path
-		g.window = CreateWindow(StripDir(path), ClientWidth(Desktop())/4, 0, ClientWidth(Desktop())/2, ClientHeight(Desktop())*0.75, Null,  WINDOW_TITLEBAR + WINDOW_RESIZABLE + WINDOW_CENTER + WINDOW_ACCEPTFILES)
-		g.txtPath = CreateTextArea(0, txtPadding, ClientWidth(g.window), txtPathHeight-txtPadding, g.window) 'CreateTextField(0, 0, ClientWidth(g.window), txtPathHeight, g.window)
-			SetGadgetLayout(g.txtPath, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_CENTERED)
-			SetGadgetText(g.txtPath, path)
-		g.txtArea = CreateTextArea(0, txtPathHeight + txtPadding, ClientWidth(g.window), ClientHeight(g.window) - txtPathHeight - txtPadding, g.window)
-			SetGadgetLayout(g.txtArea, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED)	
-			SetTextAreaText(g.txtArea, LoadText(path))
-		Return g
-		
-	End Function
-End Type
 
 Type TGui
 	Field winSettings:Settings
@@ -47,7 +36,7 @@ Type TGui
 		
 	Const UP:Int = 0
 	Const DOWN:Int = 1
-	Field tBoxes:TList
+	Field tWindows:TList
 	Field slash:String
 	
 	Function Create:TGui()
@@ -103,10 +92,11 @@ Type TGui
 		SetHotKeyEvent(KEY_N, MODIFIER_COMMAND) ' For new file
 		SetHotKeyEvent(KEY_F, MODIFIER_COMMAND) ' For new folder
 		SetHotKeyEvent(KEY_BACKSPACE, MODIFIER_COMMAND) ' For deleting
+		SetHotKeyEvent(KEY_DELETE, MODIFIER_COMMAND) ' For deleting
 		SetHotKeyEvent(KEY_W, MODIFIER_COMMAND)
 		
 		
-		g.tBoxes = CreateList()
+		g.tWindows = CreateList()
 		Return g
 	EndFunction
 	
@@ -137,6 +127,7 @@ Type TGui
 							Case KEY_N				DoNewFile()
 							Case KEY_F				DoNewFolder()
 							Case KEY_BACKSPACE		DoDelete()
+							Case KEY_DELETE			DoDelete()
 						
 							Case KEY_E				DoExecute()
 							Case KEY_J				DoLeftViaKeys()
@@ -165,10 +156,10 @@ Type TGui
 			theActiveGadget = GadgetGroup(theActiveGadget)
 		Wend
 		
-		For Local tempBox:TBox = EachIn tBoxes
+		For Local tempBox:TWindow = EachIn tWindows
 			If (theActiveGadget = tempBox.window)
 				FreeGadget(tempBox.window)
-				ListRemove(tBoxes, tempBox)
+				ListRemove(tWindows, tempBox)
 				ActivateGadget(lstFiles)
 				Return 0
 			EndIf
@@ -287,9 +278,9 @@ Type TGui
 		Local theActiveGadget:TGadget = ActiveGadget()
 		If (theActiveGadget = Null) Return
 		If (GadgetClass(theActiveGadget) = GADGET_TEXTAREA)
-			For Local aBox:TBox = EachIn TBoxes
-				If (aBox.txtArea = theActiveGadget)
-					SaveText(TextAreaText(aBox.txtArea), aBox.path)
+			For Local aWindow:TWindow = EachIn tWindows
+				If (aWindow.txtArea = theActiveGadget)
+					SaveText(TextAreaText(aWindow.txtArea), aWindow.path)
 					Exit
 				EndIf
 			Next
@@ -299,9 +290,7 @@ Type TGui
 	
 	Method DeleteThisFile:Int(item:String)
 		Local pathName:String = EnsurePath(navManager.Path()) + item
-		
-		Print pathName
-		
+
 		Local deleted:Int = 0
 		If (FileType(pathName) = FILETYPE_FILE)
 			deleted = DeleteFile(pathName)
@@ -326,18 +315,14 @@ Type TGui
 	
 	
 	Method DoDelete()
-		'Print "DoDelete"
 		Local theActiveGadget:TGadget = ActiveGadget()
 		If (theActiveGadget = Null) theActiveGadget = lstFiles
 		
 		Select GadgetClass(theActiveGadget)
 			Case GADGET_TEXTFIELD
-				'Print "In text field"
 				SetGadgetText(theActiveGadget, "")
 				
-				
 			Case GADGET_LISTBOX
-			
 				Local index:Int = SelectedGadgetItem(lstFiles)
 				If (index = -1) Return
 				
@@ -434,14 +419,14 @@ Type TGui
 			DetermineType()
 		Else If(FileType(path) = FILETYPE_FILE)
 			Local found:Int = 0
-			For Local aBox:TBox = EachIn tBoxes
-				If (aBox.path = path)
+			For Local aWindow:TWindow = EachIn tWindows
+				If (aWindow.path = path)
 					found = 1
 					Exit
 				EndIf
 			Next
 			
-			If (found = 0) ListAddLast(tBoxes, TBox.Create(path, winMain))
+			If (found = 0) ListAddLast(tWindows, TWindow.Create(path, winMain))
 			
 			Local rightNodePathName:String = ""
 			If (navManager.currentNode.rightNode <> Null)
