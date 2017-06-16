@@ -11,6 +11,9 @@ Notes:
 
 To do:
 - Create a custom Confirm window since default one can mislead user.
+- Need to code copy/paste functionality of files and folders.
+- Need to do cut functionality of files and folders.
+
 EndRem
 
 SuperStrict
