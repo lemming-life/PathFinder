@@ -21,10 +21,10 @@ Type TWindow
 		Local txtPadding:Int = 4
 		g.path = path
 		g.window = CreateWindow(StripDir(path), ClientWidth(Desktop())/4, 0, ClientWidth(Desktop())/2, ClientHeight(Desktop())*0.75, Null,  WINDOW_TITLEBAR + WINDOW_RESIZABLE + WINDOW_CENTER + WINDOW_ACCEPTFILES)
-		g.txtPath = CreateTextArea(0, txtPadding, ClientWidth(g.window), txtPathHeight-txtPadding, g.window) 'CreateTextField(0, 0, ClientWidth(g.window), txtPathHeight, g.window)
+		g.txtPath = CreateTextArea(0, txtPadding, ClientWidth(g.window), txtPathHeight-txtPadding, g.window) 
 			SetGadgetLayout(g.txtPath, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_CENTERED)
 			SetGadgetText(g.txtPath, path)
-		g.txtArea = CreateTextArea(0, txtPathHeight + txtPadding, ClientWidth(g.window), ClientHeight(g.window) - txtPathHeight - txtPadding, g.window)
+		g.txtArea = CreateTextArea(0, txtPathHeight + txtPadding, ClientWidth(g.window), ClientHeight(g.window) - txtPathHeight - txtPadding, g.window, TEXTAREA_WORDWRAP)
 			SetGadgetLayout(g.txtArea, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED)	
 			SetTextAreaText(g.txtArea, LoadText(path))
 			

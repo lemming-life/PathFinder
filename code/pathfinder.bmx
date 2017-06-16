@@ -11,6 +11,7 @@ Notes:
 
 To do:
 - Create a custom Confirm window since default one can mislead user.
+- Allow navigation using Cmd + ijkl when file opened.
 EndRem
 
 SuperStrict
