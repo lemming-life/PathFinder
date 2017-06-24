@@ -76,6 +76,7 @@ Type TGui
 			g.PopulateList(GadgetText(g.txtPath))
 		
 		g.navManager:NavigationManager = NavigationManager.Create(GadgetText(g.txtPath))
+
 		
 		SetHotKeyEvent(KEY_I, MODIFIER_COMMAND)	' For up operations
 		SetHotKeyEvent(KEY_K, MODIFIER_COMMAND)	' For down operations
@@ -103,6 +104,18 @@ Type TGui
 	
 	
 	Method Run()
+		If (CountGadgetItems(lstFiles)>0)
+			SelectGadgetItem(lstFiles, 0)
+			Local rightNode:Node = New Node
+			rightNode.leftNode = navManager.currentNode
+			rightNode.path = EnsurePath(navManager.Path()) + GadgetItemText(lstFiles,0)
+			If (FileType(rightNode.path) = FILETYPE_DIR)
+				rightNode.path = EnsurePath(rightNode.path)
+			EndIf
+			navManager.currentNode.rightNode = rightNode
+		EndIf
+	
+	
 		ActivateGadget(lstFiles)
 		While (True)
 		    WaitEvent()
@@ -566,41 +579,58 @@ Type TGui
 		EndIf
 		
 		Local index:Int = SelectedGadgetItem(lstFiles)
-		If (index = -1) Return
+		If (index = -1)
+			Local toBeSelectedName:String
+			If (FileType(navManager.currentNode.rightNode.path) = FILETYPE_DIR)
+				toBeSelectedName = StripDir(StripSlash(navManager.currentNode.rightNode.path))
+			ElseIf (FileType(navManager.currentNode.rightNode.path) = FILETYPE_FILE)
+				toBeSelectedName = StripDir(navManager.currentNode.rightNode.path)
+			EndIf
+			
+			SelectFile(toBeSelectedName)
+			index = SelectedGadgetItem(lstFiles)
+		EndIf
+		
 		Local name:String = GadgetItemText(lstFiles, index)
 		
 		If (FileType(navManager.Path() + name) = FILETYPE_FILE)
-			DoGoWithItem()
+			DoGoWithItem();
 		ElseIf (FileType(navManager.Path() + name) = FILETYPE_DIR)
-			Local pathName:String = navManager.Path() + EnsurePath(name)
+			Local pathName:String = EnsurePath(navManager.Path() + name)
 			
-			If (navManager.currentNode.rightNode <> Null And (navManager.currentNode.rightNode.path = pathName))
-				navManager.GoRight() ' will change what rightNode is
-				SetGadgetText(txtPath, pathName)
-				PopulateList(pathName)
-				
-				If (navManager.currentNode.rightNode <> Null And FileType(navManager.currentNode.rightNode.path) > 0)		
-					SelectFile(StripDir(StripSlash(navManager.currentNode.rightNode.path)))
-				Else
-					If (CountGadgetItems(lstFiles)>0)
-						SelectGadgetItem(lstFiles, 0)
-						Local newRightNode:Node = New Node
-						Local newName:String = GadgetItemText(lstFiles, 0)
-						
-						If (FileType(pathName + newName) = FILETYPE_FILE)
-							newRightNode.path = pathName + newName
-						Else If(FileType(pathName + GadgetItemText(lstFiles, 0)) = FILETYPE_DIR)
-							newRightNode.path = pathName + EnsurePath(newName)
-						EndIf
-						
-						newRightNode.leftNode = navManager.currentNode.rightNode
-						navManager.currentNode.rightNode.rightNode = newRightNode
-					EndIf
-				EndIf
+			
+			If (pathName = navManager.currentNode.rightNode.path)
+				navManager.GoRight()
 			Else
-				DoGoWithItem()
+				navManager.GoInside(pathName)
 			EndIf
 			
+			SetGadgetText(txtPath, pathName)
+			PopulateList(pathName)
+			
+			
+			If (navManager.currentNode.rightNode = Null)
+				If (CountGadgetItems(lstFiles)>0)
+					SelectGadgetItem(lstFiles, 0)
+					Local rightNode:Node = New Node
+					rightNode.leftNode = navManager.currentNode
+					rightNode.path = EnsurePath(navManager.Path()) + GadgetItemText(lstFiles,0)
+					If (FileType(rightNode.path) = FILETYPE_DIR)
+						rightNode.path = EnsurePath(rightNode.path)
+					EndIf
+					navManager.currentNode.rightNode = rightNode
+				EndIf
+			Else
+				Local toBeSelectedName:String
+				
+				If (FileType(navManager.currentNode.rightNode.path) = FILETYPE_DIR)
+					toBeSelectedName = StripDir(StripSlash(navManager.currentNode.rightNode.path))
+				ElseIf (FileType(navManager.currentNode.rightNode.path) = FILETYPE_FILE)
+					toBeSelectedName = StripDir(navManager.currentNode.rightNode.path)
+				EndIf
+				
+				SelectFile(toBeSelectedName)
+			EndIf
 		EndIf
 		
 		DetermineType()
