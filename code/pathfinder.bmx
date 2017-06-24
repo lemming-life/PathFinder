@@ -71,7 +71,7 @@ Type TGui
 			SetGadgetLayout(g.txtPath, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_CENTERED)
 			SetGadgetText(g.txtPath, g.EnsurePath(CurrentDir()))
 					
-		g.lstFiles:TGadget = CreateListBox(0, btnHeight, ClientWidth(g.winMain), ClientHeight(g.winMain) - (btnHeight*2), g.winMain)
+		g.lstFiles:TGadget = CreateListBox(0, btnHeight, ClientWidth(g.winMain), ClientHeight(g.winMain) - (btnHeight), g.winMain)
 			SetGadgetLayout(g.lstFiles, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED)
 			g.PopulateList(GadgetText(g.txtPath))
 		
@@ -81,7 +81,6 @@ Type TGui
 		SetHotKeyEvent(KEY_K, MODIFIER_COMMAND)	' For down operations
 		SetHotKeyEvent(KEY_J, MODIFIER_COMMAND)	' For left operations
 		SetHotKeyEvent(KEY_L, MODIFIER_COMMAND)	' For right operations
-		'SetHotKeyEvent(KEY_SEMICOLON, MODIFIER_COMMAND)	' For opening preview
 		
 		SetHotKeyEvent(KEY_E, MODIFIER_COMMAND) ' For Executing
 		SetHotKeyEvent(Key_S, MODIFIER_COMMAND) ' For saving
@@ -104,6 +103,7 @@ Type TGui
 	
 	
 	Method Run()
+		ActivateGadget(lstFiles)
 		While (True)
 		    WaitEvent()
 		
@@ -342,7 +342,10 @@ Type TGui
 				Local name:String = GadgetItemText(lstFiles, index)
 				If (DeleteThisFile(name) = 0) Return
 				RemoveGadgetItem(lstFiles, index)
-				If (CountGadgetItems(lstFiles)>0) SelectGadgetItem(lstFiles, nextIndex)
+				If (CountGadgetItems(lstFiles)>0)
+					SelectGadgetItem(lstFiles, nextIndex)
+					ActivateGadget(lstFiles)
+				EndIf
 				navManager.RemoveIfRight(EnsurePath(navManager.Path()) + EnsurePath(name))
 				DetermineType()
 		End Select
@@ -684,7 +687,7 @@ Type TGui
 	Method UpdateStatusBar()
 		Local cumulative:String = ""
 		If (Len(statusFileType)>0) cumulative = cumulative + "Selected Type: " + statusFileType
-		cumulative = cumulative + " | " + statusError
+		If (Len(statusError)>0) cumulative = cumulative + " | " + statusError
 		SetStatusText(winMain, cumulative)
 	End Method
 	
