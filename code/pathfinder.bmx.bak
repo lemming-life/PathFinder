@@ -1,12 +1,13 @@
 Rem
 Project: PathFinder
 Author: http://lemming.life
-Updated: June 15, 2017
+Updated: June 24, 2017
 License: zlib/libpng
 Notes:
 - Allows quick navigation of folders/directories and files.
 - Allows creation and deletion of files and folders.
 - Allows editing of files.
+- Allows renaming of files and folders.
 - Allows execution of programs and files.
 
 To do:
@@ -81,7 +82,7 @@ Type TGui
 		SetHotKeyEvent(KEY_K, MODIFIER_COMMAND)	' For down operations
 		SetHotKeyEvent(KEY_J, MODIFIER_COMMAND)	' For left operations
 		SetHotKeyEvent(KEY_L, MODIFIER_COMMAND)	' For right operations
-		'SetHotKeyEvent(KEY_SEMICOLON, MODIFIER_COMMAND)	' For opening preview
+		SetHotKeyEvent(KEY_SEMICOLON, MODIFIER_COMMAND)	' For opening preview
 		
 		SetHotKeyEvent(KEY_E, MODIFIER_COMMAND) ' For Executing
 		SetHotKeyEvent(Key_S, MODIFIER_COMMAND) ' For saving
