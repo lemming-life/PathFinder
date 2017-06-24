@@ -1,7 +1,7 @@
 Rem
 Project: PathFinder
 Author: http://lemming.life
-Updated: June 15, 2017
+Updated: June 24, 2017
 License: zlib/libpng
 Notes:
 - Allows quick navigation of folders/directories and files.
@@ -598,8 +598,7 @@ Type TGui
 		ElseIf (FileType(navManager.Path() + name) = FILETYPE_DIR)
 			Local pathName:String = EnsurePath(navManager.Path() + name)
 			
-			
-			If (pathName = navManager.currentNode.rightNode.path)
+			If ( (navManager.currentNode.rightNode <> Null) And (pathName = navManager.currentNode.rightNode.path))
 				navManager.GoRight()
 			Else
 				navManager.GoInside(pathName)
@@ -607,7 +606,6 @@ Type TGui
 			
 			SetGadgetText(txtPath, pathName)
 			PopulateList(pathName)
-			
 			
 			If (navManager.currentNode.rightNode = Null)
 				If (CountGadgetItems(lstFiles)>0)
@@ -620,19 +618,15 @@ Type TGui
 					EndIf
 					navManager.currentNode.rightNode = rightNode
 				EndIf
-			Else
-				Local toBeSelectedName:String
-				
-				If (FileType(navManager.currentNode.rightNode.path) = FILETYPE_DIR)
-					toBeSelectedName = StripDir(StripSlash(navManager.currentNode.rightNode.path))
-				ElseIf (FileType(navManager.currentNode.rightNode.path) = FILETYPE_FILE)
-					toBeSelectedName = StripDir(navManager.currentNode.rightNode.path)
+			Else				
+				If ( (Right(navManager.currentNode.rightNode.path, 1) = "/") Or (Right(navManager.currentNode.rightNode.path, 1) = "\") )
+					name = StripDir(StripSlash(navManager.currentNode.rightNode.path))
+				Else
+					name = StripDir(navManager.currentNode.rightNode.path)
 				EndIf
-				
-				SelectFile(toBeSelectedName)
+				SelectFile(name)
 			EndIf
-		EndIf
-		
+		EndIf		
 		DetermineType()
 	End Method
 	
