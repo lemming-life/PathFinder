@@ -28,3 +28,6 @@ Note: pasting may paste a file (if the active gui element is the files list box)
 - Cut a file/folder: command + x
 - Paste a file/older or its path: command + v
 - Delete file/folder: (command + delete)  or  (command + backspace)
+
+Editing text
+- To Save: command + s
