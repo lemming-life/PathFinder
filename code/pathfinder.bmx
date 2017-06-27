@@ -16,6 +16,7 @@ EndRem
 
 SuperStrict
 Import MaxGui.Drivers
+Import MaxGui.ProxyGadgets
 Import "import/inputWindow.bmx"
 Import "import/textWindow.bmx"
 
@@ -32,6 +33,10 @@ Type TGui
 	Field btnRight:TGadget
 	Field btnGo:TGadget
 	Field txtPath:TGadget
+	Field splitter:TSplitter
+	Field pnlFavorites:TGadget
+	Field pnlFiles:TGadget
+	Field lstFavorites:TGadget
 	Field lstFiles:TGadget
 		
 	Const UP:Int = 0
@@ -39,6 +44,8 @@ Type TGui
 	Field tWindows:TList
 	Field slash:String
 	
+	Field favoritesFileName:String
+	Field favorites:TMap
 	Field clipPathName:String
 	
 	Function Create:TGui()
@@ -54,36 +61,56 @@ Type TGui
 		Local txtFieldHeight:Int = btnHeight - txtPadding
 		Local topButtonsCount:Int = 1
 		
-		g.winSettings:Settings = Settings.Create(ClientWidth(Desktop())/4, 0, ClientWidth(Desktop())/2, ClientHeight(Desktop())*0.75)
-		g.winMain:TGadget = CreateWindow("PathFinder", g.winSettings.x, g.winSettings.y, g.winSettings.width, g.winSettings.height)
+		g.winSettings = Settings.Create(ClientWidth(Desktop())/4, 0, ClientWidth(Desktop())/2, ClientHeight(Desktop())*0.75)
+		g.winMain = CreateWindow("PathFinder", g.winSettings.x, g.winSettings.y, g.winSettings.width, g.winSettings.height)
 		
 		Local btnNavigationWidth:Int = 38
-		g.btnLeft:TGadget = CreateButton("<", 0, 0, btnNavigationWidth, btnHeight, g.winMain, BUTTON_PUSH)
+		g.btnLeft = CreateButton("<", 0, 0, btnNavigationWidth, btnHeight, g.winMain, BUTTON_PUSH)
 			SetGadgetLayout(g.btnLeft, EDGE_ALIGNED, EDGE_CENTERED, EDGE_ALIGNED, EDGE_CENTERED)
-		g.btnRight:TGadget = CreateButton(">", GadgetWidth(g.btnLeft), 0, btnNavigationWidth, btnHeight, g.winMain, BUTTON_PUSH)
+		g.btnRight = CreateButton(">", GadgetWidth(g.btnLeft), 0, btnNavigationWidth, btnHeight, g.winMain, BUTTON_PUSH)
 			SetGadgetLayout(g.btnRight, EDGE_ALIGNED, EDGE_CENTERED, EDGE_ALIGNED, EDGE_CENTERED)
 			
 		Local btnGoWidth:Int = 50
-		g.btnGo:TGadget = CreateButton("Go", ClientWidth(g.winMain) - btnGoWidth, 0, btnGoWidth, btnHeight, g.winMain, BUTTON_OK)
+		g.btnGo = CreateButton("Go", ClientWidth(g.winMain) - btnGoWidth, 0, btnGoWidth, btnHeight, g.winMain, BUTTON_OK)
 			SetGadgetLayout(g.btnGo, EDGE_CENTERED, EDGE_ALIGNED , EDGE_ALIGNED, EDGE_CENTERED)
 		Local txtPathX:Int = GadgetWidth(g.btnLeft) + GadgetHeight(g.btnRight) + txtPadding
-		g.txtPath:TGadget = CreateTextField(txtPathX, 2 + txtPadding/2, ClientWidth(g.winMain) - (btnGoWidth + txtPathX + txtPadding/2), txtFieldHeight - txtPadding/2, g.winMain)
+		g.txtPath = CreateTextField(txtPathX, 2 + txtPadding/2, ClientWidth(g.winMain) - (btnGoWidth + txtPathX + txtPadding/2), txtFieldHeight - txtPadding/2, g.winMain)
 			SetGadgetLayout(g.txtPath, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_CENTERED)
 			SetGadgetText(g.txtPath, g.EnsurePath(CurrentDir()))
-					
-		g.lstFiles:TGadget = CreateListBox(0, btnHeight, ClientWidth(g.winMain), ClientHeight(g.winMain) - (btnHeight), g.winMain)
-			SetGadgetLayout(g.lstFiles, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED)
+		
+		g.splitter = CreateSplitter(0, btnHeight, ClientWidth(g.winMain), ClientHeight(g.winMain) - btnHeight, g.winMain)
+			SetGadgetLayout(g.splitter, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED)
+			SetSplitterPosition(g.splitter, ClientWidth(g.winMain)/1.5, 0)
+			SetSplitterBehavior(g.splitter, SPLIT_RESIZABLE + SPLIT_CANFLIP + SPLIT_CLICKTOTOGGLE)
+		g.pnlFavorites = SplitterPanel(g.splitter, SPLITPANEL_MAIN)
+		g.pnlFiles = SplitterPanel(g.splitter, SPLITPANEL_SIDEPANE)
+		
+		Local lbl:TGadget = CreateLabel("Favorites", 0, btnHeight/4, 100, btnHeight, g.pnlFavorites)
+		g.lstFavorites = CreateListBox(0, btnHeight, ClientWidth(g.pnlFavorites), ClientHeight(g.pnlFavorites) - btnHeight, g.pnlFavorites)
+			SetGadgetLayout(g.lstFavorites, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED)
+			g.favoritesFileName = "favorites.txt"
+			g.favorites = CreateMap()
+				
+		g.lstFiles = CreateListBox(0, 0, ClientWidth(g.pnlFiles), ClientHeight(g.pnlFiles), g.pnlFiles)
+			SetGadgetLayout(g.lstFiles, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED)		
 			g.PopulateList(GadgetText(g.txtPath))
 		
-		g.navManager:NavigationManager = NavigationManager.Create(GadgetText(g.txtPath))
+		g.navManager = NavigationManager.Create(GadgetText(g.txtPath))
 
+		
+		
+		SetHotKeyEvent(KEY_1, MODIFIER_COMMAND)	' Add to favorite
+		SetHotKeyEvent(KEY_2, MODIFIER_COMMAND)	' Remove favorite
+		SetHotKeyEvent(KEY_U, MODIFIER_COMMAND)	' For favorite up
+		SetHotKeyEvent(KEY_O, MODIFIER_COMMAND)	' For favorite down
 		
 		SetHotKeyEvent(KEY_I, MODIFIER_COMMAND)	' For up operations
 		SetHotKeyEvent(KEY_K, MODIFIER_COMMAND)	' For down operations
 		SetHotKeyEvent(KEY_J, MODIFIER_COMMAND)	' For left operations
 		SetHotKeyEvent(KEY_L, MODIFIER_COMMAND)	' For right operations
 		
-		SetHotKeyEvent(KEY_E, MODIFIER_COMMAND) ' For Executing
+		'SetHotKeyEvent(KEY_E, MODIFIER_COMMAND) ' For Executing
+		SetHotKeyEvent(KEY_SEMICOLON, MODIFIER_COMMAND) ' For Executing
 		SetHotKeyEvent(Key_S, MODIFIER_COMMAND) ' For saving
 		SetHotKeyEvent(KEY_A, MODIFIER_COMMAND) ' For select all
 		SetHotKeyEvent(KEY_W, MODIFIER_COMMAND) ' For closing windows
@@ -104,6 +131,25 @@ Type TGui
 	
 	
 	Method Run()
+		' Add favorites to list
+		If (FileType(favoritesFileName) = FILETYPE_FILE)
+			Local fileIn:TStream = ReadFile(favoritesFileName)
+			Local line:String
+			While( Not Eof(fileIn) )
+				line = ReadLine(fileIn)
+				'If (Len(line)>0) ListAddLast(extensionsList, line)
+				If (Len(line)>0 And FileType(line) > 0)
+					Local fn:FavoriteNode = FavoriteNode.Create(line)
+					If (Not (MapContains(favorites, fn.name)) )
+						MapInsert(favorites, fn.name, fn.path)
+						AddGadgetItem(lstFavorites, fn.name)
+					EndIf
+				EndIf
+			Wend
+			CloseFile(fileIn)
+		EndIf
+	
+		' Initialize the right node (if possible)
 		If (CountGadgetItems(lstFiles)>0)
 			SelectGadgetItem(lstFiles, 0)
 			Local rightNode:Node = New Node
@@ -115,24 +161,28 @@ Type TGui
 			navManager.currentNode.rightNode = rightNode
 		EndIf
 	
-	
 		ActivateGadget(lstFiles)
 		While (True)
 		    WaitEvent()
-		
 		    Select EventID()
 		        Case EVENT_WINDOWCLOSE				If (DoCloseActiveWindow(TGadget(EventSource()))) Return
-				Case EVENT_GADGETSELECT				If (EventSource() = lstFiles)	DoSelect()	
+				'Case EVENT_GADGETSELECT				If (EventSource() = lstFiles)	DoSelect()	
+				Case EVENT_GADGETSELECT				LastSelected(EventSource())
 				Case EVENT_GADGETACTION
 					Select EventSource()
 						Case btnLeft				DoLeft()
 						Case btnRight				DoRight()
 						Case btnGo					DoGo(GadgetText(txtPath))		
-						Case lstFiles				DoSelectAction()
+						'Case lstFiles				DoSelectAction()
 					End Select
 				Case EVENT_HOTKEYHIT
 					If (EventMods() = MODIFIER_COMMAND)
 						Select EventData()
+							Case KEY_1				AddFavorite()
+							Case KEY_2				RemoveFavorite()
+							Case KEY_U				GoDirectionInList(lstFavorites, UP)
+							Case KEY_O				GoDirectionInList(lstFavorites, DOWN)
+							
 							Case KEY_S				DoSave()
 							Case KEY_A				DoSelectAll()
 							Case KEY_X				DoCut()
@@ -144,21 +194,62 @@ Type TGui
 							Case KEY_BACKSPACE		DoDelete()
 							Case KEY_DELETE			DoDelete()
 						
-							Case KEY_E				DoExecute()
+							Case KEY_SEMICOLON		DoExecute()
 							Case KEY_J				DoLeftViaKeys()
 							Case KEY_L				DoRightViaKeys()
 							Case KEY_ENTER			DoRightViaKeys()
-							Case KEY_I				GoDirectionInList(UP)
-							Case KEY_K				GoDirectionInList(DOWN)
 							Case KEY_W				If (DoCloseActiveWindow(ActiveGadget())) Return
+							Case KEY_I				GoDirectionInList(lstFiles, UP)
+													DetermineType()
+							Case KEY_K				GoDirectionInList(lstFiles, DOWN)
+													DetermineType()
 						End Select
 					EndIf
 				Case EVENT_KEYDOWN
 					If (ActiveGadget() = txtPath And EventData() = KEY_RETURN)
 						DoGo(GadgetText(txtPath))
 					EndIf
+				
 		    End Select
 		Wend
+	End Method
+	
+	Method LastSelected(obj:Object)
+		Local gadget:TGadget = TGadget(obj)
+		If (gadget = lstFiles Or gadget = lstFavorites) Then
+			lastActiveListGadget = gadget
+		EndIf
+	EndMethod
+	
+	Method SaveFavorites()
+		Local fileOut:TStream = WriteFile(favoritesFileName)
+			For Local value:Object = EachIn MapValues(favorites)
+				WriteLine(fileOut, String(value))
+			Next
+		CloseFile(fileOut)
+	EndMethod
+	
+	Method AddFavorite()
+		Local selectedIndex:Int = SelectedGadgetItem(lstFiles)
+		If (selectedIndex = -1) Return
+		Local selectedName:String = GadgetItemText(lstFiles, selectedIndex)
+		If ( MapContains(favorites, selectedName) ) Return
+		
+		Local fn:FavoriteNode = FavoriteNode.Create(navManager.path() + selectedName)
+		MapInsert(favorites, fn.name, fn.path)
+		AddGadgetItem(lstFavorites, fn.name)
+		
+		SaveFavorites()
+	End Method
+	
+	Method RemoveFavorite()
+		Local selectedIndex:Int = SelectedGadgetItem(lstFavorites)
+		If (selectedIndex = -1) Return
+		Local selectedName:String = GadgetItemText(lstFavorites, selectedIndex)
+		If (Not MapContains(favorites, selectedName)) Return
+		MapRemove(favorites, selectedName)
+		RemoveGadgetItem(lstFavorites, selectedIndex)
+		SaveFavorites()
 	End Method
 	
 	
@@ -273,11 +364,22 @@ Type TGui
 	
 	
 	Method DoExecute()
-		Local index:Int = SelectedGadgetItem(lstFiles)
-		If (index = -1) Return
-		Local pathExe:String = EnsurePath(navManager.path()) + GadgetItemText(lstFiles, index)
-		Local openStr:String = "open "
+		Local currentGadget:TGadget = lastActiveListGadget
+		If (currentGadget = Null) Return
+		If ( Not(currentGadget = lstFiles) And Not(currentGadget = lstFavorites) ) Return
 		
+		Local index:Int = SelectedGadgetItem(currentGadget)
+		If (index = -1) Return
+		Local name:String = GadgetItemText(currentGadget, index)
+		
+		Local pathExe:String
+		If (currentGadget = lstFiles)
+			pathExe = EnsurePath(navManager.path()) + name
+		Else If(currentGadget = lstFavorites)
+			pathExe = String( MapValueForKey(favorites, name) )
+		EndIf
+		
+		Local openStr:String = "open "
 		?win32
 			If (Instr(Lower(pathExe), ".exe") > -1)
 				system_(openStr + Chr(34) + pathExe + Chr(34))
@@ -567,9 +669,31 @@ Type TGui
 	
 	Method DoRightViaKeys()
 		If (Not(ActiveGadget() = lstFiles) And Not(ActiveGadget() = Null))  Return
-		DoRight()
+		If (lastActiveListGadget = lstFavorites)
+			'todo
+			'DoGo(GadgetText(txtPath))
+			
+			
+			Local index:Int = SelectedGadgetItem(lstFavorites)
+			If (index = -1) Return
+			Local name:String = GadgetItemText(lstFavorites, index)
+			Local pathName:String = String(MapValueForKey(favorites, name))
+			Local path:String = pathName
+			If (FileType(pathName) = FILETYPE_FILE) path = ExtractDir(pathName)
+			
+			DoGo( path )
+			
+			If (FileType(pathName) = FILETYPE_FILE)
+				SelectFile(name)
+				ActivateGadget(lstFiles)
+				lastActiveListGadget = lstFiles
+			EndIf
+		Else
+			DoRight()
+		EndIf
+		
+		
 	End Method
-	
 	
 	
 	Method DoRight()
@@ -630,16 +754,14 @@ Type TGui
 		DetermineType()
 	End Method
 	
+	
 	Method DoLeftViaKeys()
 		If (Not(ActiveGadget() = lstFiles) And Not(ActiveGadget() = Null))  Return
 		DoLeft()
 	End Method
 	
 	Method DoLeft()
-		' Consider if there was a selected item!
 		Local index:Int = SelectedGadgetItem(lstFiles)
-		'If (index = -1) Return
-		
 		
 		If (index>-1)
 			Local pathName:String = navManager.Path() + GadgetItemText(lstFiles,index)
@@ -674,22 +796,18 @@ Type TGui
 		DetermineType()
 	End Method
 	
-	
-	Method GoDirectionInList(direction:Int)
-		If (Not(ActiveGadget() = lstFiles) And Not(ActiveGadget() = Null))  Return
+	Field lastActiveListGadget:TGadget = Null
+	Method GoDirectionInList(listGadget:TGadget, direction:Int)
+		ActivateGadget(listGadget)
+		If (CountGadgetItems(listGadget) = 0) Return
+		If (SelectedGadgetItem(listGadget) = -1) SelectGadgetItem(listGadget, 0)
 		
-		If (SelectedGadgetItem(lstFiles) = -1) Return
-		Local selectedFileType:String
-		
-		If (direction = UP And SelectedGadgetItem(lstFiles)>0)
-			SelectGadgetItem(lstFiles, SelectedGadgetItem(lstFiles)-1)
-		Else If (direction = DOWN And SelectedGadgetItem(lstFiles)<CountGadgetItems(lstFiles)-1)
-			SelectGadgetItem(lstFiles, SelectedGadgetItem(lstFiles)+1)
+		If (direction = UP And SelectedGadgetItem(listGadget)>0)
+			SelectGadgetItem(listGadget, SelectedGadgetItem(listGadget)-1)
+		ElseIf (direction = DOWN And SelectedGadgetItem(listGadget)<CountGadgetItems(listGadget)-1)
+			SelectGadgetItem(listGadget, SelectedGadgetItem(listGadget)+1)
 		EndIf
-		
-		
-		
-		DetermineType()
+		lastActiveListGadget = listGadget
 	End Method
 	
 	Method DetermineType()
@@ -697,7 +815,6 @@ Type TGui
 		
 		If (FileType(EnsurePath(navManager.path()) + GadgetItemText(lstFiles, SelectedGadgetItem(lstFiles))) = FILETYPE_DIR)
 			statusFileType = "Directory"
-			
 		Else 
 			statusFileType = "File"
 		EndIf
@@ -711,7 +828,7 @@ Type TGui
 	Method UpdateStatusBar()
 		Local cumulative:String = ""
 		If (Len(statusFileType)>0) cumulative = cumulative + "Selected Type: " + statusFileType
-		If (Len(statusError)>0) cumulative = cumulative + " | " + statusError
+		'If (Len(statusError)>0) cumulative = cumulative + " | " + statusError
 		SetStatusText(winMain, cumulative)
 	End Method
 	
@@ -814,7 +931,78 @@ Type Settings
 		
 		CloseFile(file)
 	End Method
+	
+EndType
 
+Type Favorites
+	Field filePathName:String
+	Field list:TList
+
+	Function Create:Favorites(aPathName:String = "")
+		Local f:Favorites = New Favorites
+		f.filePathName = aPathName
+		f.list = New TList
+		f.LoadFile()
+		
+		Return f
+	End Function
+	
+	
+	Method LoadFile()
+		If (Len(filePathName) = 0 Or FileType(filePathName) = 0) Return
+		
+		Local fileIn:TStream = ReadFile(filePathName)
+		Local line:String
+		While(Not Eof(fileIn))
+			line = ReadLine(fileIn)
+			If (FileType(line) > 0)
+				Rem
+				Local favNode:FavoriteNode = New FavoriteNode
+				
+				list.AddLast(
+				EndRem
+			EndIf
+		Wend
+		CloseStream(fileIn)
+		
+		
+	End Method
+	
+	Method Add(pathName:String)
+	
+	End Method
+	
+	
+	Method Remove(name:String)
+	
+	End Method
+	
+	
+	Method Save()
+		
+	End Method
+	
+	Method Clear()
+	
+	End Method
+	
+	
+	
+EndType
+
+Type FavoriteNode
+	Field path:String
+	Field name:String
+	
+	Function Create:FavoriteNode(pathName:String)
+		Local f:FavoriteNode = New FavoriteNode
+		f.path = pathName
+		f.name = StripDir(pathName)
+		Return f
+	EndFunction
+	
+	
+	
 	
 EndType
 

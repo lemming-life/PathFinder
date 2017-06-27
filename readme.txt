@@ -15,7 +15,7 @@ How to use it:
 - Navigate right or open file in text editor: command + l
 - Select file on list above: command + i
 - Select file on list below: command + k
-- Execute a file: command + e
+- Execute a file: command + ;
 - Rename a file: command + r
 - Create a new file: command + n
 - Create a new folder: command + f
