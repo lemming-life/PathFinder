@@ -1,0 +1,6 @@
+.bmx/
+*.app/
+*.bak
+*.bmx.bak
+*.app
+favorites.txt

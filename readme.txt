@@ -31,3 +31,11 @@ Note: pasting may paste a file (if the active gui element is the files list box)
 
 Editing text
 - To Save: command + s
+
+Favorites
+- Add favorite: command + 1
+- Remove favorite: command + 2
+- Select favorite up: command + u
+- Select favorite down: command + o
+- Execute file: command + ;
+- Open file / dir in file list: command + l

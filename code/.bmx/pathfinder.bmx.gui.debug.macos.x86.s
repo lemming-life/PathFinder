@@ -57,6 +57,7 @@
 	.reference	_brl_linkedlist_ListAddLast
 	.reference	_brl_linkedlist_ListRemove
 	.reference	_brl_linkedlist_TList
+	.reference	_brl_map_ClearMap
 	.reference	_brl_map_CreateMap
 	.reference	_brl_map_MapContains
 	.reference	_brl_map_MapInsert
@@ -171,6 +172,7 @@
 	.globl	__bb_TGui_GetUniqueName
 	.globl	__bb_TGui_GoDirectionInList
 	.globl	__bb_TGui_LastSelected
+	.globl	__bb_TGui_LoadFavorites
 	.globl	__bb_TGui_New
 	.globl	__bb_TGui_PopulateList
 	.globl	__bb_TGui_PopulateListWithType
@@ -193,19 +195,19 @@ __bb_main:
 	sub	$4,%esp
 	push	%ebx
 	sub	$16,%esp
-	cmpl	$0,_443
-	je	_444
+	cmpl	$0,_447
+	je	_448
 	mov	$0,%eax
 	add	$16,%esp
 	pop	%ebx
 	mov	%ebp,%esp
 	pop	%ebp
 	ret
-_444:
-	movl	$1,_443
+_448:
+	movl	$1,_447
 	movl	$_bbNullObject,-4(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_439,(%esp)
+	movl	$_443,(%esp)
 	calll	*_bbOnDebugEnterScope
 	call	___bb_blitz_blitz
 	call	___bb_drivers_drivers
@@ -224,26 +226,26 @@ _444:
 	call	_bbObjectRegisterType
 	movl	$_bb_NavigationManager,(%esp)
 	call	_bbObjectRegisterType
-	movl	$_432,(%esp)
+	movl	$_436,(%esp)
 	calll	*_bbOnDebugEnterStm
 	calll	*_bb_TGui+48
 	movl	%eax,-4(%ebp)
-	movl	$_435,(%esp)
+	movl	$_439,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_437
+	jne	_441
 	call	_brl_blitz_NullObjectError
-_437:
+_441:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*52(%eax)
-	movl	$_438,(%esp)
+	movl	$_442,(%esp)
 	calll	*_bbOnDebugEnterStm
 	call	_bbEnd
 	mov	$0,%ebx
-	jmp	_212
-_212:
+	jmp	_213
+_213:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -260,7 +262,7 @@ __bb_TGui_New:
 	movl	8(%ebp),%eax
 	movl	%eax,-4(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_466,(%esp)
+	movl	$_470,(%esp)
 	calll	*_bbOnDebugEnterScope
 	movl	-4(%ebp),%eax
 	movl	%eax,(%esp)
@@ -350,12 +352,12 @@ __bb_TGui_New:
 	movl	-4(%ebp),%eax
 	movl	%edx,88(%eax)
 	movl	%ebp,4(%esp)
-	movl	$_465,(%esp)
+	movl	$_469,(%esp)
 	calll	*_bbOnDebugEnterScope
 	calll	*_bbOnDebugLeaveScope
 	mov	$0,%ebx
-	jmp	_215
-_215:
+	jmp	_216
+_216:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -369,130 +371,130 @@ __bb_TGui_Delete:
 	push	%ebx
 	sub	$4,%esp
 	movl	8(%ebp),%ebx
-_218:
+_219:
 	movl	88(%ebx),%eax
-	decl	4(%eax)
-	jnz	_470
-	movl	%eax,(%esp)
-	call	_bbGCFree
-_470:
-	movl	84(%ebx),%eax
-	decl	4(%eax)
-	jnz	_472
-	movl	%eax,(%esp)
-	call	_bbGCFree
-_472:
-	movl	80(%ebx),%eax
 	decl	4(%eax)
 	jnz	_474
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _474:
-	movl	72(%ebx),%eax
+	movl	84(%ebx),%eax
 	decl	4(%eax)
 	jnz	_476
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _476:
-	movl	68(%ebx),%eax
+	movl	80(%ebx),%eax
 	decl	4(%eax)
 	jnz	_478
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _478:
-	movl	64(%ebx),%eax
+	movl	72(%ebx),%eax
 	decl	4(%eax)
 	jnz	_480
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _480:
-	movl	60(%ebx),%eax
+	movl	68(%ebx),%eax
 	decl	4(%eax)
 	jnz	_482
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _482:
-	movl	56(%ebx),%eax
+	movl	64(%ebx),%eax
 	decl	4(%eax)
 	jnz	_484
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _484:
-	movl	52(%ebx),%eax
+	movl	60(%ebx),%eax
 	decl	4(%eax)
 	jnz	_486
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _486:
-	movl	48(%ebx),%eax
+	movl	56(%ebx),%eax
 	decl	4(%eax)
 	jnz	_488
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _488:
-	movl	44(%ebx),%eax
+	movl	52(%ebx),%eax
 	decl	4(%eax)
 	jnz	_490
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _490:
-	movl	40(%ebx),%eax
+	movl	48(%ebx),%eax
 	decl	4(%eax)
 	jnz	_492
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _492:
-	movl	36(%ebx),%eax
+	movl	44(%ebx),%eax
 	decl	4(%eax)
 	jnz	_494
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _494:
-	movl	32(%ebx),%eax
+	movl	40(%ebx),%eax
 	decl	4(%eax)
 	jnz	_496
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _496:
-	movl	28(%ebx),%eax
+	movl	36(%ebx),%eax
 	decl	4(%eax)
 	jnz	_498
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _498:
-	movl	24(%ebx),%eax
+	movl	32(%ebx),%eax
 	decl	4(%eax)
 	jnz	_500
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _500:
-	movl	20(%ebx),%eax
+	movl	28(%ebx),%eax
 	decl	4(%eax)
 	jnz	_502
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _502:
-	movl	16(%ebx),%eax
+	movl	24(%ebx),%eax
 	decl	4(%eax)
 	jnz	_504
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _504:
-	movl	12(%ebx),%eax
+	movl	20(%ebx),%eax
 	decl	4(%eax)
 	jnz	_506
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _506:
-	movl	8(%ebx),%eax
+	movl	16(%ebx),%eax
 	decl	4(%eax)
 	jnz	_508
 	movl	%eax,(%esp)
 	call	_bbGCFree
 _508:
+	movl	12(%ebx),%eax
+	decl	4(%eax)
+	jnz	_510
+	movl	%eax,(%esp)
+	call	_bbGCFree
+_510:
+	movl	8(%ebx),%eax
+	decl	4(%eax)
+	jnz	_512
+	movl	%eax,(%esp)
+	call	_bbGCFree
+_512:
 	mov	$0,%eax
-	jmp	_468
-_468:
+	jmp	_472
+_472:
 	add	$4,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -518,60 +520,60 @@ __bb_TGui_Create:
 	movl	$_bbNullObject,-40(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_778,(%esp)
+	movl	$_775,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_509,(%esp)
+	movl	$_513,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bb_TGui,(%esp)
 	call	_bbObjectNew
 	movl	%eax,-4(%ebp)
-	movl	$_511,(%esp)
+	movl	$_515,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_513
+	jne	_517
 	call	_brl_blitz_NullObjectError
-_513:
+_517:
 	mov	$_12,%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	60(%ebx),%eax
 	decl	4(%eax)
-	jnz	_518
+	jnz	_522
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_518:
+_522:
 	movl	%esi,60(%ebx)
-	movl	$_519,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	$5,-8(%ebp)
-	movl	$_521,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	$34,-12(%ebp)
 	movl	$_523,(%esp)
 	calll	*_bbOnDebugEnterStm
-	movl	$8,-16(%ebp)
+	movl	$5,-8(%ebp)
 	movl	$_525,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	$34,-12(%ebp)
+	movl	$_527,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	$8,-16(%ebp)
+	movl	$_529,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	subl	-16(%ebp),%eax
 	movl	%eax,-20(%ebp)
-	movl	$_527,(%esp)
+	movl	$_531,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$1,-24(%ebp)
-	movl	$_529,(%esp)
+	movl	$_533,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_531
+	jne	_535
 	call	_brl_blitz_NullObjectError
-_531:
+_535:
 	call	_maxgui_maxgui_Desktop
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_ClientHeight
 	movl	%eax,-64(%ebp)
 	fildl	-64(%ebp)
-	fmuls	_3330
+	fmuls	_3363
 	fstpl	(%esp)
 	call	_bbFloatToInt
 	movl	%eax,12(%esp)
@@ -597,37 +599,27 @@ _531:
 	mov	%eax,%esi
 	movl	8(%ebx),%eax
 	decl	4(%eax)
-	jnz	_536
+	jnz	_540
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_536:
+_540:
 	movl	%esi,8(%ebx)
-	movl	$_537,(%esp)
+	movl	$_541,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_539
+	jne	_543
 	call	_brl_blitz_NullObjectError
-_539:
+_543:
 	movl	%ebx,-60(%ebp)
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_542
-	call	_brl_blitz_NullObjectError
-_542:
-	movl	8(%ebx),%eax
-	movl	%eax,-56(%ebp)
-	cmpl	$_bbNullObject,-56(%ebp)
-	jne	_544
-	call	_brl_blitz_NullObjectError
-_544:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
 	jne	_546
 	call	_brl_blitz_NullObjectError
 _546:
-	movl	8(%ebx),%edi
-	cmp	$_bbNullObject,%edi
+	movl	8(%ebx),%eax
+	movl	%eax,-56(%ebp)
+	cmpl	$_bbNullObject,-56(%ebp)
 	jne	_548
 	call	_brl_blitz_NullObjectError
 _548:
@@ -636,8 +628,8 @@ _548:
 	jne	_550
 	call	_brl_blitz_NullObjectError
 _550:
-	movl	8(%ebx),%esi
-	cmp	$_bbNullObject,%esi
+	movl	8(%ebx),%edi
+	cmp	$_bbNullObject,%edi
 	jne	_552
 	call	_brl_blitz_NullObjectError
 _552:
@@ -646,11 +638,21 @@ _552:
 	jne	_554
 	call	_brl_blitz_NullObjectError
 _554:
-	movl	8(%ebx),%ebx
-	cmp	$_bbNullObject,%ebx
+	movl	8(%ebx),%esi
+	cmp	$_bbNullObject,%esi
 	jne	_556
 	call	_brl_blitz_NullObjectError
 _556:
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_558
+	call	_brl_blitz_NullObjectError
+_558:
+	movl	8(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_560
+	call	_brl_blitz_NullObjectError
+_560:
 	movl	$15,24(%esp)
 	movl	$_bbNullObject,20(%esp)
 	movl	20(%ebx),%eax
@@ -669,28 +671,28 @@ _556:
 	movl	-60(%ebp),%eax
 	movl	16(%eax),%eax
 	decl	4(%eax)
-	jnz	_560
+	jnz	_564
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_560:
+_564:
 	movl	-60(%ebp),%eax
 	movl	%ebx,16(%eax)
-	movl	$_561,(%esp)
+	movl	$_565,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$38,-28(%ebp)
-	movl	$_563,(%esp)
+	movl	$_567,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_565
+	jne	_569
 	call	_brl_blitz_NullObjectError
-_565:
+_569:
 	mov	%ebx,%esi
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_568
+	jne	_572
 	call	_brl_blitz_NullObjectError
-_568:
+_572:
 	movl	$8,24(%esp)
 	movl	16(%ebx),%eax
 	movl	%eax,20(%esp)
@@ -706,18 +708,18 @@ _568:
 	mov	%eax,%ebx
 	movl	20(%esi),%eax
 	decl	4(%eax)
-	jnz	_572
+	jnz	_576
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_572:
+_576:
 	movl	%ebx,20(%esi)
-	movl	$_573,(%esp)
+	movl	$_577,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_575
+	jne	_579
 	call	_brl_blitz_NullObjectError
-_575:
+_579:
 	movl	$0,16(%esp)
 	movl	$1,12(%esp)
 	movl	$0,8(%esp)
@@ -725,24 +727,24 @@ _575:
 	movl	20(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SetGadgetLayout
-	movl	$_576,(%esp)
+	movl	$_580,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_578
+	jne	_582
 	call	_brl_blitz_NullObjectError
-_578:
+_582:
 	mov	%ebx,%edi
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_581
+	jne	_585
 	call	_brl_blitz_NullObjectError
-_581:
+_585:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_583
+	jne	_587
 	call	_brl_blitz_NullObjectError
-_583:
+_587:
 	movl	$8,24(%esp)
 	movl	16(%ebx),%eax
 	movl	%eax,20(%esp)
@@ -761,18 +763,18 @@ _583:
 	mov	%eax,%ebx
 	movl	24(%edi),%eax
 	decl	4(%eax)
-	jnz	_587
+	jnz	_591
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_587:
+_591:
 	movl	%ebx,24(%edi)
-	movl	$_588,(%esp)
+	movl	$_592,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_590
+	jne	_594
 	call	_brl_blitz_NullObjectError
-_590:
+_594:
 	movl	$0,16(%esp)
 	movl	$1,12(%esp)
 	movl	$0,8(%esp)
@@ -780,27 +782,27 @@ _590:
 	movl	24(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SetGadgetLayout
-	movl	$_591,(%esp)
+	movl	$_595,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$50,-32(%ebp)
-	movl	$_593,(%esp)
+	movl	$_597,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_595
+	jne	_599
 	call	_brl_blitz_NullObjectError
-_595:
+_599:
 	mov	%ebx,%edi
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_598
+	jne	_602
 	call	_brl_blitz_NullObjectError
-_598:
+_602:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_600
+	jne	_604
 	call	_brl_blitz_NullObjectError
-_600:
+_604:
 	movl	$4,24(%esp)
 	movl	16(%ebx),%eax
 	movl	%eax,20(%esp)
@@ -820,18 +822,18 @@ _600:
 	mov	%eax,%ebx
 	movl	28(%edi),%eax
 	decl	4(%eax)
-	jnz	_604
+	jnz	_608
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_604:
+_608:
 	movl	%ebx,28(%edi)
-	movl	$_605,(%esp)
+	movl	$_609,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_607
+	jne	_611
 	call	_brl_blitz_NullObjectError
-_607:
+_611:
 	movl	$0,16(%esp)
 	movl	$1,12(%esp)
 	movl	$1,8(%esp)
@@ -839,18 +841,18 @@ _607:
 	movl	28(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SetGadgetLayout
-	movl	$_608,(%esp)
+	movl	$_612,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_610
+	jne	_614
 	call	_brl_blitz_NullObjectError
-_610:
+_614:
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_612
+	jne	_616
 	call	_brl_blitz_NullObjectError
-_612:
+_616:
 	movl	20(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetWidth
@@ -862,24 +864,24 @@ _612:
 	mov	%ebx,%eax
 	addl	-16(%ebp),%eax
 	movl	%eax,-36(%ebp)
-	movl	$_614,(%esp)
+	movl	$_618,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_616
+	jne	_620
 	call	_brl_blitz_NullObjectError
-_616:
+_620:
 	mov	%ebx,%edi
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_619
+	jne	_623
 	call	_brl_blitz_NullObjectError
-_619:
+_623:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_621
+	jne	_625
 	call	_brl_blitz_NullObjectError
-_621:
+_625:
 	movl	$0,20(%esp)
 	movl	16(%ebx),%eax
 	movl	%eax,16(%esp)
@@ -920,18 +922,18 @@ _621:
 	mov	%eax,%ebx
 	movl	32(%edi),%eax
 	decl	4(%eax)
-	jnz	_625
+	jnz	_629
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_625:
+_629:
 	movl	%ebx,32(%edi)
-	movl	$_626,(%esp)
+	movl	$_630,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_628
+	jne	_632
 	call	_brl_blitz_NullObjectError
-_628:
+_632:
 	movl	$0,16(%esp)
 	movl	$1,12(%esp)
 	movl	$1,8(%esp)
@@ -939,50 +941,50 @@ _628:
 	movl	32(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SetGadgetLayout
-	movl	$_629,(%esp)
+	movl	$_633,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_631
+	jne	_635
 	call	_brl_blitz_NullObjectError
-_631:
+_635:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_633
+	jne	_637
 	call	_brl_blitz_NullObjectError
-_633:
+_637:
 	call	_brl_filesystem_CurrentDir
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%eax,4(%esp)
 	movl	32(%esi),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SetGadgetText
-	movl	$_634,(%esp)
+	movl	$_638,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_636
+	jne	_640
 	call	_brl_blitz_NullObjectError
-_636:
+_640:
 	movl	%ebx,-52(%ebp)
 	movl	-4(%ebp),%edi
 	cmp	$_bbNullObject,%edi
-	jne	_639
-	call	_brl_blitz_NullObjectError
-_639:
-	movl	-4(%ebp),%esi
-	cmp	$_bbNullObject,%esi
-	jne	_641
-	call	_brl_blitz_NullObjectError
-_641:
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
 	jne	_643
 	call	_brl_blitz_NullObjectError
 _643:
+	movl	-4(%ebp),%esi
+	cmp	$_bbNullObject,%esi
+	jne	_645
+	call	_brl_blitz_NullObjectError
+_645:
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_647
+	call	_brl_blitz_NullObjectError
+_647:
 	movl	$10,24(%esp)
 	movl	$1,20(%esp)
 	movl	16(%ebx),%eax
@@ -1005,19 +1007,19 @@ _643:
 	movl	-52(%ebp),%eax
 	movl	36(%eax),%eax
 	decl	4(%eax)
-	jnz	_647
+	jnz	_651
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_647:
+_651:
 	movl	-52(%ebp),%eax
 	movl	%ebx,36(%eax)
-	movl	$_648,(%esp)
+	movl	$_652,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_650
+	jne	_654
 	call	_brl_blitz_NullObjectError
-_650:
+_654:
 	movl	$1,16(%esp)
 	movl	$1,12(%esp)
 	movl	$1,8(%esp)
@@ -1025,55 +1027,55 @@ _650:
 	movl	36(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SetGadgetLayout
-	movl	$_651,(%esp)
+	movl	$_655,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_653
+	jne	_657
 	call	_brl_blitz_NullObjectError
-_653:
+_657:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_655
+	jne	_659
 	call	_brl_blitz_NullObjectError
-_655:
+_659:
 	movl	$0,8(%esp)
 	movl	16(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_ClientWidth
 	movl	%eax,-64(%ebp)
 	fildl	-64(%ebp)
-	fdivs	_3331
+	fdivs	_3364
 	fstpl	(%esp)
 	call	_bbFloatToInt
 	movl	%eax,4(%esp)
 	movl	36(%esi),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_proxygadgets_SetSplitterPosition
-	movl	$_656,(%esp)
+	movl	$_660,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_658
+	jne	_662
 	call	_brl_blitz_NullObjectError
-_658:
+_662:
 	movl	$37,4(%esp)
 	movl	36(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_proxygadgets_SetSplitterBehavior
-	movl	$_659,(%esp)
+	movl	$_663,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_661
+	jne	_665
 	call	_brl_blitz_NullObjectError
-_661:
+_665:
 	mov	%ebx,%esi
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_664
+	jne	_668
 	call	_brl_blitz_NullObjectError
-_664:
+_668:
 	movl	$0,4(%esp)
 	movl	36(%ebx),%eax
 	movl	%eax,(%esp)
@@ -1082,24 +1084,24 @@ _664:
 	mov	%eax,%ebx
 	movl	40(%esi),%eax
 	decl	4(%eax)
-	jnz	_668
+	jnz	_672
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_668:
+_672:
 	movl	%ebx,40(%esi)
-	movl	$_669,(%esp)
+	movl	$_673,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_671
+	jne	_675
 	call	_brl_blitz_NullObjectError
-_671:
+_675:
 	mov	%ebx,%esi
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_674
+	jne	_678
 	call	_brl_blitz_NullObjectError
-_674:
+_678:
 	movl	$1,4(%esp)
 	movl	36(%ebx),%eax
 	movl	%eax,(%esp)
@@ -1108,18 +1110,18 @@ _674:
 	mov	%eax,%ebx
 	movl	44(%esi),%eax
 	decl	4(%eax)
-	jnz	_678
+	jnz	_682
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_678:
+_682:
 	movl	%ebx,44(%esi)
-	movl	$_679,(%esp)
+	movl	$_683,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_681
+	jne	_685
 	call	_brl_blitz_NullObjectError
-_681:
+_685:
 	movl	$0,24(%esp)
 	movl	40(%ebx),%eax
 	movl	%eax,20(%esp)
@@ -1136,29 +1138,38 @@ _681:
 	movl	$_16,(%esp)
 	call	_maxgui_maxgui_CreateLabel
 	movl	%eax,-40(%ebp)
-	movl	$_683,(%esp)
+	movl	$_687,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	$0,16(%esp)
+	movl	$1,12(%esp)
+	movl	$0,8(%esp)
+	movl	$1,4(%esp)
+	movl	-40(%ebp),%eax
+	movl	%eax,(%esp)
+	call	_maxgui_maxgui_SetGadgetLayout
+	movl	$_688,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_685
-	call	_brl_blitz_NullObjectError
-_685:
-	movl	%ebx,-48(%ebp)
-	movl	-4(%ebp),%edi
-	cmp	$_bbNullObject,%edi
-	jne	_688
-	call	_brl_blitz_NullObjectError
-_688:
-	movl	-4(%ebp),%esi
-	cmp	$_bbNullObject,%esi
 	jne	_690
 	call	_brl_blitz_NullObjectError
 _690:
+	movl	%ebx,-48(%ebp)
+	movl	-4(%ebp),%edi
+	cmp	$_bbNullObject,%edi
+	jne	_693
+	call	_brl_blitz_NullObjectError
+_693:
+	movl	-4(%ebp),%esi
+	cmp	$_bbNullObject,%esi
+	jne	_695
+	call	_brl_blitz_NullObjectError
+_695:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_692
+	jne	_697
 	call	_brl_blitz_NullObjectError
-_692:
+_697:
 	movl	$0,20(%esp)
 	movl	40(%ebx),%eax
 	movl	%eax,16(%esp)
@@ -1180,19 +1191,19 @@ _692:
 	movl	-48(%ebp),%eax
 	movl	48(%eax),%eax
 	decl	4(%eax)
-	jnz	_696
+	jnz	_701
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_696:
+_701:
 	movl	-48(%ebp),%eax
 	movl	%ebx,48(%eax)
-	movl	$_697,(%esp)
+	movl	$_702,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_699
+	jne	_704
 	call	_brl_blitz_NullObjectError
-_699:
+_704:
 	movl	$1,16(%esp)
 	movl	$1,12(%esp)
 	movl	$1,8(%esp)
@@ -1200,63 +1211,46 @@ _699:
 	movl	48(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SetGadgetLayout
-	movl	$_700,(%esp)
+	movl	$_705,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_702
+	jne	_707
 	call	_brl_blitz_NullObjectError
-_702:
+_707:
 	mov	$_17,%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	64(%ebx),%eax
 	decl	4(%eax)
-	jnz	_707
+	jnz	_712
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_707:
+_712:
 	movl	%esi,64(%ebx)
-	movl	$_708,(%esp)
+	movl	$_713,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_710
+	jne	_715
 	call	_brl_blitz_NullObjectError
-_710:
-	call	_brl_map_CreateMap
-	incl	4(%eax)
-	mov	%eax,%esi
-	movl	68(%ebx),%eax
-	decl	4(%eax)
-	jnz	_715
-	movl	%eax,(%esp)
-	call	_bbGCFree
 _715:
-	movl	%esi,68(%ebx)
-	movl	$_716,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_718
-	call	_brl_blitz_NullObjectError
-_718:
 	movl	%ebx,-44(%ebp)
 	movl	-4(%ebp),%edi
 	cmp	$_bbNullObject,%edi
-	jne	_721
+	jne	_718
 	call	_brl_blitz_NullObjectError
-_721:
+_718:
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_723
+	jne	_720
 	call	_brl_blitz_NullObjectError
-_723:
+_720:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_725
+	jne	_722
 	call	_brl_blitz_NullObjectError
-_725:
+_722:
 	movl	$0,20(%esp)
 	movl	44(%ebx),%eax
 	movl	%eax,16(%esp)
@@ -1276,19 +1270,19 @@ _725:
 	movl	-44(%ebp),%eax
 	movl	52(%eax),%eax
 	decl	4(%eax)
-	jnz	_729
+	jnz	_726
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_729:
+_726:
 	movl	-44(%ebp),%eax
 	movl	%ebx,52(%eax)
-	movl	$_730,(%esp)
+	movl	$_727,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_732
+	jne	_729
 	call	_brl_blitz_NullObjectError
-_732:
+_729:
 	movl	$1,16(%esp)
 	movl	$1,12(%esp)
 	movl	$1,8(%esp)
@@ -1296,38 +1290,38 @@ _732:
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SetGadgetLayout
-	movl	$_733,(%esp)
+	movl	$_730,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_735
+	jne	_732
 	call	_brl_blitz_NullObjectError
-_735:
+_732:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_737
+	jne	_734
 	call	_brl_blitz_NullObjectError
-_737:
+_734:
 	movl	32(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetText
 	movl	%eax,4(%esp)
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
-	calll	*188(%eax)
-	movl	$_738,(%esp)
+	calll	*192(%eax)
+	movl	$_735,(%esp)
 	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_737
+	call	_brl_blitz_NullObjectError
+_737:
+	mov	%ebx,%esi
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
 	jne	_740
 	call	_brl_blitz_NullObjectError
 _740:
-	mov	%ebx,%esi
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_743
-	call	_brl_blitz_NullObjectError
-_743:
 	movl	32(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetText
@@ -1337,180 +1331,180 @@ _743:
 	mov	%eax,%ebx
 	movl	12(%esi),%eax
 	decl	4(%eax)
-	jnz	_747
+	jnz	_744
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_747:
+_744:
 	movl	%ebx,12(%esi)
-	movl	$_748,(%esp)
+	movl	$_745,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$49,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_749,(%esp)
+	movl	$_746,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$50,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_750,(%esp)
+	movl	$_747,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$85,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_751,(%esp)
+	movl	$_748,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$79,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_752,(%esp)
+	movl	$_749,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$73,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_753,(%esp)
+	movl	$_750,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$75,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_754,(%esp)
+	movl	$_751,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$74,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_755,(%esp)
+	movl	$_752,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$76,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_756,(%esp)
+	movl	$_753,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$186,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_757,(%esp)
+	movl	$_754,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$83,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_758,(%esp)
+	movl	$_755,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$65,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_759,(%esp)
+	movl	$_756,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$87,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_760,(%esp)
+	movl	$_757,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$88,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_761,(%esp)
+	movl	$_758,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$67,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_762,(%esp)
+	movl	$_759,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$86,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_763,(%esp)
+	movl	$_760,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$82,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_764,(%esp)
+	movl	$_761,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$78,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_765,(%esp)
+	movl	$_762,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$70,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_766,(%esp)
+	movl	$_763,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$8,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_767,(%esp)
+	movl	$_764,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$46,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_768,(%esp)
+	movl	$_765,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,12(%esp)
 	movl	$_bbNullObject,8(%esp)
 	movl	$8,4(%esp)
 	movl	$87,(%esp)
 	call	_maxgui_maxgui_SetHotKeyEvent
-	movl	$_769,(%esp)
+	movl	$_766,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_771
+	jne	_768
 	call	_brl_blitz_NullObjectError
-_771:
+_768:
 	call	_brl_linkedlist_CreateList
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	56(%ebx),%eax
 	decl	4(%eax)
-	jnz	_776
+	jnz	_773
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_776:
+_773:
 	movl	%esi,56(%ebx)
-	movl	$_777,(%esp)
+	movl	$_774,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
-	jmp	_220
-_220:
+	jmp	_221
+_221:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$28,%esp
@@ -1523,21 +1517,28 @@ _220:
 __bb_TGui_Run:
 	push	%ebp
 	mov	%esp,%ebp
-	sub	$24,%esp
+	sub	$12,%esp
 	push	%ebx
 	push	%esi
 	push	%edi
-	sub	$36,%esp
+	sub	$16,%esp
 	movl	8(%ebp),%eax
 	movl	%eax,-4(%ebp)
 	movl	$_bbNullObject,-8(%ebp)
-	movl	$_bbEmptyString,-12(%ebp)
-	movl	$_bbNullObject,-16(%ebp)
-	movl	$_bbNullObject,-20(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1096,(%esp)
+	movl	$_1050,(%esp)
 	calll	*_bbOnDebugEnterScope
+	movl	$_786,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_788
+	call	_brl_blitz_NullObjectError
+_788:
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*64(%eax)
 	movl	$_789,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
@@ -1545,14 +1546,14 @@ __bb_TGui_Run:
 	jne	_791
 	call	_brl_blitz_NullObjectError
 _791:
-	movl	64(%ebx),%eax
+	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
-	call	_brl_filesystem_FileType
-	cmp	$1,%eax
-	jne	_792
+	call	_maxgui_maxgui_CountGadgetItems
+	cmp	$0,%eax
+	jle	_792
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_831,(%esp)
+	movl	$_855,(%esp)
 	calll	*_bbOnDebugEnterScope
 	movl	$_793,(%esp)
 	calll	*_bbOnDebugEnterStm
@@ -1561,230 +1562,71 @@ _791:
 	jne	_795
 	call	_brl_blitz_NullObjectError
 _795:
-	movl	64(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_brl_filesystem_ReadFile
-	movl	%eax,-8(%ebp)
-	movl	$_797,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	$_bbEmptyString,-12(%ebp)
-	movl	$_799,(%esp)
-	calll	*_bbOnDebugEnterStm
-	jmp	_18
-_20:
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_829,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_800,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-8(%ebp),%eax
-	movl	%eax,(%esp)
-	call	_brl_stream_ReadLine
-	movl	%eax,-12(%ebp)
-	movl	$_801,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-12(%ebp),%eax
-	movl	8(%eax),%eax
-	cmp	$0,%eax
-	setg	%al
-	movzbl	%al,%eax
-	cmp	$0,%eax
-	je	_802
-	movl	-12(%ebp),%eax
-	movl	%eax,(%esp)
-	call	_brl_filesystem_FileType
-	cmp	$0,%eax
-	setg	%al
-	movzbl	%al,%eax
-_802:
-	cmp	$0,%eax
-	je	_804
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_826,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_805,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-12(%ebp),%eax
-	movl	%eax,(%esp)
-	calll	*_bb_FavoriteNode+48
-	movl	%eax,-16(%ebp)
-	movl	$_807,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%esi
-	cmp	$_bbNullObject,%esi
-	jne	_809
-	call	_brl_blitz_NullObjectError
-_809:
-	movl	-16(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_811
-	call	_brl_blitz_NullObjectError
-_811:
-	movl	12(%ebx),%eax
-	movl	%eax,4(%esp)
-	movl	68(%esi),%eax
-	movl	%eax,(%esp)
-	call	_brl_map_MapContains
-	cmp	$0,%eax
-	jne	_812
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_825,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_813,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%edi
-	cmp	$_bbNullObject,%edi
-	jne	_815
-	call	_brl_blitz_NullObjectError
-_815:
-	movl	-16(%ebp),%esi
-	cmp	$_bbNullObject,%esi
-	jne	_817
-	call	_brl_blitz_NullObjectError
-_817:
-	movl	-16(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_819
-	call	_brl_blitz_NullObjectError
-_819:
-	movl	8(%ebx),%eax
-	movl	%eax,8(%esp)
-	movl	12(%esi),%eax
-	movl	%eax,4(%esp)
-	movl	68(%edi),%eax
-	movl	%eax,(%esp)
-	call	_brl_map_MapInsert
-	movl	$_820,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%esi
-	cmp	$_bbNullObject,%esi
-	jne	_822
-	call	_brl_blitz_NullObjectError
-_822:
-	movl	-16(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_824
-	call	_brl_blitz_NullObjectError
-_824:
-	movl	$_bbNullObject,20(%esp)
-	movl	$_1,16(%esp)
-	movl	$-1,12(%esp)
-	movl	$0,8(%esp)
-	movl	12(%ebx),%eax
-	movl	%eax,4(%esp)
-	movl	48(%esi),%eax
-	movl	%eax,(%esp)
-	call	_maxgui_maxgui_AddGadgetItem
-	calll	*_bbOnDebugLeaveScope
-_812:
-	calll	*_bbOnDebugLeaveScope
-_804:
-	calll	*_bbOnDebugLeaveScope
-_18:
-	movl	-8(%ebp),%eax
-	movl	%eax,(%esp)
-	call	_brl_stream_Eof
-	cmp	$0,%eax
-	je	_20
-_19:
-	movl	$_830,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-8(%ebp),%eax
-	movl	%eax,(%esp)
-	call	_brl_filesystem_CloseFile
-	calll	*_bbOnDebugLeaveScope
-_792:
-	movl	$_835,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_837
-	call	_brl_blitz_NullObjectError
-_837:
-	movl	52(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_maxgui_maxgui_CountGadgetItems
-	cmp	$0,%eax
-	jle	_838
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_901,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_839,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_841
-	call	_brl_blitz_NullObjectError
-_841:
 	movl	$0,4(%esp)
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectGadgetItem
-	movl	$_842,(%esp)
+	movl	$_796,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bb_Node,(%esp)
 	call	_bbObjectNew
-	movl	%eax,-20(%ebp)
-	movl	$_844,(%esp)
+	movl	%eax,-8(%ebp)
+	movl	$_798,(%esp)
 	calll	*_bbOnDebugEnterStm
-	movl	-20(%ebp),%ebx
+	movl	-8(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_846
+	jne	_800
 	call	_brl_blitz_NullObjectError
-_846:
+_800:
 	mov	%ebx,%esi
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_849
+	jne	_803
 	call	_brl_blitz_NullObjectError
-_849:
+_803:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_851
+	jne	_805
 	call	_brl_blitz_NullObjectError
-_851:
+_805:
 	movl	8(%ebx),%eax
 	incl	4(%eax)
 	mov	%eax,%ebx
 	movl	12(%esi),%eax
 	decl	4(%eax)
-	jnz	_855
+	jnz	_809
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_855:
+_809:
 	movl	%ebx,12(%esi)
-	movl	$_856,(%esp)
+	movl	$_810,(%esp)
 	calll	*_bbOnDebugEnterStm
-	movl	-20(%ebp),%ebx
+	movl	-8(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_858
+	jne	_812
 	call	_brl_blitz_NullObjectError
-_858:
-	movl	%ebx,-24(%ebp)
+_812:
+	movl	%ebx,-12(%ebp)
 	movl	-4(%ebp),%edi
 	cmp	$_bbNullObject,%edi
-	jne	_861
+	jne	_815
 	call	_brl_blitz_NullObjectError
-_861:
+_815:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_863
+	jne	_817
 	call	_brl_blitz_NullObjectError
-_863:
+_817:
 	movl	12(%ebx),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_865
+	jne	_819
 	call	_brl_blitz_NullObjectError
-_865:
+_819:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_867
+	jne	_821
 	call	_brl_blitz_NullObjectError
-_867:
+_821:
 	movl	$0,4(%esp)
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
@@ -1796,147 +1638,147 @@ _867:
 	movl	%eax,4(%esp)
 	movl	%edi,(%esp)
 	movl	(%edi),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%ebx,4(%esp)
 	movl	%eax,(%esp)
 	call	_bbStringConcat
 	mov	%eax,%ebx
 	incl	4(%ebx)
-	movl	-24(%ebp),%eax
+	movl	-12(%ebp),%eax
 	movl	8(%eax),%eax
 	decl	4(%eax)
-	jnz	_871
+	jnz	_825
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_871:
-	movl	-24(%ebp),%eax
+_825:
+	movl	-12(%ebp),%eax
 	movl	%ebx,8(%eax)
-	movl	$_872,(%esp)
+	movl	$_826,(%esp)
 	calll	*_bbOnDebugEnterStm
-	movl	-20(%ebp),%ebx
+	movl	-8(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_874
+	jne	_828
 	call	_brl_blitz_NullObjectError
-_874:
+_828:
 	movl	8(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$2,%eax
-	jne	_875
+	jne	_829
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_888,(%esp)
+	movl	$_842,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_876,(%esp)
+	movl	$_830,(%esp)
 	calll	*_bbOnDebugEnterStm
-	movl	-20(%ebp),%ebx
+	movl	-8(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_878
+	jne	_832
 	call	_brl_blitz_NullObjectError
-_878:
+_832:
 	mov	%ebx,%edi
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_881
+	jne	_835
 	call	_brl_blitz_NullObjectError
-_881:
-	movl	-20(%ebp),%ebx
+_835:
+	movl	-8(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_883
+	jne	_837
 	call	_brl_blitz_NullObjectError
-_883:
+_837:
 	movl	8(%ebx),%eax
 	movl	%eax,4(%esp)
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	incl	4(%eax)
 	mov	%eax,%ebx
 	movl	8(%edi),%eax
 	decl	4(%eax)
-	jnz	_887
+	jnz	_841
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_887:
+_841:
 	movl	%ebx,8(%edi)
 	calll	*_bbOnDebugLeaveScope
-_875:
-	movl	$_889,(%esp)
+_829:
+	movl	$_843,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_891
+	jne	_845
 	call	_brl_blitz_NullObjectError
-_891:
+_845:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_893
+	jne	_847
 	call	_brl_blitz_NullObjectError
-_893:
+_847:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_895
+	jne	_849
 	call	_brl_blitz_NullObjectError
-_895:
-	movl	-20(%ebp),%eax
+_849:
+	movl	-8(%ebp),%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	16(%ebx),%eax
 	decl	4(%eax)
-	jnz	_900
+	jnz	_854
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_900:
+_854:
 	movl	%esi,16(%ebx)
 	calll	*_bbOnDebugLeaveScope
-_838:
-	movl	$_902,(%esp)
+_792:
+	movl	$_856,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_904
+	jne	_858
 	call	_brl_blitz_NullObjectError
-_904:
+_858:
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_ActivateGadget
-	movl	$_905,(%esp)
+	movl	$_859,(%esp)
 	calll	*_bbOnDebugEnterStm
-	jmp	_21
-_23:
+	jmp	_18
+_20:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1095,(%esp)
+	movl	$_1049,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_906,(%esp)
+	movl	$_860,(%esp)
 	calll	*_bbOnDebugEnterStm
 	call	_brl_eventqueue_WaitEvent
-	movl	$_907,(%esp)
+	movl	$_861,(%esp)
 	calll	*_bbOnDebugEnterStm
 	call	_brl_eventqueue_EventID
 	cmp	$16387,%eax
-	je	_910
+	je	_864
 	cmp	$8195,%eax
-	je	_911
+	je	_865
 	cmp	$8193,%eax
-	je	_912
+	je	_866
 	cmp	$4097,%eax
-	je	_913
+	je	_867
 	cmp	$513,%eax
-	je	_914
-	jmp	_909
-_910:
+	je	_868
+	jmp	_863
+_864:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_921,(%esp)
+	movl	$_875,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_915,(%esp)
+	movl	$_869,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_917
+	jne	_871
 	call	_brl_blitz_NullObjectError
-_917:
+_871:
 	movl	$_maxgui_maxgui_TGadget,4(%esp)
 	call	_brl_eventqueue_EventSource
 	movl	%eax,(%esp)
@@ -1944,542 +1786,542 @@ _917:
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*72(%eax)
+	calll	*76(%eax)
 	cmp	$0,%eax
-	je	_918
+	je	_872
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_920,(%esp)
+	movl	$_874,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_919,(%esp)
+	movl	$_873,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
 	calll	*_bbOnDebugLeaveScope
 	calll	*_bbOnDebugLeaveScope
-	jmp	_223
-_918:
+	jmp	_224
+_872:
 	calll	*_bbOnDebugLeaveScope
-	jmp	_909
-_911:
+	jmp	_863
+_865:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_925,(%esp)
+	movl	$_879,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_922,(%esp)
+	movl	$_876,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_924
+	jne	_878
 	call	_brl_blitz_NullObjectError
-_924:
+_878:
 	call	_brl_eventqueue_EventSource
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*56(%eax)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_909
-_912:
+	jmp	_863
+_866:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_952,(%esp)
+	movl	$_906,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_926,(%esp)
+	movl	$_880,(%esp)
 	calll	*_bbOnDebugEnterStm
 	call	_brl_eventqueue_EventSource
 	mov	%eax,%esi
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_931
+	jne	_885
 	call	_brl_blitz_NullObjectError
-_931:
+_885:
 	cmpl	20(%ebx),%esi
-	je	_929
+	je	_883
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_934
+	jne	_888
 	call	_brl_blitz_NullObjectError
-_934:
+_888:
 	cmpl	24(%ebx),%esi
-	je	_932
+	je	_886
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_937
+	jne	_891
 	call	_brl_blitz_NullObjectError
-_937:
+_891:
 	cmpl	28(%ebx),%esi
-	je	_935
-	jmp	_928
-_929:
+	je	_889
+	jmp	_882
+_883:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_941,(%esp)
+	movl	$_895,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_938,(%esp)
+	movl	$_892,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_940
+	jne	_894
 	call	_brl_blitz_NullObjectError
-_940:
+_894:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*168(%eax)
+	calll	*172(%eax)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_928
-_932:
+	jmp	_882
+_886:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_945,(%esp)
+	movl	$_899,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_942,(%esp)
+	movl	$_896,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_944
+	jne	_898
 	call	_brl_blitz_NullObjectError
-_944:
+_898:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*160(%eax)
+	calll	*164(%eax)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_928
-_935:
+	jmp	_882
+_889:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_951,(%esp)
+	movl	$_905,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_946,(%esp)
+	movl	$_900,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_948
+	jne	_902
 	call	_brl_blitz_NullObjectError
-_948:
+_902:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_950
+	jne	_904
 	call	_brl_blitz_NullObjectError
-_950:
+_904:
 	movl	32(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetText
 	movl	%eax,4(%esp)
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
-	calll	*152(%eax)
+	calll	*156(%eax)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_928
-_928:
+	jmp	_882
+_882:
 	calll	*_bbOnDebugLeaveScope
-	jmp	_909
-_913:
+	jmp	_863
+_867:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1081,(%esp)
+	movl	$_1035,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_953,(%esp)
+	movl	$_907,(%esp)
 	calll	*_bbOnDebugEnterStm
 	call	_brl_eventqueue_EventMods
 	cmp	$8,%eax
-	jne	_954
+	jne	_908
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1080,(%esp)
+	movl	$_1034,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_955,(%esp)
+	movl	$_909,(%esp)
 	calll	*_bbOnDebugEnterStm
 	call	_brl_eventqueue_EventData
 	cmp	$49,%eax
-	je	_958
+	je	_912
 	cmp	$50,%eax
-	je	_959
+	je	_913
 	cmp	$85,%eax
-	je	_960
+	je	_914
 	cmp	$79,%eax
-	je	_961
+	je	_915
 	cmp	$83,%eax
-	je	_962
+	je	_916
 	cmp	$65,%eax
-	je	_963
+	je	_917
 	cmp	$88,%eax
-	je	_964
+	je	_918
 	cmp	$67,%eax
-	je	_965
+	je	_919
 	cmp	$86,%eax
-	je	_966
+	je	_920
 	cmp	$82,%eax
-	je	_967
+	je	_921
 	cmp	$78,%eax
-	je	_968
+	je	_922
 	cmp	$70,%eax
-	je	_969
+	je	_923
 	cmp	$8,%eax
-	je	_970
+	je	_924
 	cmp	$46,%eax
-	je	_971
+	je	_925
 	cmp	$186,%eax
-	je	_972
+	je	_926
 	cmp	$74,%eax
-	je	_973
+	je	_927
 	cmp	$76,%eax
-	je	_974
+	je	_928
 	cmp	$13,%eax
-	je	_975
+	je	_929
 	cmp	$87,%eax
-	je	_976
+	je	_930
 	cmp	$73,%eax
-	je	_977
+	je	_931
 	cmp	$75,%eax
-	je	_978
-	jmp	_957
-_958:
+	je	_932
+	jmp	_911
+_912:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_982,(%esp)
+	movl	$_936,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_979,(%esp)
+	movl	$_933,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_981
+	jne	_935
 	call	_brl_blitz_NullObjectError
-_981:
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*64(%eax)
-	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_959:
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_986,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_983,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_985
-	call	_brl_blitz_NullObjectError
-_985:
+_935:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*68(%eax)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_960:
+	jmp	_911
+_913:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_940,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_937,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_939
+	call	_brl_blitz_NullObjectError
+_939:
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*72(%eax)
+	calll	*_bbOnDebugLeaveScope
+	jmp	_911
+_914:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_946,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_941,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%esi
+	cmp	$_bbNullObject,%esi
+	jne	_943
+	call	_brl_blitz_NullObjectError
+_943:
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_945
+	call	_brl_blitz_NullObjectError
+_945:
+	movl	$0,8(%esp)
+	movl	48(%ebx),%eax
+	movl	%eax,4(%esp)
+	movl	%esi,(%esp)
+	movl	(%esi),%eax
+	calll	*176(%eax)
+	calll	*_bbOnDebugLeaveScope
+	jmp	_911
+_915:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_952,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_947,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%esi
+	cmp	$_bbNullObject,%esi
+	jne	_949
+	call	_brl_blitz_NullObjectError
+_949:
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_951
+	call	_brl_blitz_NullObjectError
+_951:
+	movl	$1,8(%esp)
+	movl	48(%ebx),%eax
+	movl	%eax,4(%esp)
+	movl	%esi,(%esp)
+	movl	(%esi),%eax
+	calll	*176(%eax)
+	calll	*_bbOnDebugLeaveScope
+	jmp	_911
+_916:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_956,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_953,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_955
+	call	_brl_blitz_NullObjectError
+_955:
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*104(%eax)
+	calll	*_bbOnDebugLeaveScope
+	jmp	_911
+_917:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_960,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_957,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_959
+	call	_brl_blitz_NullObjectError
+_959:
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*116(%eax)
+	calll	*_bbOnDebugLeaveScope
+	jmp	_911
+_918:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_964,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_961,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_963
+	call	_brl_blitz_NullObjectError
+_963:
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*124(%eax)
+	calll	*_bbOnDebugLeaveScope
+	jmp	_911
+_919:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_968,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_965,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_967
+	call	_brl_blitz_NullObjectError
+_967:
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*120(%eax)
+	calll	*_bbOnDebugLeaveScope
+	jmp	_911
+_920:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_972,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_969,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_971
+	call	_brl_blitz_NullObjectError
+_971:
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*128(%eax)
+	calll	*_bbOnDebugLeaveScope
+	jmp	_911
+_921:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_976,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_973,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_975
+	call	_brl_blitz_NullObjectError
+_975:
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*96(%eax)
+	calll	*_bbOnDebugLeaveScope
+	jmp	_911
+_922:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_980,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_977,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_979
+	call	_brl_blitz_NullObjectError
+_979:
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*92(%eax)
+	calll	*_bbOnDebugLeaveScope
+	jmp	_911
+_923:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_984,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_981,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_983
+	call	_brl_blitz_NullObjectError
+_983:
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*88(%eax)
+	calll	*_bbOnDebugLeaveScope
+	jmp	_911
+_924:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_988,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_985,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_987
+	call	_brl_blitz_NullObjectError
+_987:
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*112(%eax)
+	calll	*_bbOnDebugLeaveScope
+	jmp	_911
+_925:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
 	movl	$_992,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_987,(%esp)
+	movl	$_989,(%esp)
 	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%esi
-	cmp	$_bbNullObject,%esi
-	jne	_989
-	call	_brl_blitz_NullObjectError
-_989:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
 	jne	_991
 	call	_brl_blitz_NullObjectError
 _991:
-	movl	$0,8(%esp)
-	movl	48(%ebx),%eax
-	movl	%eax,4(%esp)
-	movl	%esi,(%esp)
-	movl	(%esi),%eax
-	calll	*172(%eax)
-	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_961:
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_998,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_993,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%esi
-	cmp	$_bbNullObject,%esi
-	jne	_995
-	call	_brl_blitz_NullObjectError
-_995:
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_997
-	call	_brl_blitz_NullObjectError
-_997:
-	movl	$1,8(%esp)
-	movl	48(%ebx),%eax
-	movl	%eax,4(%esp)
-	movl	%esi,(%esp)
-	movl	(%esi),%eax
-	calll	*172(%eax)
-	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_962:
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1002,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_999,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1001
-	call	_brl_blitz_NullObjectError
-_1001:
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*100(%eax)
-	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_963:
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1006,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1003,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1005
-	call	_brl_blitz_NullObjectError
-_1005:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*112(%eax)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_964:
+	jmp	_911
+_926:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1010,(%esp)
+	movl	$_996,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1007,(%esp)
+	movl	$_993,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1009
+	jne	_995
 	call	_brl_blitz_NullObjectError
-_1009:
+_995:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*120(%eax)
+	calll	*100(%eax)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_965:
+	jmp	_911
+_927:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1014,(%esp)
+	movl	$_1000,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1011,(%esp)
+	movl	$_997,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1013
+	jne	_999
 	call	_brl_blitz_NullObjectError
-_1013:
+_999:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*116(%eax)
+	calll	*168(%eax)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_966:
+	jmp	_911
+_928:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1018,(%esp)
+	movl	$_1004,(%esp)
 	calll	*_bbOnDebugEnterScope
+	movl	$_1001,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1003
+	call	_brl_blitz_NullObjectError
+_1003:
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*160(%eax)
+	calll	*_bbOnDebugLeaveScope
+	jmp	_911
+_929:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_1008,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_1005,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1007
+	call	_brl_blitz_NullObjectError
+_1007:
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*160(%eax)
+	calll	*_bbOnDebugLeaveScope
+	jmp	_911
+_930:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
 	movl	$_1015,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1017
-	call	_brl_blitz_NullObjectError
-_1017:
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*124(%eax)
-	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_967:
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1022,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1019,(%esp)
+	movl	$_1009,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1021
+	jne	_1011
 	call	_brl_blitz_NullObjectError
-_1021:
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*92(%eax)
-	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_968:
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1026,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1023,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1025
-	call	_brl_blitz_NullObjectError
-_1025:
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*88(%eax)
-	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_969:
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1030,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1027,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1029
-	call	_brl_blitz_NullObjectError
-_1029:
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*84(%eax)
-	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_970:
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1034,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1031,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1033
-	call	_brl_blitz_NullObjectError
-_1033:
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*108(%eax)
-	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_971:
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1038,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1035,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1037
-	call	_brl_blitz_NullObjectError
-_1037:
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*108(%eax)
-	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_972:
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1042,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1039,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1041
-	call	_brl_blitz_NullObjectError
-_1041:
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*96(%eax)
-	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_973:
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1046,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1043,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1045
-	call	_brl_blitz_NullObjectError
-_1045:
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*164(%eax)
-	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_974:
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1050,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1047,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1049
-	call	_brl_blitz_NullObjectError
-_1049:
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*156(%eax)
-	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_975:
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1054,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1051,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1053
-	call	_brl_blitz_NullObjectError
-_1053:
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*156(%eax)
-	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_976:
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1061,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1055,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1057
-	call	_brl_blitz_NullObjectError
-_1057:
+_1011:
 	call	_maxgui_maxgui_ActiveGadget
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*72(%eax)
+	calll	*76(%eax)
 	cmp	$0,%eax
-	je	_1058
+	je	_1012
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1060,(%esp)
+	movl	$_1014,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1059,(%esp)
+	movl	$_1013,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
@@ -2487,150 +2329,150 @@ _1057:
 	calll	*_bbOnDebugLeaveScope
 	calll	*_bbOnDebugLeaveScope
 	calll	*_bbOnDebugLeaveScope
-	jmp	_223
-_1058:
+	jmp	_224
+_1012:
 	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_977:
+	jmp	_911
+_931:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1070,(%esp)
+	movl	$_1024,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1062,(%esp)
+	movl	$_1016,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_1064
+	jne	_1018
 	call	_brl_blitz_NullObjectError
-_1064:
+_1018:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1066
+	jne	_1020
 	call	_brl_blitz_NullObjectError
-_1066:
+_1020:
 	movl	$0,8(%esp)
 	movl	52(%ebx),%eax
 	movl	%eax,4(%esp)
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
-	calll	*172(%eax)
-	movl	$_1067,(%esp)
+	calll	*176(%eax)
+	movl	$_1021,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1069
+	jne	_1023
 	call	_brl_blitz_NullObjectError
-_1069:
+_1023:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*176(%eax)
+	calll	*180(%eax)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_978:
+	jmp	_911
+_932:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1079,(%esp)
+	movl	$_1033,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1071,(%esp)
+	movl	$_1025,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_1073
+	jne	_1027
 	call	_brl_blitz_NullObjectError
-_1073:
+_1027:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1075
+	jne	_1029
 	call	_brl_blitz_NullObjectError
-_1075:
+_1029:
 	movl	$1,8(%esp)
 	movl	52(%ebx),%eax
 	movl	%eax,4(%esp)
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
-	calll	*172(%eax)
-	movl	$_1076,(%esp)
+	calll	*176(%eax)
+	movl	$_1030,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1078
+	jne	_1032
 	call	_brl_blitz_NullObjectError
-_1078:
+_1032:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*176(%eax)
+	calll	*180(%eax)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_957
-_957:
+	jmp	_911
+_911:
 	calll	*_bbOnDebugLeaveScope
-_954:
+_908:
 	calll	*_bbOnDebugLeaveScope
-	jmp	_909
-_914:
+	jmp	_863
+_868:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1094,(%esp)
+	movl	$_1048,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1082,(%esp)
+	movl	$_1036,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1084
+	jne	_1038
 	call	_brl_blitz_NullObjectError
-_1084:
+_1038:
 	call	_maxgui_maxgui_ActiveGadget
 	cmpl	32(%ebx),%eax
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	je	_1085
+	je	_1039
 	call	_brl_eventqueue_EventData
 	cmp	$13,%eax
 	sete	%al
 	movzbl	%al,%eax
-_1085:
+_1039:
 	cmp	$0,%eax
-	je	_1087
+	je	_1041
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1093,(%esp)
+	movl	$_1047,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1088,(%esp)
+	movl	$_1042,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_1090
+	jne	_1044
 	call	_brl_blitz_NullObjectError
-_1090:
+_1044:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1092
+	jne	_1046
 	call	_brl_blitz_NullObjectError
-_1092:
+_1046:
 	movl	32(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetText
 	movl	%eax,4(%esp)
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
-	calll	*152(%eax)
+	calll	*156(%eax)
 	calll	*_bbOnDebugLeaveScope
-_1087:
+_1041:
 	calll	*_bbOnDebugLeaveScope
-	jmp	_909
-_909:
+	jmp	_863
+_863:
 	calll	*_bbOnDebugLeaveScope
-_21:
+_18:
 	mov	$1,%eax
 	cmp	$0,%eax
-	jne	_23
-_22:
+	jne	_20
+_19:
 	mov	$0,%ebx
-	jmp	_223
-_223:
+	jmp	_224
+_224:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
-	add	$36,%esp
+	add	$16,%esp
 	pop	%edi
 	pop	%esi
 	pop	%ebx
@@ -2651,66 +2493,66 @@ __bb_TGui_LastSelected:
 	movl	$_bbNullObject,-12(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1116,(%esp)
+	movl	$_1070,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1097,(%esp)
+	movl	$_1051,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_maxgui_maxgui_TGadget,4(%esp)
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_bbObjectDowncast
 	movl	%eax,-12(%ebp)
-	movl	$_1099,(%esp)
+	movl	$_1053,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1101
+	jne	_1055
 	call	_brl_blitz_NullObjectError
-_1101:
+_1055:
 	movl	-12(%ebp),%eax
 	cmpl	52(%ebx),%eax
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	jne	_1104
+	jne	_1058
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1103
+	jne	_1057
 	call	_brl_blitz_NullObjectError
-_1103:
+_1057:
 	movl	-12(%ebp),%eax
 	cmpl	48(%ebx),%eax
 	sete	%al
 	movzbl	%al,%eax
-_1104:
+_1058:
 	cmp	$0,%eax
-	je	_1106
+	je	_1060
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1115,(%esp)
+	movl	$_1069,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1107,(%esp)
+	movl	$_1061,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1109
+	jne	_1063
 	call	_brl_blitz_NullObjectError
-_1109:
+_1063:
 	movl	-12(%ebp),%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	80(%ebx),%eax
 	decl	4(%eax)
-	jnz	_1114
+	jnz	_1068
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_1114:
+_1068:
 	movl	%esi,80(%ebx)
 	calll	*_bbOnDebugLeaveScope
-_1106:
+_1060:
 	mov	$0,%ebx
-	jmp	_227
-_227:
+	jmp	_228
+_228:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$20,%esp
@@ -2732,93 +2574,333 @@ __bb_TGui_SaveFavorites:
 	movl	$_bbNullObject,-12(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1142,(%esp)
+	movl	$_1096,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1120,(%esp)
+	movl	$_1074,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1122
+	jne	_1076
 	call	_brl_blitz_NullObjectError
-_1122:
+_1076:
 	movl	64(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_WriteFile
 	movl	%eax,-8(%ebp)
-	movl	$_1124,(%esp)
+	movl	$_1078,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bbNullObject,-12(%ebp)
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1127
+	jne	_1081
 	call	_brl_blitz_NullObjectError
-_1127:
+_1081:
 	movl	68(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_map_MapValues
 	mov	%eax,%esi
 	mov	%esi,%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1130
+	jne	_1084
 	call	_brl_blitz_NullObjectError
-_1130:
+_1084:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*48(%eax)
 	mov	%eax,%ebx
-	jmp	_24
-_26:
+	jmp	_21
+_23:
 	cmp	$_bbNullObject,%ebx
-	jne	_1135
+	jne	_1089
 	call	_brl_blitz_NullObjectError
-_1135:
+_1089:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*52(%eax)
 	movl	%eax,-12(%ebp)
 	cmpl	$_bbNullObject,-12(%ebp)
-	je	_24
+	je	_21
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1139,(%esp)
+	movl	$_1093,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1136,(%esp)
+	movl	$_1090,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bbStringClass,4(%esp)
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_bbObjectDowncast
 	cmp	$_bbNullObject,%eax
-	jne	_1138
+	jne	_1092
 	mov	$_bbEmptyString,%eax
-_1138:
+_1092:
 	movl	%eax,4(%esp)
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_stream_WriteLine
 	calll	*_bbOnDebugLeaveScope
-_24:
+_21:
 	cmp	$_bbNullObject,%ebx
-	jne	_1133
+	jne	_1087
 	call	_brl_blitz_NullObjectError
-_1133:
+_1087:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*48(%eax)
 	cmp	$0,%eax
-	jne	_26
-_25:
-	movl	$_1141,(%esp)
+	jne	_23
+_22:
+	movl	$_1095,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_CloseFile
 	mov	$0,%ebx
-	jmp	_230
-_230:
+	jmp	_231
+_231:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$20,%esp
+	pop	%esi
+	pop	%ebx
+	mov	%ebp,%esp
+	pop	%ebp
+	ret
+__bb_TGui_LoadFavorites:
+	push	%ebp
+	mov	%esp,%ebp
+	sub	$16,%esp
+	push	%ebx
+	push	%esi
+	push	%edi
+	sub	$28,%esp
+	movl	8(%ebp),%eax
+	movl	%eax,-4(%ebp)
+	movl	$_bbNullObject,-8(%ebp)
+	movl	$_bbEmptyString,-12(%ebp)
+	movl	$_bbNullObject,-16(%ebp)
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_1163,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_1099,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1101
+	call	_brl_blitz_NullObjectError
+_1101:
+	movl	64(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_brl_filesystem_FileType
+	cmp	$1,%eax
+	jne	_1102
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_1160,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_1103,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1105
+	call	_brl_blitz_NullObjectError
+_1105:
+	cmpl	$_bbNullObject,68(%ebx)
+	je	_1106
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_1110,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_1107,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1109
+	call	_brl_blitz_NullObjectError
+_1109:
+	movl	68(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_brl_map_ClearMap
+	calll	*_bbOnDebugLeaveScope
+_1106:
+	movl	$_1111,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1113
+	call	_brl_blitz_NullObjectError
+_1113:
+	movl	48(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_maxgui_maxgui_ClearGadgetItems
+	movl	$_1114,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1116
+	call	_brl_blitz_NullObjectError
+_1116:
+	call	_brl_map_CreateMap
+	incl	4(%eax)
+	mov	%eax,%esi
+	movl	68(%ebx),%eax
+	decl	4(%eax)
+	jnz	_1121
+	movl	%eax,(%esp)
+	call	_bbGCFree
+_1121:
+	movl	%esi,68(%ebx)
+	movl	$_1122,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1124
+	call	_brl_blitz_NullObjectError
+_1124:
+	movl	64(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_brl_filesystem_ReadFile
+	movl	%eax,-8(%ebp)
+	movl	$_1126,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	$_bbEmptyString,-12(%ebp)
+	movl	$_1128,(%esp)
+	calll	*_bbOnDebugEnterStm
+	jmp	_24
+_26:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_1158,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_1129,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-8(%ebp),%eax
+	movl	%eax,(%esp)
+	call	_brl_stream_ReadLine
+	movl	%eax,-12(%ebp)
+	movl	$_1130,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-12(%ebp),%eax
+	movl	8(%eax),%eax
+	cmp	$0,%eax
+	setg	%al
+	movzbl	%al,%eax
+	cmp	$0,%eax
+	je	_1131
+	movl	-12(%ebp),%eax
+	movl	%eax,(%esp)
+	call	_brl_filesystem_FileType
+	cmp	$0,%eax
+	setg	%al
+	movzbl	%al,%eax
+_1131:
+	cmp	$0,%eax
+	je	_1133
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_1155,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_1134,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-12(%ebp),%eax
+	movl	%eax,(%esp)
+	calll	*_bb_FavoriteNode+48
+	movl	%eax,-16(%ebp)
+	movl	$_1136,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%esi
+	cmp	$_bbNullObject,%esi
+	jne	_1138
+	call	_brl_blitz_NullObjectError
+_1138:
+	movl	-16(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1140
+	call	_brl_blitz_NullObjectError
+_1140:
+	movl	12(%ebx),%eax
+	movl	%eax,4(%esp)
+	movl	68(%esi),%eax
+	movl	%eax,(%esp)
+	call	_brl_map_MapContains
+	cmp	$0,%eax
+	jne	_1141
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_1154,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_1142,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%edi
+	cmp	$_bbNullObject,%edi
+	jne	_1144
+	call	_brl_blitz_NullObjectError
+_1144:
+	movl	-16(%ebp),%esi
+	cmp	$_bbNullObject,%esi
+	jne	_1146
+	call	_brl_blitz_NullObjectError
+_1146:
+	movl	-16(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1148
+	call	_brl_blitz_NullObjectError
+_1148:
+	movl	8(%ebx),%eax
+	movl	%eax,8(%esp)
+	movl	12(%esi),%eax
+	movl	%eax,4(%esp)
+	movl	68(%edi),%eax
+	movl	%eax,(%esp)
+	call	_brl_map_MapInsert
+	movl	$_1149,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%esi
+	cmp	$_bbNullObject,%esi
+	jne	_1151
+	call	_brl_blitz_NullObjectError
+_1151:
+	movl	-16(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1153
+	call	_brl_blitz_NullObjectError
+_1153:
+	movl	$_bbNullObject,20(%esp)
+	movl	$_1,16(%esp)
+	movl	$-1,12(%esp)
+	movl	$0,8(%esp)
+	movl	12(%ebx),%eax
+	movl	%eax,4(%esp)
+	movl	48(%esi),%eax
+	movl	%eax,(%esp)
+	call	_maxgui_maxgui_AddGadgetItem
+	calll	*_bbOnDebugLeaveScope
+_1141:
+	calll	*_bbOnDebugLeaveScope
+_1133:
+	calll	*_bbOnDebugLeaveScope
+_24:
+	movl	-8(%ebp),%eax
+	movl	%eax,(%esp)
+	call	_brl_stream_Eof
+	cmp	$0,%eax
+	je	_26
+_25:
+	movl	$_1159,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-8(%ebp),%eax
+	movl	%eax,(%esp)
+	call	_brl_filesystem_CloseFile
+	calll	*_bbOnDebugLeaveScope
+_1102:
+	mov	$0,%ebx
+	jmp	_234
+_234:
+	calll	*_bbOnDebugLeaveScope
+	mov	%ebx,%eax
+	add	$28,%esp
+	pop	%edi
 	pop	%esi
 	pop	%ebx
 	mov	%ebp,%esp
@@ -2839,82 +2921,82 @@ __bb_TGui_AddFavorite:
 	movl	$_bbNullObject,-16(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1183,(%esp)
+	movl	$_1203,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1144,(%esp)
+	movl	$_1164,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1146
+	jne	_1166
 	call	_brl_blitz_NullObjectError
-_1146:
+_1166:
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
 	movl	%eax,-8(%ebp)
-	movl	$_1148,(%esp)
+	movl	$_1168,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$-1,-8(%ebp)
-	jne	_1149
+	jne	_1169
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1151,(%esp)
+	movl	$_1171,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1150,(%esp)
+	movl	$_1170,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_233
-_1149:
-	movl	$_1152,(%esp)
+	jmp	_237
+_1169:
+	movl	$_1172,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1154
+	jne	_1174
 	call	_brl_blitz_NullObjectError
-_1154:
+_1174:
 	movl	-8(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetItemText
 	movl	%eax,-12(%ebp)
-	movl	$_1156,(%esp)
+	movl	$_1176,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1158
+	jne	_1178
 	call	_brl_blitz_NullObjectError
-_1158:
+_1178:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	68(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_map_MapContains
 	cmp	$0,%eax
-	je	_1159
+	je	_1179
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1161,(%esp)
+	movl	$_1181,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1160,(%esp)
+	movl	$_1180,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_233
-_1159:
-	movl	$_1162,(%esp)
+	jmp	_237
+_1179:
+	movl	$_1182,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1164
+	jne	_1184
 	call	_brl_blitz_NullObjectError
-_1164:
+_1184:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1166
+	jne	_1186
 	call	_brl_blitz_NullObjectError
-_1166:
+_1186:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
@@ -2925,23 +3007,23 @@ _1166:
 	movl	%eax,(%esp)
 	calll	*_bb_FavoriteNode+48
 	movl	%eax,-16(%ebp)
-	movl	$_1168,(%esp)
+	movl	$_1188,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%edi
 	cmp	$_bbNullObject,%edi
-	jne	_1170
+	jne	_1190
 	call	_brl_blitz_NullObjectError
-_1170:
+_1190:
 	movl	-16(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_1172
+	jne	_1192
 	call	_brl_blitz_NullObjectError
-_1172:
+_1192:
 	movl	-16(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1174
+	jne	_1194
 	call	_brl_blitz_NullObjectError
-_1174:
+_1194:
 	movl	8(%ebx),%eax
 	movl	%eax,8(%esp)
 	movl	12(%esi),%eax
@@ -2949,18 +3031,18 @@ _1174:
 	movl	68(%edi),%eax
 	movl	%eax,(%esp)
 	call	_brl_map_MapInsert
-	movl	$_1175,(%esp)
+	movl	$_1195,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_1177
+	jne	_1197
 	call	_brl_blitz_NullObjectError
-_1177:
+_1197:
 	movl	-16(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1179
+	jne	_1199
 	call	_brl_blitz_NullObjectError
-_1179:
+_1199:
 	movl	$_bbNullObject,20(%esp)
 	movl	$_1,16(%esp)
 	movl	$-1,12(%esp)
@@ -2970,19 +3052,19 @@ _1179:
 	movl	48(%esi),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_AddGadgetItem
-	movl	$_1180,(%esp)
+	movl	$_1200,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1182
+	jne	_1202
 	call	_brl_blitz_NullObjectError
-_1182:
+_1202:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*60(%eax)
 	mov	$0,%ebx
-	jmp	_233
-_233:
+	jmp	_237
+_237:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$28,%esp
@@ -3003,105 +3085,105 @@ __bb_TGui_RemoveFavorite:
 	movl	$0,-8(%ebp)
 	movl	$_bbEmptyString,-12(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_1213,(%esp)
+	movl	$_1233,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1186,(%esp)
+	movl	$_1206,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1188
+	jne	_1208
 	call	_brl_blitz_NullObjectError
-_1188:
+_1208:
 	movl	48(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
 	movl	%eax,-8(%ebp)
-	movl	$_1190,(%esp)
+	movl	$_1210,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$-1,-8(%ebp)
-	jne	_1191
+	jne	_1211
 	movl	%ebp,4(%esp)
-	movl	$_1193,(%esp)
+	movl	$_1213,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1192,(%esp)
+	movl	$_1212,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_236
-_1191:
-	movl	$_1194,(%esp)
+	jmp	_240
+_1211:
+	movl	$_1214,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1196
+	jne	_1216
 	call	_brl_blitz_NullObjectError
-_1196:
+_1216:
 	movl	-8(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	48(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetItemText
 	movl	%eax,-12(%ebp)
-	movl	$_1198,(%esp)
+	movl	$_1218,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1200
+	jne	_1220
 	call	_brl_blitz_NullObjectError
-_1200:
+_1220:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	68(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_map_MapContains
 	cmp	$0,%eax
-	jne	_1201
+	jne	_1221
 	movl	%ebp,4(%esp)
-	movl	$_1203,(%esp)
+	movl	$_1223,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1202,(%esp)
+	movl	$_1222,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_236
-_1201:
-	movl	$_1204,(%esp)
+	jmp	_240
+_1221:
+	movl	$_1224,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1206
+	jne	_1226
 	call	_brl_blitz_NullObjectError
-_1206:
+_1226:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	68(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_map_MapRemove
-	movl	$_1207,(%esp)
+	movl	$_1227,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1209
+	jne	_1229
 	call	_brl_blitz_NullObjectError
-_1209:
+_1229:
 	movl	-8(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	48(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_RemoveGadgetItem
-	movl	$_1210,(%esp)
+	movl	$_1230,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1212
+	jne	_1232
 	call	_brl_blitz_NullObjectError
-_1212:
+_1232:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*60(%eax)
 	mov	$0,%ebx
-	jmp	_236
-_236:
+	jmp	_240
+_240:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$8,%esp
@@ -3125,35 +3207,35 @@ __bb_TGui_DoCloseActiveWindow:
 	movl	$_bbNullObject,-16(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1254,(%esp)
+	movl	$_1274,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1214,(%esp)
+	movl	$_1234,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,-12(%ebp)
-	movl	$_1216,(%esp)
+	movl	$_1236,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$_bbNullObject,-12(%ebp)
-	jne	_1217
+	jne	_1237
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1219,(%esp)
+	movl	$_1239,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1218,(%esp)
+	movl	$_1238,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$1,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_240
-_1217:
-	movl	$_1220,(%esp)
+	jmp	_244
+_1237:
+	movl	$_1240,(%esp)
 	calll	*_bbOnDebugEnterStm
 	jmp	_27
 _29:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1222,(%esp)
+	movl	$_1242,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1221,(%esp)
+	movl	$_1241,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
@@ -3170,20 +3252,20 @@ _27:
 	cmp	$0,%eax
 	je	_29
 _28:
-	movl	$_1223,(%esp)
+	movl	$_1243,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bbNullObject,-16(%ebp)
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1226
+	jne	_1246
 	call	_brl_blitz_NullObjectError
-_1226:
+_1246:
 	movl	56(%ebx),%edi
 	mov	%edi,%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1229
+	jne	_1249
 	call	_brl_blitz_NullObjectError
-_1229:
+_1249:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*140(%eax)
@@ -3192,9 +3274,9 @@ _1229:
 _32:
 	mov	%esi,%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1234
+	jne	_1254
 	call	_brl_blitz_NullObjectError
-_1234:
+_1254:
 	movl	$_bb_TWindow,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
@@ -3206,79 +3288,79 @@ _1234:
 	je	_30
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1250,(%esp)
+	movl	$_1270,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1235,(%esp)
+	movl	$_1255,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-16(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1237
+	jne	_1257
 	call	_brl_blitz_NullObjectError
-_1237:
+_1257:
 	movl	8(%ebx),%eax
 	cmpl	%eax,-12(%ebp)
-	jne	_1238
+	jne	_1258
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1249,(%esp)
+	movl	$_1269,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1239,(%esp)
+	movl	$_1259,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-16(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1241
+	jne	_1261
 	call	_brl_blitz_NullObjectError
-_1241:
+_1261:
 	movl	8(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_FreeGadget
-	movl	$_1242,(%esp)
+	movl	$_1262,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1244
+	jne	_1264
 	call	_brl_blitz_NullObjectError
-_1244:
+_1264:
 	movl	-16(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	56(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_linkedlist_ListRemove
-	movl	$_1245,(%esp)
+	movl	$_1265,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1247
+	jne	_1267
 	call	_brl_blitz_NullObjectError
-_1247:
+_1267:
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_ActivateGadget
-	movl	$_1248,(%esp)
+	movl	$_1268,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
 	calll	*_bbOnDebugLeaveScope
-	jmp	_240
-_1238:
+	jmp	_244
+_1258:
 	calll	*_bbOnDebugLeaveScope
 _30:
 	mov	%esi,%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1232
+	jne	_1252
 	call	_brl_blitz_NullObjectError
-_1232:
+_1252:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*48(%eax)
 	cmp	$0,%eax
 	jne	_32
 _31:
-	movl	$_1253,(%esp)
+	movl	$_1273,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$1,%ebx
-	jmp	_240
-_240:
+	jmp	_244
+_244:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$12,%esp
@@ -3302,26 +3384,26 @@ __bb_TGui_SelectFile:
 	movl	$0,-12(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1271,(%esp)
+	movl	$_1291,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1257,(%esp)
+	movl	$_1277,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,-12(%ebp)
-	movl	$_1259,(%esp)
+	movl	$_1279,(%esp)
 	calll	*_bbOnDebugEnterStm
 	jmp	_33
 _35:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1270,(%esp)
+	movl	$_1290,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1260,(%esp)
+	movl	$_1280,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_1262
+	jne	_1282
 	call	_brl_blitz_NullObjectError
-_1262:
+_1282:
 	movl	-8(%ebp),%ebx
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
@@ -3332,30 +3414,30 @@ _1262:
 	movl	%eax,(%esp)
 	call	_bbStringCompare
 	cmp	$0,%eax
-	jne	_1263
+	jne	_1283
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1268,(%esp)
+	movl	$_1288,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1264,(%esp)
+	movl	$_1284,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1266
+	jne	_1286
 	call	_brl_blitz_NullObjectError
-_1266:
+_1286:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectGadgetItem
-	movl	$_1267,(%esp)
+	movl	$_1287,(%esp)
 	calll	*_bbOnDebugEnterStm
 	calll	*_bbOnDebugLeaveScope
 	calll	*_bbOnDebugLeaveScope
 	jmp	_34
-_1263:
-	movl	$_1269,(%esp)
+_1283:
+	movl	$_1289,(%esp)
 	calll	*_bbOnDebugEnterStm
 	addl	$1,-12(%ebp)
 	calll	*_bbOnDebugLeaveScope
@@ -3365,8 +3447,8 @@ _33:
 	jne	_35
 _34:
 	mov	$0,%ebx
-	jmp	_244
-_244:
+	jmp	_248
+_248:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$20,%esp
@@ -3394,31 +3476,31 @@ __bb_TGui_DoNewFileFolder:
 	movl	$0,-32(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1342,(%esp)
+	movl	$_1362,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1273,(%esp)
+	movl	$_1293,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_36,-12(%ebp)
-	movl	$_1275,(%esp)
+	movl	$_1295,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$2,-8(%ebp)
-	jne	_1276
+	jne	_1296
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1278,(%esp)
+	movl	$_1298,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1277,(%esp)
+	movl	$_1297,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_37,-12(%ebp)
 	calll	*_bbOnDebugLeaveScope
-_1276:
-	movl	$_1279,(%esp)
+_1296:
+	movl	$_1299,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1281
+	jne	_1301
 	call	_brl_blitz_NullObjectError
-_1281:
+_1301:
 	movl	$_11,12(%esp)
 	movl	$_10,8(%esp)
 	movl	16(%ebx),%ebx
@@ -3430,50 +3512,50 @@ _1281:
 	movl	%eax,(%esp)
 	calll	*_bb_TInputWindow+48
 	movl	%eax,-16(%ebp)
-	movl	$_1283,(%esp)
+	movl	$_1303,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_1,4(%esp)
 	movl	-16(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_bbStringCompare
 	cmp	$0,%eax
-	jne	_1284
+	jne	_1304
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1286,(%esp)
+	movl	$_1306,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1285,(%esp)
+	movl	$_1305,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_248
-_1284:
-	movl	$_1287,(%esp)
+	jmp	_252
+_1304:
+	movl	$_1307,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_1289
+	jne	_1309
 	call	_brl_blitz_NullObjectError
-_1289:
+_1309:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1291
+	jne	_1311
 	call	_brl_blitz_NullObjectError
-_1291:
+_1311:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1293
+	jne	_1313
 	call	_brl_blitz_NullObjectError
-_1293:
+_1313:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*68(%eax)
 	movl	%eax,4(%esp)
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%eax,-20(%ebp)
-	movl	$_1295,(%esp)
+	movl	$_1315,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-16(%ebp),%eax
 	movl	%eax,4(%esp)
@@ -3481,20 +3563,20 @@ _1293:
 	movl	%eax,(%esp)
 	call	_bbStringConcat
 	movl	%eax,-24(%ebp)
-	movl	$_1297,(%esp)
+	movl	$_1317,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-24(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	movl	%eax,-28(%ebp)
-	movl	$_1299,(%esp)
+	movl	$_1319,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-28(%ebp),%eax
 	cmp	$0,%eax
 	setg	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	je	_1300
+	je	_1320
 	movl	$_39,4(%esp)
 	movl	-16(%ebp),%eax
 	movl	%eax,(%esp)
@@ -3505,52 +3587,52 @@ _1293:
 	cmp	$0,%eax
 	sete	%al
 	movzbl	%al,%eax
-_1300:
+_1320:
 	cmp	$0,%eax
-	je	_1302
+	je	_1322
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1304,(%esp)
+	movl	$_1324,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1303,(%esp)
+	movl	$_1323,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_248
-_1302:
-	movl	$_1305,(%esp)
+	jmp	_252
+_1322:
+	movl	$_1325,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,-32(%ebp)
-	movl	$_1307,(%esp)
+	movl	$_1327,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$1,-8(%ebp)
-	jne	_1308
+	jne	_1328
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1310,(%esp)
+	movl	$_1330,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1309,(%esp)
+	movl	$_1329,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-24(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_CreateFile
 	movl	%eax,-32(%ebp)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_1311
-_1308:
+	jmp	_1331
+_1328:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1316,(%esp)
+	movl	$_1336,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1312,(%esp)
+	movl	$_1332,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$2,-8(%ebp)
-	jne	_1313
+	jne	_1333
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1315,(%esp)
+	movl	$_1335,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1314,(%esp)
+	movl	$_1334,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,4(%esp)
 	movl	-24(%ebp),%eax
@@ -3558,24 +3640,24 @@ _1308:
 	call	_brl_filesystem_CreateDir
 	movl	%eax,-32(%ebp)
 	calll	*_bbOnDebugLeaveScope
-_1313:
+_1333:
 	calll	*_bbOnDebugLeaveScope
-_1311:
-	movl	$_1317,(%esp)
+_1331:
+	movl	$_1337,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$0,-32(%ebp)
-	jne	_1318
+	jne	_1338
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1327,(%esp)
+	movl	$_1347,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1319,(%esp)
+	movl	$_1339,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1321
+	jne	_1341
 	call	_brl_blitz_NullObjectError
-_1321:
+_1341:
 	movl	-16(%ebp),%esi
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
@@ -3591,67 +3673,67 @@ _1321:
 	mov	%eax,%esi
 	movl	88(%ebx),%eax
 	decl	4(%eax)
-	jnz	_1326
+	jnz	_1346
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_1326:
+_1346:
 	movl	%esi,88(%ebx)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_1328
-_1318:
+	jmp	_1348
+_1338:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1338,(%esp)
+	movl	$_1358,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1329,(%esp)
+	movl	$_1349,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1331
+	jne	_1351
 	call	_brl_blitz_NullObjectError
-_1331:
+_1351:
 	movl	-20(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*152(%eax)
-	movl	$_1332,(%esp)
+	calll	*156(%eax)
+	movl	$_1352,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1334
+	jne	_1354
 	call	_brl_blitz_NullObjectError
-_1334:
+_1354:
 	movl	-16(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*76(%eax)
-	movl	$_1335,(%esp)
+	calll	*80(%eax)
+	movl	$_1355,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1337
+	jne	_1357
 	call	_brl_blitz_NullObjectError
-_1337:
+_1357:
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_ActivateGadget
 	calll	*_bbOnDebugLeaveScope
-_1328:
-	movl	$_1339,(%esp)
+_1348:
+	movl	$_1359,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1341
+	jne	_1361
 	call	_brl_blitz_NullObjectError
-_1341:
+_1361:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*180(%eax)
+	calll	*184(%eax)
 	mov	$0,%ebx
-	jmp	_248
-_248:
+	jmp	_252
+_252:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -3669,22 +3751,22 @@ __bb_TGui_DoNewFolder:
 	movl	8(%ebp),%eax
 	movl	%eax,-4(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_1351,(%esp)
+	movl	$_1371,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1348,(%esp)
+	movl	$_1368,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1350
+	jne	_1370
 	call	_brl_blitz_NullObjectError
-_1350:
+_1370:
 	movl	$2,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*80(%eax)
+	calll	*84(%eax)
 	mov	$0,%ebx
-	jmp	_251
-_251:
+	jmp	_255
+_255:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -3701,22 +3783,22 @@ __bb_TGui_DoNewFile:
 	movl	8(%ebp),%eax
 	movl	%eax,-4(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_1355,(%esp)
+	movl	$_1375,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1352,(%esp)
+	movl	$_1372,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1354
+	jne	_1374
 	call	_brl_blitz_NullObjectError
-_1354:
+_1374:
 	movl	$1,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*80(%eax)
+	calll	*84(%eax)
 	mov	$0,%ebx
-	jmp	_254
-_254:
+	jmp	_258
+_258:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -3742,53 +3824,53 @@ __bb_TGui_DoRename:
 	movl	$_bbNullObject,-32(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1437,(%esp)
+	movl	$_1457,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1356,(%esp)
+	movl	$_1376,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1358
+	jne	_1378
 	call	_brl_blitz_NullObjectError
-_1358:
+_1378:
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
 	movl	%eax,-8(%ebp)
-	movl	$_1360,(%esp)
+	movl	$_1380,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$-1,-8(%ebp)
-	jne	_1361
+	jne	_1381
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1363,(%esp)
+	movl	$_1383,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1362,(%esp)
+	movl	$_1382,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_257
-_1361:
-	movl	$_1364,(%esp)
+	jmp	_261
+_1381:
+	movl	$_1384,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1366
+	jne	_1386
 	call	_brl_blitz_NullObjectError
-_1366:
+_1386:
 	movl	-8(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetItemText
 	movl	%eax,-12(%ebp)
-	movl	$_1368,(%esp)
+	movl	$_1388,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1370
+	jne	_1390
 	call	_brl_blitz_NullObjectError
-_1370:
+_1390:
 	movl	$_11,12(%esp)
 	movl	$_44,8(%esp)
 	movl	16(%ebx),%ebx
@@ -3803,36 +3885,36 @@ _1370:
 	movl	%eax,(%esp)
 	calll	*_bb_TInputWindow+48
 	movl	%eax,-16(%ebp)
-	movl	$_1372,(%esp)
+	movl	$_1392,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_1,4(%esp)
 	movl	-16(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_bbStringCompare
 	cmp	$0,%eax
-	jne	_1373
+	jne	_1393
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1375,(%esp)
+	movl	$_1395,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1374,(%esp)
+	movl	$_1394,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_257
-_1373:
-	movl	$_1376,(%esp)
+	jmp	_261
+_1393:
+	movl	$_1396,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1378
+	jne	_1398
 	call	_brl_blitz_NullObjectError
-_1378:
+_1398:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1380
+	jne	_1400
 	call	_brl_blitz_NullObjectError
-_1380:
+_1400:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
@@ -3841,18 +3923,18 @@ _1380:
 	movl	%eax,(%esp)
 	call	_bbStringConcat
 	movl	%eax,-20(%ebp)
-	movl	$_1382,(%esp)
+	movl	$_1402,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1384
+	jne	_1404
 	call	_brl_blitz_NullObjectError
-_1384:
+_1404:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1386
+	jne	_1406
 	call	_brl_blitz_NullObjectError
-_1386:
+_1406:
 	movl	-16(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
@@ -3861,36 +3943,36 @@ _1386:
 	movl	%eax,(%esp)
 	call	_bbStringConcat
 	movl	%eax,-24(%ebp)
-	movl	$_1388,(%esp)
+	movl	$_1408,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,-28(%ebp)
-	movl	$_1390,(%esp)
+	movl	$_1410,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-20(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$2,%eax
-	jne	_1391
+	jne	_1411
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1395,(%esp)
+	movl	$_1415,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1392,(%esp)
+	movl	$_1412,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1394
+	jne	_1414
 	call	_brl_blitz_NullObjectError
-_1394:
+_1414:
 	movl	-24(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%eax,-24(%ebp)
 	calll	*_bbOnDebugLeaveScope
-_1391:
-	movl	$_1396,(%esp)
+_1411:
+	movl	$_1416,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-24(%ebp),%eax
 	movl	%eax,4(%esp)
@@ -3898,27 +3980,27 @@ _1391:
 	movl	%eax,(%esp)
 	call	_brl_filesystem_RenameFile
 	movl	%eax,-28(%ebp)
-	movl	$_1397,(%esp)
+	movl	$_1417,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$0,-28(%ebp)
-	jne	_1398
+	jne	_1418
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1400,(%esp)
+	movl	$_1420,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1399,(%esp)
+	movl	$_1419,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_257
-_1398:
-	movl	$_1401,(%esp)
+	jmp	_261
+_1418:
+	movl	$_1421,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1403
+	jne	_1423
 	call	_brl_blitz_NullObjectError
-_1403:
+_1423:
 	movl	$_bbNullObject,24(%esp)
 	movl	$_1,20(%esp)
 	movl	$-1,16(%esp)
@@ -3930,69 +4012,69 @@ _1403:
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_ModifyGadgetItem
-	movl	$_1404,(%esp)
+	movl	$_1424,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1406
+	jne	_1426
 	call	_brl_blitz_NullObjectError
-_1406:
+_1426:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1408
+	jne	_1428
 	call	_brl_blitz_NullObjectError
-_1408:
+_1428:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1410
+	jne	_1430
 	call	_brl_blitz_NullObjectError
-_1410:
+_1430:
 	cmpl	$_bbNullObject,16(%ebx)
-	je	_1411
+	je	_1431
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1435,(%esp)
+	movl	$_1455,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1412,(%esp)
+	movl	$_1432,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1414
+	jne	_1434
 	call	_brl_blitz_NullObjectError
-_1414:
+_1434:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1416
+	jne	_1436
 	call	_brl_blitz_NullObjectError
-_1416:
+_1436:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1418
+	jne	_1438
 	call	_brl_blitz_NullObjectError
-_1418:
+_1438:
 	movl	16(%ebx),%eax
 	movl	%eax,-32(%ebp)
-	movl	$_1420,(%esp)
+	movl	$_1440,(%esp)
 	calll	*_bbOnDebugEnterStm
 	jmp	_45
 _47:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1434,(%esp)
+	movl	$_1454,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1421,(%esp)
+	movl	$_1441,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-32(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1423
+	jne	_1443
 	call	_brl_blitz_NullObjectError
-_1423:
+_1443:
 	mov	%ebx,%esi
 	movl	-32(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1426
+	jne	_1446
 	call	_brl_blitz_NullObjectError
-_1426:
+_1446:
 	movl	-24(%ebp),%eax
 	movl	%eax,8(%esp)
 	movl	-20(%ebp),%eax
@@ -4004,18 +4086,18 @@ _1426:
 	mov	%eax,%ebx
 	movl	8(%esi),%eax
 	decl	4(%eax)
-	jnz	_1430
+	jnz	_1450
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_1430:
+_1450:
 	movl	%ebx,8(%esi)
-	movl	$_1431,(%esp)
+	movl	$_1451,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-32(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1433
+	jne	_1453
 	call	_brl_blitz_NullObjectError
-_1433:
+_1453:
 	movl	16(%ebx),%eax
 	movl	%eax,-32(%ebp)
 	calll	*_bbOnDebugLeaveScope
@@ -4024,10 +4106,10 @@ _45:
 	jne	_47
 _46:
 	calll	*_bbOnDebugLeaveScope
-_1411:
+_1431:
 	mov	$0,%ebx
-	jmp	_257
-_257:
+	jmp	_261
+_261:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$32,%esp
@@ -4053,38 +4135,38 @@ __bb_TGui_DoExecute:
 	movl	$_bbEmptyString,-24(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1499,(%esp)
+	movl	$_1519,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1443,(%esp)
+	movl	$_1463,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1445
+	jne	_1465
 	call	_brl_blitz_NullObjectError
-_1445:
+_1465:
 	movl	80(%ebx),%eax
 	movl	%eax,-8(%ebp)
-	movl	$_1447,(%esp)
+	movl	$_1467,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$_bbNullObject,-8(%ebp)
-	jne	_1448
+	jne	_1468
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1450,(%esp)
+	movl	$_1470,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1449,(%esp)
+	movl	$_1469,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_260
-_1448:
-	movl	$_1451,(%esp)
+	jmp	_264
+_1468:
+	movl	$_1471,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1453
+	jne	_1473
 	call	_brl_blitz_NullObjectError
-_1453:
+_1473:
 	movl	-8(%ebp),%eax
 	cmpl	52(%ebx),%eax
 	sete	%al
@@ -4093,12 +4175,12 @@ _1453:
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	je	_1456
+	je	_1476
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1455
+	jne	_1475
 	call	_brl_blitz_NullObjectError
-_1455:
+_1475:
 	movl	-8(%ebp),%eax
 	cmpl	48(%ebx),%eax
 	sete	%al
@@ -4106,40 +4188,40 @@ _1455:
 	cmp	$0,%eax
 	sete	%al
 	movzbl	%al,%eax
-_1456:
+_1476:
 	cmp	$0,%eax
-	je	_1458
+	je	_1478
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1460,(%esp)
+	movl	$_1480,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1459,(%esp)
+	movl	$_1479,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_260
-_1458:
-	movl	$_1461,(%esp)
+	jmp	_264
+_1478:
+	movl	$_1481,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
 	movl	%eax,-12(%ebp)
-	movl	$_1463,(%esp)
+	movl	$_1483,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$-1,-12(%ebp)
-	jne	_1464
+	jne	_1484
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1466,(%esp)
+	movl	$_1486,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1465,(%esp)
+	movl	$_1485,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_260
-_1464:
-	movl	$_1467,(%esp)
+	jmp	_264
+_1484:
+	movl	$_1487,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
@@ -4147,40 +4229,40 @@ _1464:
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetItemText
 	movl	%eax,-16(%ebp)
-	movl	$_1469,(%esp)
+	movl	$_1489,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bbEmptyString,-20(%ebp)
-	movl	$_1471,(%esp)
+	movl	$_1491,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1473
+	jne	_1493
 	call	_brl_blitz_NullObjectError
-_1473:
+_1493:
 	movl	52(%ebx),%eax
 	cmpl	%eax,-8(%ebp)
-	jne	_1474
+	jne	_1494
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1482,(%esp)
+	movl	$_1502,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1475,(%esp)
+	movl	$_1495,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%edi
 	cmp	$_bbNullObject,%edi
-	jne	_1477
+	jne	_1497
 	call	_brl_blitz_NullObjectError
-_1477:
+_1497:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1479
+	jne	_1499
 	call	_brl_blitz_NullObjectError
-_1479:
+_1499:
 	movl	12(%ebx),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_1481
+	jne	_1501
 	call	_brl_blitz_NullObjectError
-_1481:
+_1501:
 	movl	-16(%ebp),%ebx
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
@@ -4188,39 +4270,39 @@ _1481:
 	movl	%eax,4(%esp)
 	movl	%edi,(%esp)
 	movl	(%edi),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%ebx,4(%esp)
 	movl	%eax,(%esp)
 	call	_bbStringConcat
 	movl	%eax,-20(%ebp)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_1483
-_1474:
+	jmp	_1503
+_1494:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1494,(%esp)
+	movl	$_1514,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1484,(%esp)
+	movl	$_1504,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1486
+	jne	_1506
 	call	_brl_blitz_NullObjectError
-_1486:
+_1506:
 	movl	48(%ebx),%eax
 	cmpl	%eax,-8(%ebp)
-	jne	_1487
+	jne	_1507
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1493,(%esp)
+	movl	$_1513,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1488,(%esp)
+	movl	$_1508,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1490
+	jne	_1510
 	call	_brl_blitz_NullObjectError
-_1490:
+_1510:
 	movl	-16(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	68(%ebx),%eax
@@ -4230,35 +4312,35 @@ _1490:
 	movl	%eax,(%esp)
 	call	_bbObjectDowncast
 	cmp	$_bbNullObject,%eax
-	jne	_1492
+	jne	_1512
 	mov	$_bbEmptyString,%eax
-_1492:
+_1512:
 	movl	%eax,-20(%ebp)
 	calll	*_bbOnDebugLeaveScope
-_1487:
+_1507:
 	calll	*_bbOnDebugLeaveScope
-_1483:
-	movl	$_1495,(%esp)
+_1503:
+	movl	$_1515,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_48,-24(%ebp)
-	movl	$_1497,(%esp)
+	movl	$_1517,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-20(%ebp),%ebx
-	movl	$_1498,4(%esp)
+	movl	$_1518,4(%esp)
 	movl	-24(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_bbStringConcat
 	movl	%ebx,4(%esp)
 	movl	%eax,(%esp)
 	call	_bbStringConcat
-	movl	$_1498,4(%esp)
+	movl	$_1518,4(%esp)
 	movl	%eax,(%esp)
 	call	_bbStringConcat
 	movl	%eax,(%esp)
 	call	_system_
 	mov	$0,%ebx
-	jmp	_260
-_260:
+	jmp	_264
+_264:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$20,%esp
@@ -4282,51 +4364,51 @@ __bb_TGui_DoSave:
 	movl	$_bbNullObject,-12(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1537,(%esp)
+	movl	$_1557,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1503,(%esp)
+	movl	$_1523,(%esp)
 	calll	*_bbOnDebugEnterStm
 	call	_maxgui_maxgui_ActiveGadget
 	movl	%eax,-8(%ebp)
-	movl	$_1505,(%esp)
+	movl	$_1525,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$_bbNullObject,-8(%ebp)
-	jne	_1506
+	jne	_1526
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1508,(%esp)
+	movl	$_1528,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1507,(%esp)
+	movl	$_1527,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_263
-_1506:
-	movl	$_1509,(%esp)
+	jmp	_267
+_1526:
+	movl	$_1529,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetClass
 	cmp	$5,%eax
-	jne	_1510
+	jne	_1530
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1536,(%esp)
+	movl	$_1556,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1511,(%esp)
+	movl	$_1531,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bbNullObject,-12(%ebp)
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1514
+	jne	_1534
 	call	_brl_blitz_NullObjectError
-_1514:
+_1534:
 	movl	56(%ebx),%edi
 	mov	%edi,%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1517
+	jne	_1537
 	call	_brl_blitz_NullObjectError
-_1517:
+_1537:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*140(%eax)
@@ -4335,9 +4417,9 @@ _1517:
 _51:
 	mov	%esi,%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1522
+	jne	_1542
 	call	_brl_blitz_NullObjectError
-_1522:
+_1542:
 	movl	$_bb_TWindow,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
@@ -4349,34 +4431,34 @@ _1522:
 	je	_49
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1534,(%esp)
+	movl	$_1554,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1523,(%esp)
+	movl	$_1543,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1525
+	jne	_1545
 	call	_brl_blitz_NullObjectError
-_1525:
+_1545:
 	movl	-8(%ebp),%eax
 	cmpl	%eax,16(%ebx)
-	jne	_1526
+	jne	_1546
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1533,(%esp)
+	movl	$_1553,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1527,(%esp)
+	movl	$_1547,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_1529
+	jne	_1549
 	call	_brl_blitz_NullObjectError
-_1529:
+_1549:
 	movl	-12(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1531
+	jne	_1551
 	call	_brl_blitz_NullObjectError
-_1531:
+_1551:
 	movl	20(%ebx),%ebx
 	movl	$1,12(%esp)
 	movl	$-1,8(%esp)
@@ -4387,19 +4469,19 @@ _1531:
 	movl	%ebx,4(%esp)
 	movl	%eax,(%esp)
 	call	_brl_textstream_SaveText
-	movl	$_1532,(%esp)
+	movl	$_1552,(%esp)
 	calll	*_bbOnDebugEnterStm
 	calll	*_bbOnDebugLeaveScope
 	calll	*_bbOnDebugLeaveScope
 	jmp	_50
-_1526:
+_1546:
 	calll	*_bbOnDebugLeaveScope
 _49:
 	mov	%esi,%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1520
+	jne	_1540
 	call	_brl_blitz_NullObjectError
-_1520:
+_1540:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*48(%eax)
@@ -4407,10 +4489,10 @@ _1520:
 	jne	_51
 _50:
 	calll	*_bbOnDebugLeaveScope
-_1510:
+_1530:
 	mov	$0,%ebx
-	jmp	_263
-_263:
+	jmp	_267
+_267:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -4436,25 +4518,25 @@ __bb_TGui_DeleteThisFile:
 	movl	$0,-16(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1606,(%esp)
+	movl	$_1626,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1538,(%esp)
+	movl	$_1558,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%edi
 	cmp	$_bbNullObject,%edi
-	jne	_1540
+	jne	_1560
 	call	_brl_blitz_NullObjectError
-_1540:
+_1560:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1542
+	jne	_1562
 	call	_brl_blitz_NullObjectError
-_1542:
+_1562:
 	movl	12(%ebx),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_1544
+	jne	_1564
 	call	_brl_blitz_NullObjectError
-_1544:
+_1564:
 	movl	-8(%ebp),%ebx
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
@@ -4462,50 +4544,50 @@ _1544:
 	movl	%eax,4(%esp)
 	movl	%edi,(%esp)
 	movl	(%edi),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%ebx,4(%esp)
 	movl	%eax,(%esp)
 	call	_bbStringConcat
 	movl	%eax,-12(%ebp)
-	movl	$_1546,(%esp)
+	movl	$_1566,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,-16(%ebp)
-	movl	$_1548,(%esp)
+	movl	$_1568,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$1,%eax
-	jne	_1549
+	jne	_1569
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1551,(%esp)
+	movl	$_1571,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1550,(%esp)
+	movl	$_1570,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_DeleteFile
 	movl	%eax,-16(%ebp)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_1552
-_1549:
+	jmp	_1572
+_1569:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1560,(%esp)
+	movl	$_1580,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1553,(%esp)
+	movl	$_1573,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$2,%eax
-	jne	_1554
+	jne	_1574
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1559,(%esp)
+	movl	$_1579,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1555,(%esp)
+	movl	$_1575,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,4(%esp)
@@ -4518,12 +4600,12 @@ _1549:
 	movl	%eax,(%esp)
 	call	_brl_system_Confirm
 	cmp	$0,%eax
-	je	_1556
+	je	_1576
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1558,(%esp)
+	movl	$_1578,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1557,(%esp)
+	movl	$_1577,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$1,4(%esp)
 	movl	-12(%ebp),%eax
@@ -4531,148 +4613,148 @@ _1549:
 	call	_brl_filesystem_DeleteDir
 	movl	%eax,-16(%ebp)
 	calll	*_bbOnDebugLeaveScope
-_1556:
+_1576:
 	calll	*_bbOnDebugLeaveScope
-_1554:
+_1574:
 	calll	*_bbOnDebugLeaveScope
-_1552:
-	movl	$_1561,(%esp)
+_1572:
+	movl	$_1581,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$0,-16(%ebp)
-	je	_1562
+	je	_1582
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1602,(%esp)
+	movl	$_1622,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1563,(%esp)
+	movl	$_1583,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1565
+	jne	_1585
 	call	_brl_blitz_NullObjectError
-_1565:
+_1585:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1567
+	jne	_1587
 	call	_brl_blitz_NullObjectError
-_1567:
+_1587:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1569
+	jne	_1589
 	call	_brl_blitz_NullObjectError
-_1569:
+_1589:
 	cmpl	$_bbNullObject,16(%ebx)
-	je	_1570
+	je	_1590
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1600,(%esp)
+	movl	$_1620,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1571,(%esp)
+	movl	$_1591,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$2,%eax
-	jne	_1572
+	jne	_1592
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1576,(%esp)
+	movl	$_1596,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1573,(%esp)
+	movl	$_1593,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1575
+	jne	_1595
 	call	_brl_blitz_NullObjectError
-_1575:
+_1595:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%eax,-12(%ebp)
 	calll	*_bbOnDebugLeaveScope
-_1572:
-	movl	$_1577,(%esp)
+_1592:
+	movl	$_1597,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1579
+	jne	_1599
 	call	_brl_blitz_NullObjectError
-_1579:
+_1599:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1581
+	jne	_1601
 	call	_brl_blitz_NullObjectError
-_1581:
+_1601:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1583
+	jne	_1603
 	call	_brl_blitz_NullObjectError
-_1583:
+_1603:
 	movl	16(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1585
+	jne	_1605
 	call	_brl_blitz_NullObjectError
-_1585:
+_1605:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	8(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_bbStringCompare
 	cmp	$0,%eax
-	jne	_1586
+	jne	_1606
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1599,(%esp)
+	movl	$_1619,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1587,(%esp)
+	movl	$_1607,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1589
+	jne	_1609
 	call	_brl_blitz_NullObjectError
-_1589:
+_1609:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1591
+	jne	_1611
 	call	_brl_blitz_NullObjectError
-_1591:
+_1611:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1593
+	jne	_1613
 	call	_brl_blitz_NullObjectError
-_1593:
+_1613:
 	mov	$_bbNullObject,%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	16(%ebx),%eax
 	decl	4(%eax)
-	jnz	_1598
+	jnz	_1618
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_1598:
+_1618:
 	movl	%esi,16(%ebx)
 	calll	*_bbOnDebugLeaveScope
-_1586:
+_1606:
 	calll	*_bbOnDebugLeaveScope
-_1570:
-	movl	$_1601,(%esp)
+_1590:
+	movl	$_1621,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$1,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_267
-_1562:
+	jmp	_271
+_1582:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1605,(%esp)
+	movl	$_1625,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1604,(%esp)
+	movl	$_1624,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_267
-_267:
+	jmp	_271
+_271:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$12,%esp
@@ -4698,32 +4780,32 @@ __bb_TGui_DoDelete:
 	movl	$_bbEmptyString,-20(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1694,(%esp)
+	movl	$_1714,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1609,(%esp)
+	movl	$_1629,(%esp)
 	calll	*_bbOnDebugEnterStm
 	call	_maxgui_maxgui_ActiveGadget
 	movl	%eax,-8(%ebp)
-	movl	$_1611,(%esp)
+	movl	$_1631,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$_bbNullObject,-8(%ebp)
-	jne	_1612
+	jne	_1632
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1616,(%esp)
+	movl	$_1636,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1613,(%esp)
+	movl	$_1633,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1615
+	jne	_1635
 	call	_brl_blitz_NullObjectError
-_1615:
+_1635:
 	movl	52(%ebx),%eax
 	movl	%eax,-8(%ebp)
 	calll	*_bbOnDebugLeaveScope
-_1612:
-	movl	$_1617,(%esp)
+_1632:
+	movl	$_1637,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
@@ -4735,7 +4817,7 @@ _1612:
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	je	_1618
+	je	_1638
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetClass
@@ -4745,118 +4827,54 @@ _1612:
 	cmp	$0,%eax
 	sete	%al
 	movzbl	%al,%eax
-_1618:
+_1638:
 	cmp	$0,%eax
-	je	_1620
+	je	_1640
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1624,(%esp)
+	movl	$_1644,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1621,(%esp)
+	movl	$_1641,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1623
+	jne	_1643
 	call	_brl_blitz_NullObjectError
-_1623:
+_1643:
 	movl	52(%ebx),%eax
 	movl	%eax,-8(%ebp)
 	calll	*_bbOnDebugLeaveScope
-_1620:
-	movl	$_1625,(%esp)
+_1640:
+	movl	$_1645,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetClass
 	cmp	$4,%eax
-	je	_1628
+	je	_1648
 	cmp	$5,%eax
-	je	_1628
+	je	_1648
 	cmp	$7,%eax
-	je	_1629
-	jmp	_1627
-_1628:
+	je	_1649
+	jmp	_1647
+_1648:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1631,(%esp)
+	movl	$_1651,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1630,(%esp)
+	movl	$_1650,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_1,4(%esp)
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SetGadgetText
 	calll	*_bbOnDebugLeaveScope
-	jmp	_1627
-_1629:
+	jmp	_1647
+_1649:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1692,(%esp)
+	movl	$_1712,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1632,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1634
-	call	_brl_blitz_NullObjectError
-_1634:
-	movl	52(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_maxgui_maxgui_SelectedGadgetItem
-	movl	%eax,-12(%ebp)
-	movl	$_1636,(%esp)
-	calll	*_bbOnDebugEnterStm
-	cmpl	$-1,-12(%ebp)
-	jne	_1637
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1639,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1638,(%esp)
-	calll	*_bbOnDebugEnterStm
-	mov	$0,%ebx
-	calll	*_bbOnDebugLeaveScope
-	calll	*_bbOnDebugLeaveScope
-	jmp	_270
-_1637:
-	movl	$_1640,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	$0,-16(%ebp)
-	movl	$_1642,(%esp)
-	calll	*_bbOnDebugEnterStm
-	cmpl	$0,-12(%ebp)
-	jne	_1643
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1645,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1644,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	$0,-16(%ebp)
-	calll	*_bbOnDebugLeaveScope
-	jmp	_1646
-_1643:
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1651,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1647,(%esp)
-	calll	*_bbOnDebugEnterStm
-	cmpl	$0,-12(%ebp)
-	jle	_1648
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1650,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1649,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-12(%ebp),%eax
-	sub	$1,%eax
-	movl	%eax,-16(%ebp)
-	calll	*_bbOnDebugLeaveScope
-_1648:
-	calll	*_bbOnDebugLeaveScope
-_1646:
 	movl	$_1652,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
@@ -4864,77 +4882,63 @@ _1646:
 	jne	_1654
 	call	_brl_blitz_NullObjectError
 _1654:
-	movl	-12(%ebp),%eax
-	movl	%eax,4(%esp)
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
-	call	_maxgui_maxgui_GadgetItemText
-	movl	%eax,-20(%ebp)
+	call	_maxgui_maxgui_SelectedGadgetItem
+	movl	%eax,-12(%ebp)
 	movl	$_1656,(%esp)
 	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1658
-	call	_brl_blitz_NullObjectError
-_1658:
-	movl	-20(%ebp),%eax
-	movl	%eax,4(%esp)
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*104(%eax)
-	cmp	$0,%eax
-	jne	_1659
+	cmpl	$-1,-12(%ebp)
+	jne	_1657
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1661,(%esp)
+	movl	$_1659,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1660,(%esp)
+	movl	$_1658,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
 	calll	*_bbOnDebugLeaveScope
-	jmp	_270
-_1659:
+	jmp	_274
+_1657:
+	movl	$_1660,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	$0,-16(%ebp)
 	movl	$_1662,(%esp)
 	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1664
-	call	_brl_blitz_NullObjectError
-_1664:
-	movl	-12(%ebp),%eax
+	cmpl	$0,-12(%ebp)
+	jne	_1663
+	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	52(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_maxgui_maxgui_RemoveGadgetItem
 	movl	$_1665,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_1664,(%esp)
 	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1667
-	call	_brl_blitz_NullObjectError
-_1667:
-	movl	52(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_maxgui_maxgui_CountGadgetItems
-	cmp	$0,%eax
+	movl	$0,-16(%ebp)
+	calll	*_bbOnDebugLeaveScope
+	jmp	_1666
+_1663:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_1671,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_1667,(%esp)
+	calll	*_bbOnDebugEnterStm
+	cmpl	$0,-12(%ebp)
 	jle	_1668
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1675,(%esp)
+	movl	$_1670,(%esp)
 	calll	*_bbOnDebugEnterScope
 	movl	$_1669,(%esp)
 	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1671
-	call	_brl_blitz_NullObjectError
-_1671:
-	movl	-16(%ebp),%eax
-	movl	%eax,4(%esp)
-	movl	52(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_maxgui_maxgui_SelectGadgetItem
+	movl	-12(%ebp),%eax
+	sub	$1,%eax
+	movl	%eax,-16(%ebp)
+	calll	*_bbOnDebugLeaveScope
+_1668:
+	calll	*_bbOnDebugLeaveScope
+_1666:
 	movl	$_1672,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
@@ -4942,11 +4946,12 @@ _1671:
 	jne	_1674
 	call	_brl_blitz_NullObjectError
 _1674:
+	movl	-12(%ebp),%eax
+	movl	%eax,4(%esp)
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
-	call	_maxgui_maxgui_ActivateGadget
-	calll	*_bbOnDebugLeaveScope
-_1668:
+	call	_maxgui_maxgui_GadgetItemText
+	movl	%eax,-20(%ebp)
 	movl	$_1676,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
@@ -4954,37 +4959,114 @@ _1668:
 	jne	_1678
 	call	_brl_blitz_NullObjectError
 _1678:
-	movl	12(%ebx),%eax
-	movl	%eax,-24(%ebp)
-	cmpl	$_bbNullObject,-24(%ebp)
-	jne	_1680
-	call	_brl_blitz_NullObjectError
-_1680:
-	movl	-4(%ebp),%edi
-	cmp	$_bbNullObject,%edi
-	jne	_1682
-	call	_brl_blitz_NullObjectError
-_1682:
+	movl	-20(%ebp),%eax
+	movl	%eax,4(%esp)
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*108(%eax)
+	cmp	$0,%eax
+	jne	_1679
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_1681,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_1680,(%esp)
+	calll	*_bbOnDebugEnterStm
+	mov	$0,%ebx
+	calll	*_bbOnDebugLeaveScope
+	calll	*_bbOnDebugLeaveScope
+	jmp	_274
+_1679:
+	movl	$_1682,(%esp)
+	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
 	jne	_1684
 	call	_brl_blitz_NullObjectError
 _1684:
-	movl	12(%ebx),%esi
-	cmp	$_bbNullObject,%esi
-	jne	_1686
-	call	_brl_blitz_NullObjectError
-_1686:
+	movl	-12(%ebp),%eax
+	movl	%eax,4(%esp)
+	movl	52(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_maxgui_maxgui_RemoveGadgetItem
+	movl	$_1685,(%esp)
+	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1688
+	jne	_1687
 	call	_brl_blitz_NullObjectError
+_1687:
+	movl	52(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_maxgui_maxgui_CountGadgetItems
+	cmp	$0,%eax
+	jle	_1688
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_1695,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_1689,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1691
+	call	_brl_blitz_NullObjectError
+_1691:
+	movl	-16(%ebp),%eax
+	movl	%eax,4(%esp)
+	movl	52(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_maxgui_maxgui_SelectGadgetItem
+	movl	$_1692,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1694
+	call	_brl_blitz_NullObjectError
+_1694:
+	movl	52(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_maxgui_maxgui_ActivateGadget
+	calll	*_bbOnDebugLeaveScope
 _1688:
+	movl	$_1696,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1698
+	call	_brl_blitz_NullObjectError
+_1698:
+	movl	12(%ebx),%eax
+	movl	%eax,-24(%ebp)
+	cmpl	$_bbNullObject,-24(%ebp)
+	jne	_1700
+	call	_brl_blitz_NullObjectError
+_1700:
+	movl	-4(%ebp),%edi
+	cmp	$_bbNullObject,%edi
+	jne	_1702
+	call	_brl_blitz_NullObjectError
+_1702:
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1704
+	call	_brl_blitz_NullObjectError
+_1704:
+	movl	12(%ebx),%esi
+	cmp	$_bbNullObject,%esi
+	jne	_1706
+	call	_brl_blitz_NullObjectError
+_1706:
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1708
+	call	_brl_blitz_NullObjectError
+_1708:
 	movl	-20(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	mov	%eax,%ebx
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
@@ -4992,7 +5074,7 @@ _1688:
 	movl	%eax,4(%esp)
 	movl	%edi,(%esp)
 	movl	(%edi),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%ebx,4(%esp)
 	movl	%eax,(%esp)
 	call	_bbStringConcat
@@ -5002,22 +5084,22 @@ _1688:
 	movl	-24(%ebp),%eax
 	movl	(%eax),%eax
 	calll	*64(%eax)
-	movl	$_1689,(%esp)
+	movl	$_1709,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1691
+	jne	_1711
 	call	_brl_blitz_NullObjectError
-_1691:
+_1711:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*176(%eax)
+	calll	*180(%eax)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_1627
-_1627:
+	jmp	_1647
+_1647:
 	mov	$0,%ebx
-	jmp	_270
-_270:
+	jmp	_274
+_274:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$20,%esp
@@ -5037,40 +5119,40 @@ __bb_TGui_DoSelectAll:
 	movl	%eax,-4(%ebp)
 	movl	$_bbNullObject,-8(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_1710,(%esp)
+	movl	$_1730,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1695,(%esp)
+	movl	$_1715,(%esp)
 	calll	*_bbOnDebugEnterStm
 	call	_maxgui_maxgui_ActiveGadget
 	movl	%eax,-8(%ebp)
-	movl	$_1697,(%esp)
+	movl	$_1717,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$_bbNullObject,-8(%ebp)
-	jne	_1698
+	jne	_1718
 	movl	%ebp,4(%esp)
-	movl	$_1700,(%esp)
+	movl	$_1720,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1699,(%esp)
+	movl	$_1719,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_273
-_1698:
-	movl	$_1701,(%esp)
+	jmp	_277
+_1718:
+	movl	$_1721,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetClass
 	cmp	$5,%eax
-	je	_1704
+	je	_1724
 	cmp	$4,%eax
-	je	_1705
-	jmp	_1703
-_1704:
+	je	_1725
+	jmp	_1723
+_1724:
 	movl	%ebp,4(%esp)
-	movl	$_1707,(%esp)
+	movl	$_1727,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1706,(%esp)
+	movl	$_1726,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$1,12(%esp)
 	movl	$-1,8(%esp)
@@ -5079,22 +5161,22 @@ _1704:
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectTextAreaText
 	calll	*_bbOnDebugLeaveScope
-	jmp	_1703
-_1705:
+	jmp	_1723
+_1725:
 	movl	%ebp,4(%esp)
-	movl	$_1709,(%esp)
+	movl	$_1729,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1708,(%esp)
+	movl	$_1728,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_ActivateGadget
 	calll	*_bbOnDebugLeaveScope
-	jmp	_1703
-_1703:
+	jmp	_1723
+_1723:
 	mov	$0,%ebx
-	jmp	_273
-_273:
+	jmp	_277
+_277:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$28,%esp
@@ -5117,118 +5199,118 @@ __bb_TGui_DoCopy:
 	movl	$_bbNullObject,-16(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1770,(%esp)
+	movl	$_1790,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1711,(%esp)
+	movl	$_1731,(%esp)
 	calll	*_bbOnDebugEnterStm
 	call	_maxgui_maxgui_ActiveGadget
 	movl	%eax,-8(%ebp)
-	movl	$_1713,(%esp)
+	movl	$_1733,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$_bbNullObject,-8(%ebp)
-	jne	_1714
+	jne	_1734
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1718,(%esp)
+	movl	$_1738,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1715,(%esp)
+	movl	$_1735,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1717
+	jne	_1737
 	call	_brl_blitz_NullObjectError
-_1717:
+_1737:
 	movl	52(%ebx),%eax
 	movl	%eax,-8(%ebp)
 	calll	*_bbOnDebugLeaveScope
-_1714:
-	movl	$_1719,(%esp)
+_1734:
+	movl	$_1739,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetClass
 	cmp	$5,%eax
-	je	_1722
+	je	_1742
 	cmp	$4,%eax
-	je	_1722
+	je	_1742
 	cmp	$7,%eax
-	je	_1723
-	jmp	_1721
-_1722:
+	je	_1743
+	jmp	_1741
+_1742:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1725,(%esp)
+	movl	$_1745,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1724,(%esp)
+	movl	$_1744,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetCopy
 	calll	*_bbOnDebugLeaveScope
-	jmp	_1721
-_1723:
+	jmp	_1741
+_1743:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1768,(%esp)
+	movl	$_1788,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1726,(%esp)
+	movl	$_1746,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1728
+	jne	_1748
 	call	_brl_blitz_NullObjectError
-_1728:
+_1748:
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
 	movl	%eax,-12(%ebp)
-	movl	$_1730,(%esp)
+	movl	$_1750,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$-1,-12(%ebp)
-	jne	_1731
+	jne	_1751
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1733,(%esp)
+	movl	$_1753,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1732,(%esp)
+	movl	$_1752,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
 	calll	*_bbOnDebugLeaveScope
-	jmp	_276
-_1731:
-	movl	$_1734,(%esp)
+	jmp	_280
+_1751:
+	movl	$_1754,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,-16(%ebp)
-	movl	$_1736,(%esp)
+	movl	$_1756,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%eax
 	movl	%eax,-20(%ebp)
 	cmpl	$_bbNullObject,-20(%ebp)
-	jne	_1738
+	jne	_1758
 	call	_brl_blitz_NullObjectError
-_1738:
+_1758:
 	movl	-4(%ebp),%edi
 	cmp	$_bbNullObject,%edi
-	jne	_1740
+	jne	_1760
 	call	_brl_blitz_NullObjectError
-_1740:
+_1760:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1742
+	jne	_1762
 	call	_brl_blitz_NullObjectError
-_1742:
+_1762:
 	movl	12(%ebx),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_1744
+	jne	_1764
 	call	_brl_blitz_NullObjectError
-_1744:
+_1764:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1746
+	jne	_1766
 	call	_brl_blitz_NullObjectError
-_1746:
+_1766:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	52(%ebx),%eax
@@ -5241,7 +5323,7 @@ _1746:
 	movl	%eax,4(%esp)
 	movl	%edi,(%esp)
 	movl	(%edi),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%ebx,4(%esp)
 	movl	%eax,(%esp)
 	call	_bbStringConcat
@@ -5250,39 +5332,39 @@ _1746:
 	movl	32(%eax),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SetGadgetText
-	movl	$_1747,(%esp)
+	movl	$_1767,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1749
+	jne	_1769
 	call	_brl_blitz_NullObjectError
-_1749:
+_1769:
 	movl	32(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_ActivateGadget
-	movl	$_1750,(%esp)
+	movl	$_1770,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1752
+	jne	_1772
 	call	_brl_blitz_NullObjectError
-_1752:
+_1772:
 	movl	32(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetCopy
-	movl	$_1753,(%esp)
+	movl	$_1773,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1755
+	jne	_1775
 	call	_brl_blitz_NullObjectError
-_1755:
+_1775:
 	mov	%ebx,%esi
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1758
+	jne	_1778
 	call	_brl_blitz_NullObjectError
-_1758:
+_1778:
 	movl	32(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetText
@@ -5290,30 +5372,30 @@ _1758:
 	mov	%eax,%ebx
 	movl	72(%esi),%eax
 	decl	4(%eax)
-	jnz	_1762
+	jnz	_1782
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_1762:
+_1782:
 	movl	%ebx,72(%esi)
-	movl	$_1763,(%esp)
+	movl	$_1783,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-16(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_ActivateGadget
-	movl	$_1764,(%esp)
+	movl	$_1784,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1766
+	jne	_1786
 	call	_brl_blitz_NullObjectError
-_1766:
+_1786:
 	movl	$0,76(%ebx)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_1721
-_1721:
+	jmp	_1741
+_1741:
 	mov	$0,%ebx
-	jmp	_276
-_276:
+	jmp	_280
+_280:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$8,%esp
@@ -5338,118 +5420,118 @@ __bb_TGui_DoCut:
 	movl	$_bbNullObject,-16(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1829,(%esp)
+	movl	$_1849,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1771,(%esp)
+	movl	$_1791,(%esp)
 	calll	*_bbOnDebugEnterStm
 	call	_maxgui_maxgui_ActiveGadget
 	movl	%eax,-8(%ebp)
-	movl	$_1773,(%esp)
+	movl	$_1793,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$_bbNullObject,-8(%ebp)
-	jne	_1774
+	jne	_1794
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1778,(%esp)
+	movl	$_1798,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1775,(%esp)
+	movl	$_1795,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1777
+	jne	_1797
 	call	_brl_blitz_NullObjectError
-_1777:
+_1797:
 	movl	52(%ebx),%eax
 	movl	%eax,-8(%ebp)
 	calll	*_bbOnDebugLeaveScope
-_1774:
-	movl	$_1779,(%esp)
+_1794:
+	movl	$_1799,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetClass
 	cmp	$5,%eax
-	je	_1782
+	je	_1802
 	cmp	$4,%eax
-	je	_1782
+	je	_1802
 	cmp	$7,%eax
-	je	_1783
-	jmp	_1781
-_1782:
+	je	_1803
+	jmp	_1801
+_1802:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1785,(%esp)
+	movl	$_1805,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1784,(%esp)
+	movl	$_1804,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetCut
 	calll	*_bbOnDebugLeaveScope
-	jmp	_1781
-_1783:
+	jmp	_1801
+_1803:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1828,(%esp)
+	movl	$_1848,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1786,(%esp)
+	movl	$_1806,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1788
+	jne	_1808
 	call	_brl_blitz_NullObjectError
-_1788:
+_1808:
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
 	movl	%eax,-12(%ebp)
-	movl	$_1790,(%esp)
+	movl	$_1810,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$-1,-12(%ebp)
-	jne	_1791
+	jne	_1811
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1793,(%esp)
+	movl	$_1813,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1792,(%esp)
+	movl	$_1812,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
 	calll	*_bbOnDebugLeaveScope
-	jmp	_279
-_1791:
-	movl	$_1794,(%esp)
+	jmp	_283
+_1811:
+	movl	$_1814,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,-16(%ebp)
-	movl	$_1796,(%esp)
+	movl	$_1816,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%eax
 	movl	%eax,-20(%ebp)
 	cmpl	$_bbNullObject,-20(%ebp)
-	jne	_1798
+	jne	_1818
 	call	_brl_blitz_NullObjectError
-_1798:
+_1818:
 	movl	-4(%ebp),%edi
 	cmp	$_bbNullObject,%edi
-	jne	_1800
+	jne	_1820
 	call	_brl_blitz_NullObjectError
-_1800:
+_1820:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1802
+	jne	_1822
 	call	_brl_blitz_NullObjectError
-_1802:
+_1822:
 	movl	12(%ebx),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_1804
+	jne	_1824
 	call	_brl_blitz_NullObjectError
-_1804:
+_1824:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1806
+	jne	_1826
 	call	_brl_blitz_NullObjectError
-_1806:
+_1826:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	52(%ebx),%eax
@@ -5462,7 +5544,7 @@ _1806:
 	movl	%eax,4(%esp)
 	movl	%edi,(%esp)
 	movl	(%edi),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%ebx,4(%esp)
 	movl	%eax,(%esp)
 	call	_bbStringConcat
@@ -5471,39 +5553,39 @@ _1806:
 	movl	32(%eax),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SetGadgetText
-	movl	$_1807,(%esp)
+	movl	$_1827,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1809
+	jne	_1829
 	call	_brl_blitz_NullObjectError
-_1809:
+_1829:
 	movl	32(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_ActivateGadget
-	movl	$_1810,(%esp)
+	movl	$_1830,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1812
+	jne	_1832
 	call	_brl_blitz_NullObjectError
-_1812:
+_1832:
 	movl	32(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetCopy
-	movl	$_1813,(%esp)
+	movl	$_1833,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1815
+	jne	_1835
 	call	_brl_blitz_NullObjectError
-_1815:
+_1835:
 	mov	%ebx,%esi
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1818
+	jne	_1838
 	call	_brl_blitz_NullObjectError
-_1818:
+_1838:
 	movl	32(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetText
@@ -5511,30 +5593,30 @@ _1818:
 	mov	%eax,%ebx
 	movl	72(%esi),%eax
 	decl	4(%eax)
-	jnz	_1822
+	jnz	_1842
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_1822:
+_1842:
 	movl	%ebx,72(%esi)
-	movl	$_1823,(%esp)
+	movl	$_1843,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-16(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_ActivateGadget
-	movl	$_1824,(%esp)
+	movl	$_1844,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1826
+	jne	_1846
 	call	_brl_blitz_NullObjectError
-_1826:
+_1846:
 	movl	$1,76(%ebx)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_1781
-_1781:
+	jmp	_1801
+_1801:
 	mov	$0,%ebx
-	jmp	_279
-_279:
+	jmp	_283
+_283:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$8,%esp
@@ -5559,32 +5641,32 @@ __bb_TGui_DoPaste:
 	movl	$0,-12(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1960,(%esp)
+	movl	$_1980,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1830,(%esp)
+	movl	$_1850,(%esp)
 	calll	*_bbOnDebugEnterStm
 	call	_maxgui_maxgui_ActiveGadget
 	movl	%eax,-8(%ebp)
-	movl	$_1832,(%esp)
+	movl	$_1852,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$_bbNullObject,-8(%ebp)
-	jne	_1833
+	jne	_1853
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1837,(%esp)
+	movl	$_1857,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1834,(%esp)
+	movl	$_1854,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1836
+	jne	_1856
 	call	_brl_blitz_NullObjectError
-_1836:
+_1856:
 	movl	52(%ebx),%eax
 	movl	%eax,-8(%ebp)
 	calll	*_bbOnDebugLeaveScope
-_1833:
-	movl	$_1838,(%esp)
+_1853:
+	movl	$_1858,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
@@ -5596,7 +5678,7 @@ _1833:
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	je	_1839
+	je	_1859
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetClass
@@ -5606,124 +5688,53 @@ _1833:
 	cmp	$0,%eax
 	sete	%al
 	movzbl	%al,%eax
-_1839:
+_1859:
 	cmp	$0,%eax
-	je	_1841
+	je	_1861
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1845,(%esp)
+	movl	$_1865,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1842,(%esp)
+	movl	$_1862,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1844
+	jne	_1864
 	call	_brl_blitz_NullObjectError
-_1844:
+_1864:
 	movl	52(%ebx),%eax
 	movl	%eax,-8(%ebp)
 	calll	*_bbOnDebugLeaveScope
-_1841:
-	movl	$_1846,(%esp)
+_1861:
+	movl	$_1866,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetClass
 	cmp	$5,%eax
-	je	_1849
+	je	_1869
 	cmp	$4,%eax
-	je	_1849
+	je	_1869
 	cmp	$7,%eax
-	je	_1850
-	jmp	_1848
-_1849:
+	je	_1870
+	jmp	_1868
+_1869:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1852,(%esp)
+	movl	$_1872,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1851,(%esp)
+	movl	$_1871,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetPaste
 	calll	*_bbOnDebugLeaveScope
-	jmp	_1848
-_1850:
+	jmp	_1868
+_1870:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1958,(%esp)
+	movl	$_1978,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1853,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1855
-	call	_brl_blitz_NullObjectError
-_1855:
-	movl	$_bbEmptyString,4(%esp)
-	movl	72(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_bbStringCompare
-	cmp	$0,%eax
-	jne	_1856
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1858,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1857,(%esp)
-	calll	*_bbOnDebugEnterStm
-	mov	$0,%ebx
-	calll	*_bbOnDebugLeaveScope
-	calll	*_bbOnDebugLeaveScope
-	jmp	_282
-_1856:
-	movl	$_1859,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1861
-	call	_brl_blitz_NullObjectError
-_1861:
-	movl	72(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_brl_filesystem_FileType
-	cmp	$0,%eax
-	jne	_1862
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1864,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1863,(%esp)
-	calll	*_bbOnDebugEnterStm
-	mov	$0,%ebx
-	calll	*_bbOnDebugLeaveScope
-	calll	*_bbOnDebugLeaveScope
-	jmp	_282
-_1862:
-	movl	$_1865,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1867
-	call	_brl_blitz_NullObjectError
-_1867:
-	cmpl	$0,76(%ebx)
-	je	_1868
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1905,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1869,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1871
-	call	_brl_blitz_NullObjectError
-_1871:
-	movl	72(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_brl_filesystem_StripDir
-	movl	%eax,-16(%ebp)
 	movl	$_1873,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
@@ -5731,22 +5742,93 @@ _1871:
 	jne	_1875
 	call	_brl_blitz_NullObjectError
 _1875:
+	movl	$_bbEmptyString,4(%esp)
+	movl	72(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_bbStringCompare
+	cmp	$0,%eax
+	jne	_1876
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_1878,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_1877,(%esp)
+	calll	*_bbOnDebugEnterStm
+	mov	$0,%ebx
+	calll	*_bbOnDebugLeaveScope
+	calll	*_bbOnDebugLeaveScope
+	jmp	_286
+_1876:
+	movl	$_1879,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1881
+	call	_brl_blitz_NullObjectError
+_1881:
+	movl	72(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_brl_filesystem_FileType
+	cmp	$0,%eax
+	jne	_1882
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_1884,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_1883,(%esp)
+	calll	*_bbOnDebugEnterStm
+	mov	$0,%ebx
+	calll	*_bbOnDebugLeaveScope
+	calll	*_bbOnDebugLeaveScope
+	jmp	_286
+_1882:
+	movl	$_1885,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1887
+	call	_brl_blitz_NullObjectError
+_1887:
+	cmpl	$0,76(%ebx)
+	je	_1888
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_1925,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_1889,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1891
+	call	_brl_blitz_NullObjectError
+_1891:
+	movl	72(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_brl_filesystem_StripDir
+	movl	%eax,-16(%ebp)
+	movl	$_1893,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1895
+	call	_brl_blitz_NullObjectError
+_1895:
 	movl	72(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$2,%eax
-	jne	_1876
+	jne	_1896
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1880,(%esp)
+	movl	$_1900,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1877,(%esp)
+	movl	$_1897,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1879
+	jne	_1899
 	call	_brl_blitz_NullObjectError
-_1879:
+_1899:
 	movl	72(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_StripSlash
@@ -5754,30 +5836,30 @@ _1879:
 	call	_brl_filesystem_StripDir
 	movl	%eax,-16(%ebp)
 	calll	*_bbOnDebugLeaveScope
-_1876:
-	movl	$_1881,(%esp)
+_1896:
+	movl	$_1901,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%eax
 	movl	%eax,-20(%ebp)
 	cmpl	$_bbNullObject,-20(%ebp)
-	jne	_1883
+	jne	_1903
 	call	_brl_blitz_NullObjectError
-_1883:
+_1903:
 	movl	-4(%ebp),%edi
 	cmp	$_bbNullObject,%edi
-	jne	_1885
+	jne	_1905
 	call	_brl_blitz_NullObjectError
-_1885:
+_1905:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1887
+	jne	_1907
 	call	_brl_blitz_NullObjectError
-_1887:
+_1907:
 	movl	12(%ebx),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_1889
+	jne	_1909
 	call	_brl_blitz_NullObjectError
-_1889:
+_1909:
 	movl	-16(%ebp),%ebx
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
@@ -5785,7 +5867,7 @@ _1889:
 	movl	%eax,4(%esp)
 	movl	%edi,(%esp)
 	movl	(%edi),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%ebx,4(%esp)
 	movl	%eax,(%esp)
 	call	_bbStringConcat
@@ -5795,107 +5877,49 @@ _1889:
 	movl	%eax,(%esp)
 	call	_bbStringCompare
 	cmp	$0,%eax
-	jne	_1890
+	jne	_1910
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1904,(%esp)
+	movl	$_1924,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1891,(%esp)
+	movl	$_1911,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1893
+	jne	_1913
 	call	_brl_blitz_NullObjectError
-_1893:
+_1913:
 	movl	$0,76(%ebx)
-	movl	$_1895,(%esp)
+	movl	$_1915,(%esp)
 	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1897
-	call	_brl_blitz_NullObjectError
-_1897:
-	mov	$_bbEmptyString,%eax
-	incl	4(%eax)
-	mov	%eax,%esi
-	movl	72(%ebx),%eax
-	decl	4(%eax)
-	jnz	_1902
-	movl	%eax,(%esp)
-	call	_bbGCFree
-_1902:
-	movl	%esi,72(%ebx)
-	movl	$_1903,(%esp)
-	calll	*_bbOnDebugEnterStm
-	mov	$0,%ebx
-	calll	*_bbOnDebugLeaveScope
-	calll	*_bbOnDebugLeaveScope
-	calll	*_bbOnDebugLeaveScope
-	jmp	_282
-_1890:
-	calll	*_bbOnDebugLeaveScope
-_1868:
-	movl	$_1907,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	$0,-12(%ebp)
-	movl	$_1909,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1911
-	call	_brl_blitz_NullObjectError
-_1911:
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*128(%eax)
-	cmp	$0,%eax
-	je	_1912
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1944,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1913,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1915
-	call	_brl_blitz_NullObjectError
-_1915:
-	movl	76(%ebx),%eax
-	cmp	$0,%eax
-	je	_1918
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
 	jne	_1917
 	call	_brl_blitz_NullObjectError
 _1917:
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*132(%eax)
-_1918:
-	cmp	$0,%eax
-	je	_1920
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1933,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1921,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1923
-	call	_brl_blitz_NullObjectError
-_1923:
 	mov	$_bbEmptyString,%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	72(%ebx),%eax
 	decl	4(%eax)
-	jnz	_1928
+	jnz	_1922
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_1928:
+_1922:
 	movl	%esi,72(%ebx)
+	movl	$_1923,(%esp)
+	calll	*_bbOnDebugEnterStm
+	mov	$0,%ebx
+	calll	*_bbOnDebugLeaveScope
+	calll	*_bbOnDebugLeaveScope
+	calll	*_bbOnDebugLeaveScope
+	jmp	_286
+_1910:
+	calll	*_bbOnDebugLeaveScope
+_1888:
+	movl	$_1927,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	$0,-12(%ebp)
 	movl	$_1929,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
@@ -5903,59 +5927,72 @@ _1928:
 	jne	_1931
 	call	_brl_blitz_NullObjectError
 _1931:
-	movl	$0,76(%ebx)
-	calll	*_bbOnDebugLeaveScope
-	jmp	_1934
-_1920:
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*132(%eax)
+	cmp	$0,%eax
+	je	_1932
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1943,(%esp)
+	movl	$_1964,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1935,(%esp)
+	movl	$_1933,(%esp)
 	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1935
+	call	_brl_blitz_NullObjectError
+_1935:
+	movl	76(%ebx),%eax
+	cmp	$0,%eax
+	je	_1938
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
 	jne	_1937
 	call	_brl_blitz_NullObjectError
 _1937:
-	mov	$_54,%eax
-	incl	4(%eax)
-	mov	%eax,%esi
-	movl	88(%ebx),%eax
-	decl	4(%eax)
-	jnz	_1942
-	movl	%eax,(%esp)
-	call	_bbGCFree
-_1942:
-	movl	%esi,88(%ebx)
-	calll	*_bbOnDebugLeaveScope
-_1934:
-	calll	*_bbOnDebugLeaveScope
-	jmp	_1945
-_1912:
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*136(%eax)
+_1938:
+	cmp	$0,%eax
+	je	_1940
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_1954,(%esp)
+	movl	$_1953,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1946,(%esp)
+	movl	$_1941,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1948
+	jne	_1943
 	call	_brl_blitz_NullObjectError
-_1948:
-	mov	$_54,%eax
+_1943:
+	mov	$_bbEmptyString,%eax
 	incl	4(%eax)
 	mov	%eax,%esi
-	movl	88(%ebx),%eax
+	movl	72(%ebx),%eax
 	decl	4(%eax)
-	jnz	_1953
+	jnz	_1948
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_1953:
-	movl	%esi,88(%ebx)
+_1948:
+	movl	%esi,72(%ebx)
+	movl	$_1949,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1951
+	call	_brl_blitz_NullObjectError
+_1951:
+	movl	$0,76(%ebx)
 	calll	*_bbOnDebugLeaveScope
-_1945:
+	jmp	_1954
+_1940:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_1963,(%esp)
+	calll	*_bbOnDebugEnterScope
 	movl	$_1955,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
@@ -5963,15 +6000,60 @@ _1945:
 	jne	_1957
 	call	_brl_blitz_NullObjectError
 _1957:
+	mov	$_54,%eax
+	incl	4(%eax)
+	mov	%eax,%esi
+	movl	88(%ebx),%eax
+	decl	4(%eax)
+	jnz	_1962
+	movl	%eax,(%esp)
+	call	_bbGCFree
+_1962:
+	movl	%esi,88(%ebx)
+	calll	*_bbOnDebugLeaveScope
+_1954:
+	calll	*_bbOnDebugLeaveScope
+	jmp	_1965
+_1932:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_1974,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_1966,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1968
+	call	_brl_blitz_NullObjectError
+_1968:
+	mov	$_54,%eax
+	incl	4(%eax)
+	mov	%eax,%esi
+	movl	88(%ebx),%eax
+	decl	4(%eax)
+	jnz	_1973
+	movl	%eax,(%esp)
+	call	_bbGCFree
+_1973:
+	movl	%esi,88(%ebx)
+	calll	*_bbOnDebugLeaveScope
+_1965:
+	movl	$_1975,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1977
+	call	_brl_blitz_NullObjectError
+_1977:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*180(%eax)
+	calll	*184(%eax)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_1848
-_1848:
+	jmp	_1868
+_1868:
 	mov	$0,%ebx
-	jmp	_282
-_282:
+	jmp	_286
+_286:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$8,%esp
@@ -5996,79 +6078,8 @@ __bb_TGui_AttemptFileFolderPaste:
 	movl	$0,-16(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2047,(%esp)
+	movl	$_2067,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1961,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1963
-	call	_brl_blitz_NullObjectError
-_1963:
-	movl	72(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_brl_filesystem_StripDir
-	movl	%eax,-8(%ebp)
-	movl	$_1965,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1967
-	call	_brl_blitz_NullObjectError
-_1967:
-	movl	72(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_brl_filesystem_FileType
-	cmp	$2,%eax
-	jne	_1968
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_1972,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_1969,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1971
-	call	_brl_blitz_NullObjectError
-_1971:
-	movl	72(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_brl_filesystem_StripSlash
-	movl	%eax,(%esp)
-	call	_brl_filesystem_StripDir
-	movl	%eax,-8(%ebp)
-	calll	*_bbOnDebugLeaveScope
-_1968:
-	movl	$_1973,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%edi
-	cmp	$_bbNullObject,%edi
-	jne	_1975
-	call	_brl_blitz_NullObjectError
-_1975:
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_1977
-	call	_brl_blitz_NullObjectError
-_1977:
-	movl	12(%ebx),%esi
-	cmp	$_bbNullObject,%esi
-	jne	_1979
-	call	_brl_blitz_NullObjectError
-_1979:
-	movl	-8(%ebp),%ebx
-	movl	%esi,(%esp)
-	movl	(%esi),%eax
-	calll	*68(%eax)
-	movl	%eax,4(%esp)
-	movl	%edi,(%esp)
-	movl	(%edi),%eax
-	calll	*184(%eax)
-	movl	%ebx,4(%esp)
-	movl	%eax,(%esp)
-	call	_bbStringConcat
-	movl	%eax,-12(%ebp)
 	movl	$_1981,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
@@ -6076,39 +6087,110 @@ _1979:
 	jne	_1983
 	call	_brl_blitz_NullObjectError
 _1983:
+	movl	72(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_brl_filesystem_StripDir
+	movl	%eax,-8(%ebp)
+	movl	$_1985,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1987
+	call	_brl_blitz_NullObjectError
+_1987:
+	movl	72(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_brl_filesystem_FileType
+	cmp	$2,%eax
+	jne	_1988
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_1992,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_1989,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1991
+	call	_brl_blitz_NullObjectError
+_1991:
+	movl	72(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_brl_filesystem_StripSlash
+	movl	%eax,(%esp)
+	call	_brl_filesystem_StripDir
+	movl	%eax,-8(%ebp)
+	calll	*_bbOnDebugLeaveScope
+_1988:
+	movl	$_1993,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%edi
+	cmp	$_bbNullObject,%edi
+	jne	_1995
+	call	_brl_blitz_NullObjectError
+_1995:
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_1997
+	call	_brl_blitz_NullObjectError
+_1997:
+	movl	12(%ebx),%esi
+	cmp	$_bbNullObject,%esi
+	jne	_1999
+	call	_brl_blitz_NullObjectError
+_1999:
+	movl	-8(%ebp),%ebx
+	movl	%esi,(%esp)
+	movl	(%esi),%eax
+	calll	*68(%eax)
+	movl	%eax,4(%esp)
+	movl	%edi,(%esp)
+	movl	(%edi),%eax
+	calll	*188(%eax)
+	movl	%ebx,4(%esp)
+	movl	%eax,(%esp)
+	call	_bbStringConcat
+	movl	%eax,-12(%ebp)
+	movl	$_2001,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2003
+	call	_brl_blitz_NullObjectError
+_2003:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	72(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_bbStringCompare
 	cmp	$0,%eax
-	jne	_1984
+	jne	_2004
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2001,(%esp)
+	movl	$_2021,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_1985,(%esp)
+	movl	$_2005,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%edi
 	cmp	$_bbNullObject,%edi
-	jne	_1987
+	jne	_2007
 	call	_brl_blitz_NullObjectError
-_1987:
+_2007:
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_1989
+	jne	_2009
 	call	_brl_blitz_NullObjectError
-_1989:
+_2009:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1991
+	jne	_2011
 	call	_brl_blitz_NullObjectError
-_1991:
+_2011:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1993
+	jne	_2013
 	call	_brl_blitz_NullObjectError
-_1993:
+_2013:
 	movl	-8(%ebp),%eax
 	movl	%eax,8(%esp)
 	movl	%ebx,(%esp)
@@ -6117,29 +6199,29 @@ _1993:
 	movl	%eax,4(%esp)
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%eax,4(%esp)
 	movl	%edi,(%esp)
 	movl	(%edi),%eax
-	calll	*136(%eax)
+	calll	*140(%eax)
 	movl	%eax,-8(%ebp)
-	movl	$_1994,(%esp)
+	movl	$_2014,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%edi
 	cmp	$_bbNullObject,%edi
-	jne	_1996
+	jne	_2016
 	call	_brl_blitz_NullObjectError
-_1996:
+_2016:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_1998
+	jne	_2018
 	call	_brl_blitz_NullObjectError
-_1998:
+_2018:
 	movl	12(%ebx),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_2000
+	jne	_2020
 	call	_brl_blitz_NullObjectError
-_2000:
+_2020:
 	movl	-8(%ebp),%ebx
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
@@ -6147,177 +6229,177 @@ _2000:
 	movl	%eax,4(%esp)
 	movl	%edi,(%esp)
 	movl	(%edi),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%ebx,4(%esp)
 	movl	%eax,(%esp)
 	call	_bbStringConcat
 	movl	%eax,-12(%ebp)
 	calll	*_bbOnDebugLeaveScope
-_1984:
-	movl	$_2002,(%esp)
+_2004:
+	movl	$_2022,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,-16(%ebp)
-	movl	$_2004,(%esp)
+	movl	$_2024,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2006
+	jne	_2026
 	call	_brl_blitz_NullObjectError
-_2006:
+_2026:
 	movl	72(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$1,%eax
-	jne	_2007
+	jne	_2027
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2015,(%esp)
+	movl	$_2035,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2008,(%esp)
+	movl	$_2028,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2010
+	jne	_2030
 	call	_brl_blitz_NullObjectError
-_2010:
+_2030:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	72(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_CopyFile
 	movl	%eax,-16(%ebp)
-	movl	$_2011,(%esp)
+	movl	$_2031,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$0,-16(%ebp)
-	jne	_2012
+	jne	_2032
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2014,(%esp)
+	movl	$_2034,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2013,(%esp)
+	movl	$_2033,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_DeleteFile
 	calll	*_bbOnDebugLeaveScope
-_2012:
+_2032:
 	calll	*_bbOnDebugLeaveScope
-	jmp	_2016
-_2007:
+	jmp	_2036
+_2027:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2029,(%esp)
+	movl	$_2049,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2017,(%esp)
+	movl	$_2037,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2019
+	jne	_2039
 	call	_brl_blitz_NullObjectError
-_2019:
+_2039:
 	movl	72(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$2,%eax
-	jne	_2020
+	jne	_2040
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2028,(%esp)
+	movl	$_2048,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2021,(%esp)
+	movl	$_2041,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2023
+	jne	_2043
 	call	_brl_blitz_NullObjectError
-_2023:
+_2043:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	72(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_CopyDir
 	movl	%eax,-16(%ebp)
-	movl	$_2024,(%esp)
+	movl	$_2044,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$0,-16(%ebp)
-	jne	_2025
+	jne	_2045
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2027,(%esp)
+	movl	$_2047,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2026,(%esp)
+	movl	$_2046,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$1,4(%esp)
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_DeleteDir
 	calll	*_bbOnDebugLeaveScope
-_2025:
+_2045:
 	calll	*_bbOnDebugLeaveScope
-_2020:
+_2040:
 	calll	*_bbOnDebugLeaveScope
-_2016:
-	movl	$_2030,(%esp)
+_2036:
+	movl	$_2050,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$0,-16(%ebp)
-	je	_2031
+	je	_2051
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2045,(%esp)
+	movl	$_2065,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2032,(%esp)
+	movl	$_2052,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_2034
+	jne	_2054
 	call	_brl_blitz_NullObjectError
-_2034:
+_2054:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2036
+	jne	_2056
 	call	_brl_blitz_NullObjectError
-_2036:
+_2056:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2038
+	jne	_2058
 	call	_brl_blitz_NullObjectError
-_2038:
+_2058:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*68(%eax)
 	movl	%eax,4(%esp)
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
-	calll	*152(%eax)
-	movl	$_2039,(%esp)
+	calll	*156(%eax)
+	movl	$_2059,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2041
+	jne	_2061
 	call	_brl_blitz_NullObjectError
-_2041:
+_2061:
 	movl	-8(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*76(%eax)
-	movl	$_2042,(%esp)
+	calll	*80(%eax)
+	movl	$_2062,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2044
+	jne	_2064
 	call	_brl_blitz_NullObjectError
-_2044:
+_2064:
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_ActivateGadget
 	calll	*_bbOnDebugLeaveScope
-_2031:
-	movl	$_2046,(%esp)
+_2051:
+	movl	$_2066,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-16(%ebp),%ebx
-	jmp	_285
-_285:
+	jmp	_289
+_289:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$12,%esp
@@ -6336,62 +6418,62 @@ __bb_TGui_AttemptFileFolderDelete:
 	movl	8(%ebp),%eax
 	movl	%eax,-4(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_2066,(%esp)
+	movl	$_2086,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2048,(%esp)
+	movl	$_2068,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2050
+	jne	_2070
 	call	_brl_blitz_NullObjectError
-_2050:
+_2070:
 	movl	72(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$1,%eax
-	jne	_2051
+	jne	_2071
 	movl	%ebp,4(%esp)
-	movl	$_2055,(%esp)
+	movl	$_2075,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2052,(%esp)
+	movl	$_2072,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2054
+	jne	_2074
 	call	_brl_blitz_NullObjectError
-_2054:
+_2074:
 	movl	72(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_DeleteFile
 	mov	%eax,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_288
-_2051:
+	jmp	_292
+_2071:
 	movl	%ebp,4(%esp)
-	movl	$_2065,(%esp)
+	movl	$_2085,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2057,(%esp)
+	movl	$_2077,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2059
+	jne	_2079
 	call	_brl_blitz_NullObjectError
-_2059:
+_2079:
 	movl	72(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$2,%eax
-	jne	_2060
+	jne	_2080
 	movl	%ebp,4(%esp)
-	movl	$_2064,(%esp)
+	movl	$_2084,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2061,(%esp)
+	movl	$_2081,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2063
+	jne	_2083
 	call	_brl_blitz_NullObjectError
-_2063:
+_2083:
 	movl	$1,4(%esp)
 	movl	72(%ebx),%eax
 	movl	%eax,(%esp)
@@ -6399,13 +6481,13 @@ _2063:
 	mov	%eax,%ebx
 	calll	*_bbOnDebugLeaveScope
 	calll	*_bbOnDebugLeaveScope
-	jmp	_288
-_2060:
+	jmp	_292
+_2080:
 	calll	*_bbOnDebugLeaveScope
-_2056:
+_2076:
 	mov	$0,%ebx
-	jmp	_288
-_288:
+	jmp	_292
+_292:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -6428,12 +6510,12 @@ __bb_TGui_GetUniqueName:
 	movl	$_bbEmptyString,-16(%ebp)
 	movl	$_bbEmptyString,-20(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_2078,(%esp)
+	movl	$_2098,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2067,(%esp)
+	movl	$_2087,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_1,-16(%ebp)
-	movl	$_2069,(%esp)
+	movl	$_2089,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
@@ -6441,14 +6523,14 @@ __bb_TGui_GetUniqueName:
 	movl	%eax,(%esp)
 	call	_bbStringConcat
 	movl	%eax,-20(%ebp)
-	movl	$_2071,(%esp)
+	movl	$_2091,(%esp)
 	calll	*_bbOnDebugEnterStm
 	jmp	_55
 _57:
 	movl	%ebp,4(%esp)
-	movl	$_2076,(%esp)
+	movl	$_2096,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2074,(%esp)
+	movl	$_2094,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%ebx
 	fldz
@@ -6456,7 +6538,7 @@ _57:
 	fld1
 	fstpl	(%esp)
 	call	_brl_random_Rnd
-	fldl	_3848
+	fldl	_3888
 	fmulp	%st(0),%st(1)
 	fstpl	(%esp)
 	call	_bbFloatToInt
@@ -6472,7 +6554,7 @@ _57:
 	movl	%eax,(%esp)
 	call	_bbStringConcat
 	movl	%eax,-16(%ebp)
-	movl	$_2075,(%esp)
+	movl	$_2095,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-16(%ebp),%eax
 	movl	%eax,4(%esp)
@@ -6489,22 +6571,22 @@ _55:
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	jne	_2072
+	jne	_2092
 	movl	-20(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$1,%eax
 	sete	%al
 	movzbl	%al,%eax
-_2072:
+_2092:
 	cmp	$0,%eax
 	jne	_57
 _56:
-	movl	$_2077,(%esp)
+	movl	$_2097,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-16(%ebp),%ebx
-	jmp	_293
-_293:
+	jmp	_297
+_297:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -6521,42 +6603,42 @@ __bb_TGui_DoSelect:
 	movl	8(%ebp),%eax
 	movl	%eax,-4(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_2089,(%esp)
+	movl	$_2109,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2080,(%esp)
+	movl	$_2100,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2082
+	jne	_2102
 	call	_brl_blitz_NullObjectError
-_2082:
+_2102:
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
 	cmp	$-1,%eax
-	jne	_2083
+	jne	_2103
 	movl	%ebp,4(%esp)
-	movl	$_2085,(%esp)
+	movl	$_2105,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2084,(%esp)
+	movl	$_2104,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_296
-_2083:
-	movl	$_2086,(%esp)
+	jmp	_300
+_2103:
+	movl	$_2106,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2088
+	jne	_2108
 	call	_brl_blitz_NullObjectError
-_2088:
+_2108:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*176(%eax)
+	calll	*180(%eax)
 	mov	$0,%ebx
-	jmp	_296
-_296:
+	jmp	_300
+_300:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -6573,21 +6655,21 @@ __bb_TGui_DoSelectAction:
 	movl	8(%ebp),%eax
 	movl	%eax,-4(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_2093,(%esp)
+	movl	$_2113,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2090,(%esp)
+	movl	$_2110,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2092
+	jne	_2112
 	call	_brl_blitz_NullObjectError
-_2092:
+_2112:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*148(%eax)
+	calll	*152(%eax)
 	mov	$0,%ebx
-	jmp	_299
-_299:
+	jmp	_303
+_303:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -6613,15 +6695,15 @@ __bb_TGui_DoGoWithItem:
 	movl	$_bbNullObject,-24(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2253,(%esp)
+	movl	$_2273,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2094,(%esp)
+	movl	$_2114,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2096
+	jne	_2116
 	call	_brl_blitz_NullObjectError
-_2096:
+_2116:
 	call	_maxgui_maxgui_ActiveGadget
 	cmpl	52(%ebx),%eax
 	sete	%al
@@ -6630,7 +6712,7 @@ _2096:
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	je	_2097
+	je	_2117
 	call	_maxgui_maxgui_ActiveGadget
 	cmp	$_bbNullObject,%eax
 	sete	%al
@@ -6638,66 +6720,66 @@ _2096:
 	cmp	$0,%eax
 	sete	%al
 	movzbl	%al,%eax
-_2097:
+_2117:
 	cmp	$0,%eax
-	je	_2099
+	je	_2119
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2101,(%esp)
+	movl	$_2121,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2100,(%esp)
+	movl	$_2120,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_302
-_2099:
-	movl	$_2102,(%esp)
+	jmp	_306
+_2119:
+	movl	$_2122,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2104
+	jne	_2124
 	call	_brl_blitz_NullObjectError
-_2104:
+_2124:
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
 	movl	%eax,-8(%ebp)
-	movl	$_2106,(%esp)
+	movl	$_2126,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$-1,-8(%ebp)
-	jne	_2107
+	jne	_2127
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2109,(%esp)
+	movl	$_2129,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2108,(%esp)
+	movl	$_2128,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_302
-_2107:
-	movl	$_2110,(%esp)
+	jmp	_306
+_2127:
+	movl	$_2130,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%edi
 	cmp	$_bbNullObject,%edi
-	jne	_2112
+	jne	_2132
 	call	_brl_blitz_NullObjectError
-_2112:
+_2132:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2114
+	jne	_2134
 	call	_brl_blitz_NullObjectError
-_2114:
+_2134:
 	movl	12(%ebx),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_2116
+	jne	_2136
 	call	_brl_blitz_NullObjectError
-_2116:
+_2136:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2118
+	jne	_2138
 	call	_brl_blitz_NullObjectError
-_2118:
+_2138:
 	movl	-8(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	52(%ebx),%eax
@@ -6710,98 +6792,21 @@ _2118:
 	movl	%eax,4(%esp)
 	movl	%edi,(%esp)
 	movl	(%edi),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%ebx,4(%esp)
 	movl	%eax,(%esp)
 	call	_bbStringConcat
 	movl	%eax,-12(%ebp)
-	movl	$_2120,(%esp)
+	movl	$_2140,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$2,%eax
-	jne	_2121
+	jne	_2141
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2149,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_2122,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2124
-	call	_brl_blitz_NullObjectError
-_2124:
-	movl	-12(%ebp),%eax
-	movl	%eax,4(%esp)
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*184(%eax)
-	movl	%eax,-12(%ebp)
-	movl	$_2125,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2127
-	call	_brl_blitz_NullObjectError
-_2127:
-	movl	-12(%ebp),%eax
-	movl	%eax,4(%esp)
-	movl	32(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_maxgui_maxgui_SetGadgetText
-	movl	$_2128,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2130
-	call	_brl_blitz_NullObjectError
-_2130:
-	movl	12(%ebx),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2132
-	call	_brl_blitz_NullObjectError
-_2132:
-	movl	-12(%ebp),%eax
-	movl	%eax,4(%esp)
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*56(%eax)
-	movl	$_2133,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%esi
-	cmp	$_bbNullObject,%esi
-	jne	_2135
-	call	_brl_blitz_NullObjectError
-_2135:
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2137
-	call	_brl_blitz_NullObjectError
-_2137:
-	movl	32(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_maxgui_maxgui_GadgetText
-	movl	%eax,4(%esp)
-	movl	%esi,(%esp)
-	movl	(%esi),%eax
-	calll	*188(%eax)
-	movl	$_2138,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2140
-	call	_brl_blitz_NullObjectError
-_2140:
-	movl	52(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_maxgui_maxgui_CountGadgetItems
-	cmp	$0,%eax
-	jle	_2141
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_2145,(%esp)
+	movl	$_2169,(%esp)
 	calll	*_bbOnDebugEnterScope
 	movl	$_2142,(%esp)
 	calll	*_bbOnDebugEnterStm
@@ -6810,57 +6815,134 @@ _2140:
 	jne	_2144
 	call	_brl_blitz_NullObjectError
 _2144:
+	movl	-12(%ebp),%eax
+	movl	%eax,4(%esp)
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*188(%eax)
+	movl	%eax,-12(%ebp)
+	movl	$_2145,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2147
+	call	_brl_blitz_NullObjectError
+_2147:
+	movl	-12(%ebp),%eax
+	movl	%eax,4(%esp)
+	movl	32(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_maxgui_maxgui_SetGadgetText
+	movl	$_2148,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2150
+	call	_brl_blitz_NullObjectError
+_2150:
+	movl	12(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2152
+	call	_brl_blitz_NullObjectError
+_2152:
+	movl	-12(%ebp),%eax
+	movl	%eax,4(%esp)
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*56(%eax)
+	movl	$_2153,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%esi
+	cmp	$_bbNullObject,%esi
+	jne	_2155
+	call	_brl_blitz_NullObjectError
+_2155:
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2157
+	call	_brl_blitz_NullObjectError
+_2157:
+	movl	32(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_maxgui_maxgui_GadgetText
+	movl	%eax,4(%esp)
+	movl	%esi,(%esp)
+	movl	(%esi),%eax
+	calll	*192(%eax)
+	movl	$_2158,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2160
+	call	_brl_blitz_NullObjectError
+_2160:
+	movl	52(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_maxgui_maxgui_CountGadgetItems
+	cmp	$0,%eax
+	jle	_2161
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_2165,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_2162,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2164
+	call	_brl_blitz_NullObjectError
+_2164:
 	movl	$0,4(%esp)
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectGadgetItem
 	calll	*_bbOnDebugLeaveScope
-_2141:
-	movl	$_2146,(%esp)
+_2161:
+	movl	$_2166,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2148
+	jne	_2168
 	call	_brl_blitz_NullObjectError
-_2148:
+_2168:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*176(%eax)
+	calll	*180(%eax)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_2150
-_2121:
+	jmp	_2170
+_2141:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2252,(%esp)
+	movl	$_2272,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2151,(%esp)
+	movl	$_2171,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$1,%eax
-	jne	_2152
+	jne	_2172
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2248,(%esp)
+	movl	$_2268,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2153,(%esp)
+	movl	$_2173,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,-16(%ebp)
-	movl	$_2155,(%esp)
+	movl	$_2175,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bbNullObject,-28(%ebp)
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2158
+	jne	_2178
 	call	_brl_blitz_NullObjectError
-_2158:
+_2178:
 	movl	56(%ebx),%edi
 	mov	%edi,%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2161
+	jne	_2181
 	call	_brl_blitz_NullObjectError
-_2161:
+_2181:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*140(%eax)
@@ -6869,9 +6951,9 @@ _2161:
 _62:
 	mov	%esi,%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2166
+	jne	_2186
 	call	_brl_blitz_NullObjectError
-_2166:
+_2186:
 	movl	$_bb_TWindow,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
@@ -6883,68 +6965,68 @@ _2166:
 	je	_60
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2174,(%esp)
+	movl	$_2194,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2167,(%esp)
+	movl	$_2187,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-28(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2169
+	jne	_2189
 	call	_brl_blitz_NullObjectError
-_2169:
+_2189:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	20(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_bbStringCompare
 	cmp	$0,%eax
-	jne	_2170
+	jne	_2190
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2173,(%esp)
+	movl	$_2193,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2171,(%esp)
+	movl	$_2191,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$1,-16(%ebp)
-	movl	$_2172,(%esp)
+	movl	$_2192,(%esp)
 	calll	*_bbOnDebugEnterStm
 	calll	*_bbOnDebugLeaveScope
 	calll	*_bbOnDebugLeaveScope
 	jmp	_61
-_2170:
+_2190:
 	calll	*_bbOnDebugLeaveScope
 _60:
 	mov	%esi,%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2164
+	jne	_2184
 	call	_brl_blitz_NullObjectError
-_2164:
+_2184:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*48(%eax)
 	cmp	$0,%eax
 	jne	_62
 _61:
-	movl	$_2175,(%esp)
+	movl	$_2195,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$0,-16(%ebp)
-	jne	_2176
+	jne	_2196
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2182,(%esp)
+	movl	$_2202,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2177,(%esp)
+	movl	$_2197,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_2179
+	jne	_2199
 	call	_brl_blitz_NullObjectError
-_2179:
+_2199:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2181
+	jne	_2201
 	call	_brl_blitz_NullObjectError
-_2181:
+_2201:
 	movl	16(%ebx),%eax
 	movl	%eax,4(%esp)
 	movl	-12(%ebp),%eax
@@ -6955,87 +7037,87 @@ _2181:
 	movl	%eax,(%esp)
 	call	_brl_linkedlist_ListAddLast
 	calll	*_bbOnDebugLeaveScope
-_2176:
-	movl	$_2183,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	$_1,-20(%ebp)
-	movl	$_2185,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2187
-	call	_brl_blitz_NullObjectError
-_2187:
-	movl	12(%ebx),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2189
-	call	_brl_blitz_NullObjectError
-_2189:
-	movl	8(%ebx),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2191
-	call	_brl_blitz_NullObjectError
-_2191:
-	cmpl	$_bbNullObject,16(%ebx)
-	je	_2192
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_2202,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_2193,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2195
-	call	_brl_blitz_NullObjectError
-_2195:
-	movl	12(%ebx),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2197
-	call	_brl_blitz_NullObjectError
-_2197:
-	movl	8(%ebx),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2199
-	call	_brl_blitz_NullObjectError
-_2199:
-	movl	16(%ebx),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2201
-	call	_brl_blitz_NullObjectError
-_2201:
-	movl	8(%ebx),%eax
-	movl	%eax,-20(%ebp)
-	calll	*_bbOnDebugLeaveScope
-_2192:
+_2196:
 	movl	$_2203,(%esp)
 	calll	*_bbOnDebugEnterStm
-	movl	$_bb_Node,(%esp)
-	call	_bbObjectNew
-	movl	%eax,-24(%ebp)
+	movl	$_1,-20(%ebp)
 	movl	$_2205,(%esp)
 	calll	*_bbOnDebugEnterStm
-	movl	-24(%ebp),%ebx
+	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
 	jne	_2207
 	call	_brl_blitz_NullObjectError
 _2207:
+	movl	12(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2209
+	call	_brl_blitz_NullObjectError
+_2209:
+	movl	8(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2211
+	call	_brl_blitz_NullObjectError
+_2211:
+	cmpl	$_bbNullObject,16(%ebx)
+	je	_2212
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_2222,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_2213,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2215
+	call	_brl_blitz_NullObjectError
+_2215:
+	movl	12(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2217
+	call	_brl_blitz_NullObjectError
+_2217:
+	movl	8(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2219
+	call	_brl_blitz_NullObjectError
+_2219:
+	movl	16(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2221
+	call	_brl_blitz_NullObjectError
+_2221:
+	movl	8(%ebx),%eax
+	movl	%eax,-20(%ebp)
+	calll	*_bbOnDebugLeaveScope
+_2212:
+	movl	$_2223,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	$_bb_Node,(%esp)
+	call	_bbObjectNew
+	movl	%eax,-24(%ebp)
+	movl	$_2225,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-24(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2227
+	call	_brl_blitz_NullObjectError
+_2227:
 	mov	%ebx,%edi
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2210
+	jne	_2230
 	call	_brl_blitz_NullObjectError
-_2210:
+_2230:
 	movl	12(%ebx),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_2212
+	jne	_2232
 	call	_brl_blitz_NullObjectError
-_2212:
+_2232:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2214
+	jne	_2234
 	call	_brl_blitz_NullObjectError
-_2214:
+_2234:
 	movl	-8(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	52(%ebx),%eax
@@ -7051,46 +7133,46 @@ _2214:
 	mov	%eax,%ebx
 	movl	8(%edi),%eax
 	decl	4(%eax)
-	jnz	_2218
+	jnz	_2238
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_2218:
+_2238:
 	movl	%ebx,8(%edi)
-	movl	$_2219,(%esp)
+	movl	$_2239,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-24(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2221
+	jne	_2241
 	call	_brl_blitz_NullObjectError
-_2221:
+_2241:
 	mov	%ebx,%esi
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2224
+	jne	_2244
 	call	_brl_blitz_NullObjectError
-_2224:
+_2244:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2226
+	jne	_2246
 	call	_brl_blitz_NullObjectError
-_2226:
+_2246:
 	movl	8(%ebx),%eax
 	incl	4(%eax)
 	mov	%eax,%ebx
 	movl	12(%esi),%eax
 	decl	4(%eax)
-	jnz	_2230
+	jnz	_2250
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_2230:
+_2250:
 	movl	%ebx,12(%esi)
-	movl	$_2231,(%esp)
+	movl	$_2251,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-24(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2233
+	jne	_2253
 	call	_brl_blitz_NullObjectError
-_2233:
+_2253:
 	movl	8(%ebx),%eax
 	movl	%eax,4(%esp)
 	movl	-20(%ebp),%eax
@@ -7100,47 +7182,47 @@ _2233:
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	jne	_2234
+	jne	_2254
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2247,(%esp)
+	movl	$_2267,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2235,(%esp)
+	movl	$_2255,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2237
+	jne	_2257
 	call	_brl_blitz_NullObjectError
-_2237:
+_2257:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2239
+	jne	_2259
 	call	_brl_blitz_NullObjectError
-_2239:
+_2259:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2241
+	jne	_2261
 	call	_brl_blitz_NullObjectError
-_2241:
+_2261:
 	movl	-24(%ebp),%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	16(%ebx),%eax
 	decl	4(%eax)
-	jnz	_2246
+	jnz	_2266
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_2246:
+_2266:
 	movl	%esi,16(%ebx)
 	calll	*_bbOnDebugLeaveScope
-_2234:
+_2254:
 	calll	*_bbOnDebugLeaveScope
-_2152:
+_2172:
 	calll	*_bbOnDebugLeaveScope
-_2150:
+_2170:
 	mov	$0,%ebx
-	jmp	_302
-_302:
+	jmp	_306
+_306:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -7164,64 +7246,64 @@ __bb_TGui_DoGo:
 	movl	$_bbEmptyString,-12(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2283,(%esp)
+	movl	$_2303,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2254,(%esp)
+	movl	$_2274,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2256
+	jne	_2276
 	call	_brl_blitz_NullObjectError
-_2256:
+_2276:
 	movl	-8(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%eax,-12(%ebp)
-	movl	$_2258,(%esp)
+	movl	$_2278,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2260
+	jne	_2280
 	call	_brl_blitz_NullObjectError
-_2260:
+_2280:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	32(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SetGadgetText
-	movl	$_2261,(%esp)
+	movl	$_2281,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_2263
+	jne	_2283
 	call	_brl_blitz_NullObjectError
-_2263:
+_2283:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2265
+	jne	_2285
 	call	_brl_blitz_NullObjectError
-_2265:
+_2285:
 	movl	32(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetText
 	movl	%eax,4(%esp)
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
-	calll	*188(%eax)
-	movl	$_2266,(%esp)
+	calll	*192(%eax)
+	movl	$_2286,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2268
+	jne	_2288
 	call	_brl_blitz_NullObjectError
-_2268:
+_2288:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2270
+	jne	_2290
 	call	_brl_blitz_NullObjectError
-_2270:
+_2290:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*68(%eax)
@@ -7233,28 +7315,28 @@ _2270:
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	jne	_2271
+	jne	_2291
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2279,(%esp)
+	movl	$_2299,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2272,(%esp)
+	movl	$_2292,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2274
+	jne	_2294
 	call	_brl_blitz_NullObjectError
-_2274:
+_2294:
 	movl	12(%ebx),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_2276
+	jne	_2296
 	call	_brl_blitz_NullObjectError
-_2276:
+_2296:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2278
+	jne	_2298
 	call	_brl_blitz_NullObjectError
-_2278:
+_2298:
 	movl	32(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetText
@@ -7263,20 +7345,20 @@ _2278:
 	movl	(%esi),%eax
 	calll	*52(%eax)
 	calll	*_bbOnDebugLeaveScope
-_2271:
-	movl	$_2280,(%esp)
+_2291:
+	movl	$_2300,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2282
+	jne	_2302
 	call	_brl_blitz_NullObjectError
-_2282:
+_2302:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*176(%eax)
+	calll	*180(%eax)
 	mov	$0,%ebx
-	jmp	_306
-_306:
+	jmp	_310
+_310:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$20,%esp
@@ -7300,15 +7382,15 @@ __bb_TGui_DoRightViaKeys:
 	movl	$_bbEmptyString,-20(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2338,(%esp)
+	movl	$_2371,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2285,(%esp)
+	movl	$_2305,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2287
+	jne	_2307
 	call	_brl_blitz_NullObjectError
-_2287:
+_2307:
 	call	_maxgui_maxgui_ActiveGadget
 	cmpl	52(%ebx),%eax
 	sete	%al
@@ -7317,7 +7399,7 @@ _2287:
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	je	_2288
+	je	_2308
 	call	_maxgui_maxgui_ActiveGadget
 	cmp	$_bbNullObject,%eax
 	sete	%al
@@ -7325,84 +7407,84 @@ _2287:
 	cmp	$0,%eax
 	sete	%al
 	movzbl	%al,%eax
-_2288:
+_2308:
 	cmp	$0,%eax
-	je	_2290
+	je	_2310
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2292,(%esp)
+	movl	$_2312,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2291,(%esp)
+	movl	$_2311,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_309
-_2290:
-	movl	$_2293,(%esp)
+	jmp	_313
+_2310:
+	movl	$_2313,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_2295
+	jne	_2315
 	call	_brl_blitz_NullObjectError
-_2295:
+_2315:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2297
+	jne	_2317
 	call	_brl_blitz_NullObjectError
-_2297:
+_2317:
 	movl	48(%ebx),%eax
 	cmpl	%eax,80(%esi)
-	jne	_2298
+	jne	_2318
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2332,(%esp)
+	movl	$_2365,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2299,(%esp)
+	movl	$_2319,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2301
+	jne	_2321
 	call	_brl_blitz_NullObjectError
-_2301:
+_2321:
 	movl	48(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
 	movl	%eax,-8(%ebp)
-	movl	$_2303,(%esp)
+	movl	$_2323,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$-1,-8(%ebp)
-	jne	_2304
+	jne	_2324
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2306,(%esp)
+	movl	$_2326,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2305,(%esp)
+	movl	$_2325,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
 	calll	*_bbOnDebugLeaveScope
-	jmp	_309
-_2304:
-	movl	$_2307,(%esp)
+	jmp	_313
+_2324:
+	movl	$_2327,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2309
+	jne	_2329
 	call	_brl_blitz_NullObjectError
-_2309:
+_2329:
 	movl	-8(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	48(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetItemText
 	movl	%eax,-12(%ebp)
-	movl	$_2311,(%esp)
+	movl	$_2331,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2313
+	jne	_2333
 	call	_brl_blitz_NullObjectError
-_2313:
+_2333:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	68(%ebx),%eax
@@ -7412,92 +7494,125 @@ _2313:
 	movl	%eax,(%esp)
 	call	_bbObjectDowncast
 	cmp	$_bbNullObject,%eax
-	jne	_2315
+	jne	_2335
 	mov	$_bbEmptyString,%eax
-_2315:
+_2335:
 	movl	%eax,-16(%ebp)
-	movl	$_2317,(%esp)
+	movl	$_2337,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-16(%ebp),%eax
 	movl	%eax,-20(%ebp)
-	movl	$_2319,(%esp)
+	movl	$_2339,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-16(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$1,%eax
-	jne	_2320
+	jne	_2340
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2322,(%esp)
+	movl	$_2342,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2321,(%esp)
+	movl	$_2341,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-16(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_ExtractDir
 	movl	%eax,-20(%ebp)
 	calll	*_bbOnDebugLeaveScope
-_2320:
-	movl	$_2323,(%esp)
+_2340:
+	movl	$_2343,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2325
+	jne	_2345
 	call	_brl_blitz_NullObjectError
-_2325:
+_2345:
 	movl	-20(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*152(%eax)
-	movl	$_2326,(%esp)
+	calll	*156(%eax)
+	movl	$_2346,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-16(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$1,%eax
-	jne	_2327
+	jne	_2347
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2331,(%esp)
+	movl	$_2364,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2328,(%esp)
+	movl	$_2348,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2330
+	jne	_2350
 	call	_brl_blitz_NullObjectError
-_2330:
+_2350:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*76(%eax)
-	calll	*_bbOnDebugLeaveScope
-_2327:
-	calll	*_bbOnDebugLeaveScope
-	jmp	_2333
-_2298:
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_2337,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_2334,(%esp)
+	calll	*80(%eax)
+	movl	$_2351,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2336
+	jne	_2353
 	call	_brl_blitz_NullObjectError
-_2336:
+_2353:
+	movl	52(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_maxgui_maxgui_ActivateGadget
+	movl	$_2354,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2356
+	call	_brl_blitz_NullObjectError
+_2356:
+	mov	%ebx,%esi
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2359
+	call	_brl_blitz_NullObjectError
+_2359:
+	movl	52(%ebx),%eax
+	incl	4(%eax)
+	mov	%eax,%ebx
+	movl	80(%esi),%eax
+	decl	4(%eax)
+	jnz	_2363
+	movl	%eax,(%esp)
+	call	_bbGCFree
+_2363:
+	movl	%ebx,80(%esi)
+	calll	*_bbOnDebugLeaveScope
+_2347:
+	calll	*_bbOnDebugLeaveScope
+	jmp	_2366
+_2318:
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_2370,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_2367,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2369
+	call	_brl_blitz_NullObjectError
+_2369:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*160(%eax)
+	calll	*164(%eax)
 	calll	*_bbOnDebugLeaveScope
-_2333:
+_2366:
 	mov	$0,%ebx
-	jmp	_309
-_309:
+	jmp	_313
+_313:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$12,%esp
@@ -7523,122 +7638,122 @@ __bb_TGui_DoRight:
 	movl	$_bbNullObject,-24(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2603,(%esp)
+	movl	$_2636,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2339,(%esp)
+	movl	$_2372,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2341
-	call	_brl_blitz_NullObjectError
-_2341:
-	movl	12(%ebx),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2343
-	call	_brl_blitz_NullObjectError
-_2343:
-	movl	8(%ebx),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2345
-	call	_brl_blitz_NullObjectError
-_2345:
-	cmpl	$_bbNullObject,16(%ebx)
-	jne	_2346
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_2351,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_2347,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2349
-	call	_brl_blitz_NullObjectError
-_2349:
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*148(%eax)
-	movl	$_2350,(%esp)
-	calll	*_bbOnDebugEnterStm
-	mov	$0,%ebx
-	calll	*_bbOnDebugLeaveScope
-	jmp	_312
-_2346:
-	movl	$_2352,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2354
-	call	_brl_blitz_NullObjectError
-_2354:
-	movl	52(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_maxgui_maxgui_SelectedGadgetItem
-	movl	%eax,-8(%ebp)
-	movl	$_2356,(%esp)
-	calll	*_bbOnDebugEnterStm
-	cmpl	$-1,-8(%ebp)
-	jne	_2357
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_2408,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_2358,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	$_bbEmptyString,-16(%ebp)
-	movl	$_2360,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2362
-	call	_brl_blitz_NullObjectError
-_2362:
-	movl	12(%ebx),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2364
-	call	_brl_blitz_NullObjectError
-_2364:
-	movl	8(%ebx),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2366
-	call	_brl_blitz_NullObjectError
-_2366:
-	movl	16(%ebx),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2368
-	call	_brl_blitz_NullObjectError
-_2368:
-	movl	8(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_brl_filesystem_FileType
-	cmp	$2,%eax
-	jne	_2369
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_2379,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_2370,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2372
-	call	_brl_blitz_NullObjectError
-_2372:
-	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
 	jne	_2374
 	call	_brl_blitz_NullObjectError
 _2374:
-	movl	8(%ebx),%ebx
+	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
 	jne	_2376
 	call	_brl_blitz_NullObjectError
 _2376:
-	movl	16(%ebx),%ebx
+	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
 	jne	_2378
 	call	_brl_blitz_NullObjectError
 _2378:
+	cmpl	$_bbNullObject,16(%ebx)
+	jne	_2379
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_2384,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_2380,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2382
+	call	_brl_blitz_NullObjectError
+_2382:
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*152(%eax)
+	movl	$_2383,(%esp)
+	calll	*_bbOnDebugEnterStm
+	mov	$0,%ebx
+	calll	*_bbOnDebugLeaveScope
+	jmp	_316
+_2379:
+	movl	$_2385,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2387
+	call	_brl_blitz_NullObjectError
+_2387:
+	movl	52(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_maxgui_maxgui_SelectedGadgetItem
+	movl	%eax,-8(%ebp)
+	movl	$_2389,(%esp)
+	calll	*_bbOnDebugEnterStm
+	cmpl	$-1,-8(%ebp)
+	jne	_2390
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_2441,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_2391,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	$_bbEmptyString,-16(%ebp)
+	movl	$_2393,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2395
+	call	_brl_blitz_NullObjectError
+_2395:
+	movl	12(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2397
+	call	_brl_blitz_NullObjectError
+_2397:
+	movl	8(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2399
+	call	_brl_blitz_NullObjectError
+_2399:
+	movl	16(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2401
+	call	_brl_blitz_NullObjectError
+_2401:
+	movl	8(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_brl_filesystem_FileType
+	cmp	$2,%eax
+	jne	_2402
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_2412,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_2403,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2405
+	call	_brl_blitz_NullObjectError
+_2405:
+	movl	12(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2407
+	call	_brl_blitz_NullObjectError
+_2407:
+	movl	8(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2409
+	call	_brl_blitz_NullObjectError
+_2409:
+	movl	16(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2411
+	call	_brl_blitz_NullObjectError
+_2411:
 	movl	8(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_StripSlash
@@ -7646,111 +7761,12 @@ _2378:
 	call	_brl_filesystem_StripDir
 	movl	%eax,-16(%ebp)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_2380
-_2369:
+	jmp	_2413
+_2402:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2401,(%esp)
+	movl	$_2434,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2381,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2383
-	call	_brl_blitz_NullObjectError
-_2383:
-	movl	12(%ebx),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2385
-	call	_brl_blitz_NullObjectError
-_2385:
-	movl	8(%ebx),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2387
-	call	_brl_blitz_NullObjectError
-_2387:
-	movl	16(%ebx),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2389
-	call	_brl_blitz_NullObjectError
-_2389:
-	movl	8(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_brl_filesystem_FileType
-	cmp	$1,%eax
-	jne	_2390
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_2400,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_2391,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2393
-	call	_brl_blitz_NullObjectError
-_2393:
-	movl	12(%ebx),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2395
-	call	_brl_blitz_NullObjectError
-_2395:
-	movl	8(%ebx),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2397
-	call	_brl_blitz_NullObjectError
-_2397:
-	movl	16(%ebx),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2399
-	call	_brl_blitz_NullObjectError
-_2399:
-	movl	8(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_brl_filesystem_StripDir
-	movl	%eax,-16(%ebp)
-	calll	*_bbOnDebugLeaveScope
-_2390:
-	calll	*_bbOnDebugLeaveScope
-_2380:
-	movl	$_2402,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2404
-	call	_brl_blitz_NullObjectError
-_2404:
-	movl	-16(%ebp),%eax
-	movl	%eax,4(%esp)
-	movl	%ebx,(%esp)
-	movl	(%ebx),%eax
-	calll	*76(%eax)
-	movl	$_2405,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2407
-	call	_brl_blitz_NullObjectError
-_2407:
-	movl	52(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_maxgui_maxgui_SelectedGadgetItem
-	movl	%eax,-8(%ebp)
-	calll	*_bbOnDebugLeaveScope
-_2357:
-	movl	$_2410,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2412
-	call	_brl_blitz_NullObjectError
-_2412:
-	movl	-8(%ebp),%eax
-	movl	%eax,4(%esp)
-	movl	52(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_maxgui_maxgui_GadgetItemText
-	movl	%eax,-12(%ebp)
 	movl	$_2414,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
@@ -7763,6 +7779,105 @@ _2416:
 	jne	_2418
 	call	_brl_blitz_NullObjectError
 _2418:
+	movl	8(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2420
+	call	_brl_blitz_NullObjectError
+_2420:
+	movl	16(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2422
+	call	_brl_blitz_NullObjectError
+_2422:
+	movl	8(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_brl_filesystem_FileType
+	cmp	$1,%eax
+	jne	_2423
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_2433,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_2424,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2426
+	call	_brl_blitz_NullObjectError
+_2426:
+	movl	12(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2428
+	call	_brl_blitz_NullObjectError
+_2428:
+	movl	8(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2430
+	call	_brl_blitz_NullObjectError
+_2430:
+	movl	16(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2432
+	call	_brl_blitz_NullObjectError
+_2432:
+	movl	8(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_brl_filesystem_StripDir
+	movl	%eax,-16(%ebp)
+	calll	*_bbOnDebugLeaveScope
+_2423:
+	calll	*_bbOnDebugLeaveScope
+_2413:
+	movl	$_2435,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2437
+	call	_brl_blitz_NullObjectError
+_2437:
+	movl	-16(%ebp),%eax
+	movl	%eax,4(%esp)
+	movl	%ebx,(%esp)
+	movl	(%ebx),%eax
+	calll	*80(%eax)
+	movl	$_2438,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2440
+	call	_brl_blitz_NullObjectError
+_2440:
+	movl	52(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_maxgui_maxgui_SelectedGadgetItem
+	movl	%eax,-8(%ebp)
+	calll	*_bbOnDebugLeaveScope
+_2390:
+	movl	$_2443,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2445
+	call	_brl_blitz_NullObjectError
+_2445:
+	movl	-8(%ebp),%eax
+	movl	%eax,4(%esp)
+	movl	52(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_maxgui_maxgui_GadgetItemText
+	movl	%eax,-12(%ebp)
+	movl	$_2447,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2449
+	call	_brl_blitz_NullObjectError
+_2449:
+	movl	12(%ebx),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2451
+	call	_brl_blitz_NullObjectError
+_2451:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
@@ -7773,40 +7888,40 @@ _2418:
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$1,%eax
-	jne	_2419
+	jne	_2452
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2423,(%esp)
+	movl	$_2456,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2420,(%esp)
+	movl	$_2453,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2422
+	jne	_2455
 	call	_brl_blitz_NullObjectError
-_2422:
+_2455:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*148(%eax)
+	calll	*152(%eax)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_2424
-_2419:
+	jmp	_2457
+_2452:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2599,(%esp)
+	movl	$_2632,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2425,(%esp)
+	movl	$_2458,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2427
+	jne	_2460
 	call	_brl_blitz_NullObjectError
-_2427:
+_2460:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2429
+	jne	_2462
 	call	_brl_blitz_NullObjectError
-_2429:
+_2462:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
@@ -7817,28 +7932,28 @@ _2429:
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$2,%eax
-	jne	_2430
+	jne	_2463
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2598,(%esp)
+	movl	$_2631,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2431,(%esp)
+	movl	$_2464,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_2433
+	jne	_2466
 	call	_brl_blitz_NullObjectError
-_2433:
+_2466:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2435
+	jne	_2468
 	call	_brl_blitz_NullObjectError
-_2435:
+_2468:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2437
+	jne	_2470
 	call	_brl_blitz_NullObjectError
-_2437:
+_2470:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
@@ -7849,51 +7964,51 @@ _2437:
 	movl	%eax,4(%esp)
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%eax,-20(%ebp)
-	movl	$_2439,(%esp)
+	movl	$_2472,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2441
+	jne	_2474
 	call	_brl_blitz_NullObjectError
-_2441:
+_2474:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2443
+	jne	_2476
 	call	_brl_blitz_NullObjectError
-_2443:
+_2476:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2445
+	jne	_2478
 	call	_brl_blitz_NullObjectError
-_2445:
+_2478:
 	movl	16(%ebx),%eax
 	cmp	$_bbNullObject,%eax
 	setne	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	je	_2454
+	je	_2487
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2447
+	jne	_2480
 	call	_brl_blitz_NullObjectError
-_2447:
+_2480:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2449
+	jne	_2482
 	call	_brl_blitz_NullObjectError
-_2449:
+_2482:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2451
+	jne	_2484
 	call	_brl_blitz_NullObjectError
-_2451:
+_2484:
 	movl	16(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2453
+	jne	_2486
 	call	_brl_blitz_NullObjectError
-_2453:
+_2486:
 	movl	8(%ebx),%eax
 	movl	%eax,4(%esp)
 	movl	-20(%ebp),%eax
@@ -7902,189 +8017,189 @@ _2453:
 	cmp	$0,%eax
 	sete	%al
 	movzbl	%al,%eax
-_2454:
+_2487:
 	cmp	$0,%eax
-	je	_2456
+	je	_2489
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2462,(%esp)
+	movl	$_2495,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2457,(%esp)
+	movl	$_2490,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2459
+	jne	_2492
 	call	_brl_blitz_NullObjectError
-_2459:
+_2492:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2461
+	jne	_2494
 	call	_brl_blitz_NullObjectError
-_2461:
+_2494:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*60(%eax)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_2463
-_2456:
+	jmp	_2496
+_2489:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2469,(%esp)
+	movl	$_2502,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2464,(%esp)
+	movl	$_2497,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2466
+	jne	_2499
 	call	_brl_blitz_NullObjectError
-_2466:
+_2499:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2468
+	jne	_2501
 	call	_brl_blitz_NullObjectError
-_2468:
+_2501:
 	movl	-20(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*56(%eax)
 	calll	*_bbOnDebugLeaveScope
-_2463:
-	movl	$_2470,(%esp)
+_2496:
+	movl	$_2503,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2472
+	jne	_2505
 	call	_brl_blitz_NullObjectError
-_2472:
+_2505:
 	movl	-20(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	32(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SetGadgetText
-	movl	$_2473,(%esp)
+	movl	$_2506,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2475
+	jne	_2508
 	call	_brl_blitz_NullObjectError
-_2475:
+_2508:
 	movl	-20(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*188(%eax)
-	movl	$_2476,(%esp)
+	calll	*192(%eax)
+	movl	$_2509,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2478
+	jne	_2511
 	call	_brl_blitz_NullObjectError
-_2478:
+_2511:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2480
+	jne	_2513
 	call	_brl_blitz_NullObjectError
-_2480:
+_2513:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2482
+	jne	_2515
 	call	_brl_blitz_NullObjectError
-_2482:
+_2515:
 	cmpl	$_bbNullObject,16(%ebx)
-	jne	_2483
+	jne	_2516
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2551,(%esp)
+	movl	$_2584,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2484,(%esp)
+	movl	$_2517,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2486
+	jne	_2519
 	call	_brl_blitz_NullObjectError
-_2486:
+_2519:
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_CountGadgetItems
 	cmp	$0,%eax
-	jle	_2487
+	jle	_2520
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2550,(%esp)
+	movl	$_2583,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2488,(%esp)
+	movl	$_2521,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2490
+	jne	_2523
 	call	_brl_blitz_NullObjectError
-_2490:
+_2523:
 	movl	$0,4(%esp)
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectGadgetItem
-	movl	$_2491,(%esp)
+	movl	$_2524,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bb_Node,(%esp)
 	call	_bbObjectNew
 	movl	%eax,-24(%ebp)
-	movl	$_2493,(%esp)
+	movl	$_2526,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-24(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2495
+	jne	_2528
 	call	_brl_blitz_NullObjectError
-_2495:
+_2528:
 	mov	%ebx,%esi
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2498
+	jne	_2531
 	call	_brl_blitz_NullObjectError
-_2498:
+_2531:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2500
+	jne	_2533
 	call	_brl_blitz_NullObjectError
-_2500:
+_2533:
 	movl	8(%ebx),%eax
 	incl	4(%eax)
 	mov	%eax,%ebx
 	movl	12(%esi),%eax
 	decl	4(%eax)
-	jnz	_2504
+	jnz	_2537
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_2504:
+_2537:
 	movl	%ebx,12(%esi)
-	movl	$_2505,(%esp)
+	movl	$_2538,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-24(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2507
+	jne	_2540
 	call	_brl_blitz_NullObjectError
-_2507:
+_2540:
 	movl	%ebx,-28(%ebp)
 	movl	-4(%ebp),%edi
 	cmp	$_bbNullObject,%edi
-	jne	_2510
+	jne	_2543
 	call	_brl_blitz_NullObjectError
-_2510:
+_2543:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2512
+	jne	_2545
 	call	_brl_blitz_NullObjectError
-_2512:
+_2545:
 	movl	12(%ebx),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_2514
+	jne	_2547
 	call	_brl_blitz_NullObjectError
-_2514:
+_2547:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2516
+	jne	_2549
 	call	_brl_blitz_NullObjectError
-_2516:
+_2549:
 	movl	$0,4(%esp)
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
@@ -8096,7 +8211,7 @@ _2516:
 	movl	%eax,4(%esp)
 	movl	%edi,(%esp)
 	movl	(%edi),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%ebx,4(%esp)
 	movl	%eax,(%esp)
 	call	_bbStringConcat
@@ -8105,120 +8220,120 @@ _2516:
 	movl	-28(%ebp),%eax
 	movl	8(%eax),%eax
 	decl	4(%eax)
-	jnz	_2520
+	jnz	_2553
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_2520:
+_2553:
 	movl	-28(%ebp),%eax
 	movl	%ebx,8(%eax)
-	movl	$_2521,(%esp)
+	movl	$_2554,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-24(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2523
+	jne	_2556
 	call	_brl_blitz_NullObjectError
-_2523:
+_2556:
 	movl	8(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$2,%eax
-	jne	_2524
+	jne	_2557
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2537,(%esp)
+	movl	$_2570,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2525,(%esp)
+	movl	$_2558,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-24(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2527
+	jne	_2560
 	call	_brl_blitz_NullObjectError
-_2527:
+_2560:
 	mov	%ebx,%edi
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_2530
+	jne	_2563
 	call	_brl_blitz_NullObjectError
-_2530:
+_2563:
 	movl	-24(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2532
+	jne	_2565
 	call	_brl_blitz_NullObjectError
-_2532:
+_2565:
 	movl	8(%ebx),%eax
 	movl	%eax,4(%esp)
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	incl	4(%eax)
 	mov	%eax,%ebx
 	movl	8(%edi),%eax
 	decl	4(%eax)
-	jnz	_2536
+	jnz	_2569
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_2536:
+_2569:
 	movl	%ebx,8(%edi)
 	calll	*_bbOnDebugLeaveScope
-_2524:
-	movl	$_2538,(%esp)
+_2557:
+	movl	$_2571,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2540
+	jne	_2573
 	call	_brl_blitz_NullObjectError
-_2540:
+_2573:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2542
+	jne	_2575
 	call	_brl_blitz_NullObjectError
-_2542:
+_2575:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2544
+	jne	_2577
 	call	_brl_blitz_NullObjectError
-_2544:
+_2577:
 	movl	-24(%ebp),%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	16(%ebx),%eax
 	decl	4(%eax)
-	jnz	_2549
+	jnz	_2582
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_2549:
+_2582:
 	movl	%esi,16(%ebx)
 	calll	*_bbOnDebugLeaveScope
-_2487:
+_2520:
 	calll	*_bbOnDebugLeaveScope
-	jmp	_2552
-_2483:
+	jmp	_2585
+_2516:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2597,(%esp)
+	movl	$_2630,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2553,(%esp)
+	movl	$_2586,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2555
+	jne	_2588
 	call	_brl_blitz_NullObjectError
-_2555:
+_2588:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2557
+	jne	_2590
 	call	_brl_blitz_NullObjectError
-_2557:
+_2590:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2559
+	jne	_2592
 	call	_brl_blitz_NullObjectError
-_2559:
+_2592:
 	movl	16(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2561
+	jne	_2594
 	call	_brl_blitz_NullObjectError
-_2561:
+_2594:
 	movl	$1,4(%esp)
 	movl	8(%ebx),%eax
 	movl	%eax,(%esp)
@@ -8230,27 +8345,27 @@ _2561:
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	jne	_2570
+	jne	_2603
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2563
+	jne	_2596
 	call	_brl_blitz_NullObjectError
-_2563:
+_2596:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2565
+	jne	_2598
 	call	_brl_blitz_NullObjectError
-_2565:
+_2598:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2567
+	jne	_2600
 	call	_brl_blitz_NullObjectError
-_2567:
+_2600:
 	movl	16(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2569
+	jne	_2602
 	call	_brl_blitz_NullObjectError
-_2569:
+_2602:
 	movl	$1,4(%esp)
 	movl	8(%ebx),%eax
 	movl	%eax,(%esp)
@@ -8261,35 +8376,35 @@ _2569:
 	cmp	$0,%eax
 	sete	%al
 	movzbl	%al,%eax
-_2570:
+_2603:
 	cmp	$0,%eax
-	je	_2572
+	je	_2605
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2582,(%esp)
+	movl	$_2615,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2573,(%esp)
+	movl	$_2606,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2575
+	jne	_2608
 	call	_brl_blitz_NullObjectError
-_2575:
+_2608:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2577
+	jne	_2610
 	call	_brl_blitz_NullObjectError
-_2577:
+_2610:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2579
+	jne	_2612
 	call	_brl_blitz_NullObjectError
-_2579:
+_2612:
 	movl	16(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2581
+	jne	_2614
 	call	_brl_blitz_NullObjectError
-_2581:
+_2614:
 	movl	8(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_StripSlash
@@ -8297,71 +8412,71 @@ _2581:
 	call	_brl_filesystem_StripDir
 	movl	%eax,-12(%ebp)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_2583
-_2572:
+	jmp	_2616
+_2605:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2593,(%esp)
+	movl	$_2626,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2584,(%esp)
+	movl	$_2617,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2586
+	jne	_2619
 	call	_brl_blitz_NullObjectError
-_2586:
+_2619:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2588
+	jne	_2621
 	call	_brl_blitz_NullObjectError
-_2588:
+_2621:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2590
+	jne	_2623
 	call	_brl_blitz_NullObjectError
-_2590:
+_2623:
 	movl	16(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2592
+	jne	_2625
 	call	_brl_blitz_NullObjectError
-_2592:
+_2625:
 	movl	8(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_StripDir
 	movl	%eax,-12(%ebp)
 	calll	*_bbOnDebugLeaveScope
-_2583:
-	movl	$_2594,(%esp)
+_2616:
+	movl	$_2627,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2596
+	jne	_2629
 	call	_brl_blitz_NullObjectError
-_2596:
+_2629:
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*76(%eax)
+	calll	*80(%eax)
 	calll	*_bbOnDebugLeaveScope
-_2552:
+_2585:
 	calll	*_bbOnDebugLeaveScope
-_2430:
+_2463:
 	calll	*_bbOnDebugLeaveScope
-_2424:
-	movl	$_2600,(%esp)
+_2457:
+	movl	$_2633,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2602
+	jne	_2635
 	call	_brl_blitz_NullObjectError
-_2602:
+_2635:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*176(%eax)
+	calll	*180(%eax)
 	mov	$0,%ebx
-	jmp	_312
-_312:
+	jmp	_316
+_316:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -8380,15 +8495,15 @@ __bb_TGui_DoLeftViaKeys:
 	movl	8(%ebp),%eax
 	movl	%eax,-4(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_2615,(%esp)
+	movl	$_2648,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2604,(%esp)
+	movl	$_2637,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2606
+	jne	_2639
 	call	_brl_blitz_NullObjectError
-_2606:
+_2639:
 	call	_maxgui_maxgui_ActiveGadget
 	cmpl	52(%ebx),%eax
 	sete	%al
@@ -8397,7 +8512,7 @@ _2606:
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	je	_2607
+	je	_2640
 	call	_maxgui_maxgui_ActiveGadget
 	cmp	$_bbNullObject,%eax
 	sete	%al
@@ -8405,31 +8520,31 @@ _2606:
 	cmp	$0,%eax
 	sete	%al
 	movzbl	%al,%eax
-_2607:
+_2640:
 	cmp	$0,%eax
-	je	_2609
+	je	_2642
 	movl	%ebp,4(%esp)
-	movl	$_2611,(%esp)
+	movl	$_2644,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2610,(%esp)
+	movl	$_2643,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_315
-_2609:
-	movl	$_2612,(%esp)
+	jmp	_319
+_2642:
+	movl	$_2645,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2614
+	jne	_2647
 	call	_brl_blitz_NullObjectError
-_2614:
+_2647:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*168(%eax)
+	calll	*172(%eax)
 	mov	$0,%ebx
-	jmp	_315
-_315:
+	jmp	_319
+_319:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -8455,44 +8570,44 @@ __bb_TGui_DoLeft:
 	movl	$0,-20(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2755,(%esp)
+	movl	$_2788,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2616,(%esp)
+	movl	$_2649,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2618
+	jne	_2651
 	call	_brl_blitz_NullObjectError
-_2618:
+_2651:
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
 	movl	%eax,-8(%ebp)
-	movl	$_2620,(%esp)
+	movl	$_2653,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$-1,-8(%ebp)
-	jle	_2621
+	jle	_2654
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2697,(%esp)
+	movl	$_2730,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2622,(%esp)
+	movl	$_2655,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2624
+	jne	_2657
 	call	_brl_blitz_NullObjectError
-_2624:
+_2657:
 	movl	12(%ebx),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_2626
+	jne	_2659
 	call	_brl_blitz_NullObjectError
-_2626:
+_2659:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2628
+	jne	_2661
 	call	_brl_blitz_NullObjectError
-_2628:
+_2661:
 	movl	-8(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	52(%ebx),%eax
@@ -8505,118 +8620,118 @@ _2628:
 	movl	%eax,(%esp)
 	call	_bbStringConcat
 	movl	%eax,-24(%ebp)
-	movl	$_2630,(%esp)
+	movl	$_2663,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-24(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$2,%eax
-	jne	_2631
+	jne	_2664
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2635,(%esp)
+	movl	$_2668,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2632,(%esp)
+	movl	$_2665,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2634
+	jne	_2667
 	call	_brl_blitz_NullObjectError
-_2634:
+_2667:
 	movl	-24(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%eax,-24(%ebp)
 	calll	*_bbOnDebugLeaveScope
-_2631:
-	movl	$_2636,(%esp)
+_2664:
+	movl	$_2669,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bb_Node,(%esp)
 	call	_bbObjectNew
 	movl	%eax,-28(%ebp)
-	movl	$_2638,(%esp)
+	movl	$_2671,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-28(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2640
+	jne	_2673
 	call	_brl_blitz_NullObjectError
-_2640:
+_2673:
 	movl	-24(%ebp),%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	8(%ebx),%eax
 	decl	4(%eax)
-	jnz	_2645
+	jnz	_2678
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_2645:
+_2678:
 	movl	%esi,8(%ebx)
-	movl	$_2646,(%esp)
+	movl	$_2679,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2648
+	jne	_2681
 	call	_brl_blitz_NullObjectError
-_2648:
+_2681:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2650
+	jne	_2683
 	call	_brl_blitz_NullObjectError
-_2650:
+_2683:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2652
+	jne	_2685
 	call	_brl_blitz_NullObjectError
-_2652:
+_2685:
 	movl	16(%ebx),%eax
 	cmp	$_bbNullObject,%eax
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	jne	_2669
+	jne	_2702
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2654
+	jne	_2687
 	call	_brl_blitz_NullObjectError
-_2654:
+_2687:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2656
+	jne	_2689
 	call	_brl_blitz_NullObjectError
-_2656:
+_2689:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2658
+	jne	_2691
 	call	_brl_blitz_NullObjectError
-_2658:
+_2691:
 	movl	16(%ebx),%eax
 	cmp	$_bbNullObject,%eax
 	setne	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	je	_2667
+	je	_2700
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2660
+	jne	_2693
 	call	_brl_blitz_NullObjectError
-_2660:
+_2693:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2662
+	jne	_2695
 	call	_brl_blitz_NullObjectError
-_2662:
+_2695:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2664
+	jne	_2697
 	call	_brl_blitz_NullObjectError
-_2664:
+_2697:
 	movl	16(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2666
+	jne	_2699
 	call	_brl_blitz_NullObjectError
-_2666:
+_2699:
 	movl	8(%ebx),%eax
 	movl	%eax,4(%esp)
 	movl	-24(%ebp),%eax
@@ -8628,115 +8743,115 @@ _2666:
 	cmp	$0,%eax
 	sete	%al
 	movzbl	%al,%eax
-_2667:
-_2669:
+_2700:
+_2702:
 	cmp	$0,%eax
-	je	_2671
+	je	_2704
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2696,(%esp)
+	movl	$_2729,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2672,(%esp)
+	movl	$_2705,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-28(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2674
+	jne	_2707
 	call	_brl_blitz_NullObjectError
-_2674:
+_2707:
 	mov	%ebx,%esi
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2677
+	jne	_2710
 	call	_brl_blitz_NullObjectError
-_2677:
+_2710:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2679
+	jne	_2712
 	call	_brl_blitz_NullObjectError
-_2679:
+_2712:
 	movl	8(%ebx),%eax
 	incl	4(%eax)
 	mov	%eax,%ebx
 	movl	12(%esi),%eax
 	decl	4(%eax)
-	jnz	_2683
+	jnz	_2716
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_2683:
+_2716:
 	movl	%ebx,12(%esi)
-	movl	$_2684,(%esp)
+	movl	$_2717,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2686
+	jne	_2719
 	call	_brl_blitz_NullObjectError
-_2686:
+_2719:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2688
+	jne	_2721
 	call	_brl_blitz_NullObjectError
-_2688:
+_2721:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2690
+	jne	_2723
 	call	_brl_blitz_NullObjectError
-_2690:
+_2723:
 	movl	-28(%ebp),%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	16(%ebx),%eax
 	decl	4(%eax)
-	jnz	_2695
+	jnz	_2728
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_2695:
+_2728:
 	movl	%esi,16(%ebx)
 	calll	*_bbOnDebugLeaveScope
-_2671:
+_2704:
 	calll	*_bbOnDebugLeaveScope
-_2621:
-	movl	$_2698,(%esp)
+_2654:
+	movl	$_2731,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2700
+	jne	_2733
 	call	_brl_blitz_NullObjectError
-_2700:
+_2733:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2702
+	jne	_2735
 	call	_brl_blitz_NullObjectError
-_2702:
+_2735:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*68(%eax)
 	movl	%eax,-12(%ebp)
-	movl	$_2704,(%esp)
+	movl	$_2737,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$-1,-16(%ebp)
-	movl	$_2706,(%esp)
+	movl	$_2739,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$1,-20(%ebp)
-	movl	$_2708,(%esp)
+	movl	$_2741,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$1,-20(%ebp)
 	movl	-12(%ebp),%eax
 	movl	8(%eax),%eax
 	sub	$1,%eax
 	mov	%eax,%esi
-	jmp	_2709
+	jmp	_2742
 _66:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2720,(%esp)
+	movl	$_2753,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2711,(%esp)
+	movl	$_2744,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2713
+	jne	_2746
 	call	_brl_blitz_NullObjectError
-_2713:
+_2746:
 	movl	60(%ebx),%ebx
 	movl	$1,8(%esp)
 	movl	-20(%ebp),%eax
@@ -8748,50 +8863,50 @@ _2713:
 	movl	%eax,(%esp)
 	call	_bbStringCompare
 	cmp	$0,%eax
-	jne	_2714
+	jne	_2747
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2719,(%esp)
+	movl	$_2752,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2715,(%esp)
+	movl	$_2748,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-20(%ebp),%eax
 	cmpl	%eax,-16(%ebp)
-	jge	_2716
-	mov	%ebp,%eax
-	movl	%eax,4(%esp)
-	movl	$_2718,(%esp)
-	calll	*_bbOnDebugEnterScope
-	movl	$_2717,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-20(%ebp),%eax
-	movl	%eax,-16(%ebp)
-	calll	*_bbOnDebugLeaveScope
-_2716:
-	calll	*_bbOnDebugLeaveScope
-_2714:
-	calll	*_bbOnDebugLeaveScope
-_64:
-	addl	$1,-20(%ebp)
-_2709:
-	cmpl	%esi,-20(%ebp)
-	jle	_66
-_65:
-	movl	$_2721,(%esp)
-	calll	*_bbOnDebugEnterStm
-	cmpl	$0,-16(%ebp)
-	jle	_2722
+	jge	_2749
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
 	movl	$_2751,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2723,(%esp)
+	movl	$_2750,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-20(%ebp),%eax
+	movl	%eax,-16(%ebp)
+	calll	*_bbOnDebugLeaveScope
+_2749:
+	calll	*_bbOnDebugLeaveScope
+_2747:
+	calll	*_bbOnDebugLeaveScope
+_64:
+	addl	$1,-20(%ebp)
+_2742:
+	cmpl	%esi,-20(%ebp)
+	jle	_66
+_65:
+	movl	$_2754,(%esp)
+	calll	*_bbOnDebugEnterStm
+	cmpl	$0,-16(%ebp)
+	jle	_2755
+	mov	%ebp,%eax
+	movl	%eax,4(%esp)
+	movl	$_2784,(%esp)
+	calll	*_bbOnDebugEnterScope
+	movl	$_2756,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2725
+	jne	_2758
 	call	_brl_blitz_NullObjectError
-_2725:
+_2758:
 	movl	-16(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	-12(%ebp),%eax
@@ -8801,18 +8916,47 @@ _2725:
 	movl	32(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SetGadgetText
-	movl	$_2726,(%esp)
+	movl	$_2759,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_2728
+	jne	_2761
 	call	_brl_blitz_NullObjectError
-_2728:
+_2761:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2730
+	jne	_2763
 	call	_brl_blitz_NullObjectError
-_2730:
+_2763:
+	movl	32(%ebx),%eax
+	movl	%eax,(%esp)
+	call	_maxgui_maxgui_GadgetText
+	movl	%eax,4(%esp)
+	movl	%esi,(%esp)
+	movl	(%esi),%eax
+	calll	*192(%eax)
+	movl	$_2764,(%esp)
+	calll	*_bbOnDebugEnterStm
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2766
+	call	_brl_blitz_NullObjectError
+_2766:
+	movl	12(%ebx),%edi
+	cmp	$_bbNullObject,%edi
+	jne	_2768
+	call	_brl_blitz_NullObjectError
+_2768:
+	movl	-4(%ebp),%esi
+	cmp	$_bbNullObject,%esi
+	jne	_2770
+	call	_brl_blitz_NullObjectError
+_2770:
+	movl	-4(%ebp),%ebx
+	cmp	$_bbNullObject,%ebx
+	jne	_2772
+	call	_brl_blitz_NullObjectError
+_2772:
 	movl	32(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_GadgetText
@@ -8820,66 +8964,37 @@ _2730:
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
 	calll	*188(%eax)
-	movl	$_2731,(%esp)
-	calll	*_bbOnDebugEnterStm
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2733
-	call	_brl_blitz_NullObjectError
-_2733:
-	movl	12(%ebx),%edi
-	cmp	$_bbNullObject,%edi
-	jne	_2735
-	call	_brl_blitz_NullObjectError
-_2735:
-	movl	-4(%ebp),%esi
-	cmp	$_bbNullObject,%esi
-	jne	_2737
-	call	_brl_blitz_NullObjectError
-_2737:
-	movl	-4(%ebp),%ebx
-	cmp	$_bbNullObject,%ebx
-	jne	_2739
-	call	_brl_blitz_NullObjectError
-_2739:
-	movl	32(%ebx),%eax
-	movl	%eax,(%esp)
-	call	_maxgui_maxgui_GadgetText
-	movl	%eax,4(%esp)
-	movl	%esi,(%esp)
-	movl	(%esi),%eax
-	calll	*184(%eax)
 	movl	%eax,4(%esp)
 	movl	%edi,(%esp)
 	movl	(%edi),%eax
 	calll	*52(%eax)
-	movl	$_2740,(%esp)
+	movl	$_2773,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_2742
+	jne	_2775
 	call	_brl_blitz_NullObjectError
-_2742:
+_2775:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2744
+	jne	_2777
 	call	_brl_blitz_NullObjectError
-_2744:
+_2777:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2746
+	jne	_2779
 	call	_brl_blitz_NullObjectError
-_2746:
+_2779:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2748
+	jne	_2781
 	call	_brl_blitz_NullObjectError
-_2748:
+_2781:
 	movl	16(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2750
+	jne	_2783
 	call	_brl_blitz_NullObjectError
-_2750:
+_2783:
 	movl	8(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_StripSlash
@@ -8888,22 +9003,22 @@ _2750:
 	movl	%eax,4(%esp)
 	movl	%esi,(%esp)
 	movl	(%esi),%eax
-	calll	*76(%eax)
+	calll	*80(%eax)
 	calll	*_bbOnDebugLeaveScope
-_2722:
-	movl	$_2752,(%esp)
+_2755:
+	movl	$_2785,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2754
+	jne	_2787
 	call	_brl_blitz_NullObjectError
-_2754:
+_2787:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*176(%eax)
+	calll	*180(%eax)
 	mov	$0,%ebx
-	jmp	_318
-_318:
+	jmp	_322
+_322:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -8928,71 +9043,71 @@ __bb_TGui_GoDirectionInList:
 	movl	%eax,-12(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2788,(%esp)
+	movl	$_2821,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2757,(%esp)
+	movl	$_2790,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_ActivateGadget
-	movl	$_2758,(%esp)
+	movl	$_2791,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_CountGadgetItems
 	cmp	$0,%eax
-	jne	_2759
+	jne	_2792
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2761,(%esp)
+	movl	$_2794,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2760,(%esp)
+	movl	$_2793,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_323
-_2759:
-	movl	$_2762,(%esp)
+	jmp	_327
+_2792:
+	movl	$_2795,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
 	cmp	$-1,%eax
-	jne	_2763
+	jne	_2796
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2765,(%esp)
+	movl	$_2798,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2764,(%esp)
+	movl	$_2797,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,4(%esp)
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectGadgetItem
 	calll	*_bbOnDebugLeaveScope
-_2763:
-	movl	$_2766,(%esp)
+_2796:
+	movl	$_2799,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	cmp	$0,%eax
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	je	_2767
+	je	_2800
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
 	cmp	$0,%eax
 	setg	%al
 	movzbl	%al,%eax
-_2767:
+_2800:
 	cmp	$0,%eax
-	je	_2769
+	je	_2802
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2771,(%esp)
+	movl	$_2804,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2770,(%esp)
+	movl	$_2803,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
@@ -9003,20 +9118,20 @@ _2767:
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectGadgetItem
 	calll	*_bbOnDebugLeaveScope
-	jmp	_2772
-_2769:
+	jmp	_2805
+_2802:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2779,(%esp)
+	movl	$_2812,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2773,(%esp)
+	movl	$_2806,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	cmp	$1,%eax
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	je	_2774
+	je	_2807
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
@@ -9028,14 +9143,14 @@ _2769:
 	cmp	%eax,%ebx
 	setl	%al
 	movzbl	%al,%eax
-_2774:
+_2807:
 	cmp	$0,%eax
-	je	_2776
+	je	_2809
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2778,(%esp)
+	movl	$_2811,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2777,(%esp)
+	movl	$_2810,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
@@ -9046,29 +9161,29 @@ _2774:
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectGadgetItem
 	calll	*_bbOnDebugLeaveScope
-_2776:
+_2809:
 	calll	*_bbOnDebugLeaveScope
-_2772:
-	movl	$_2780,(%esp)
+_2805:
+	movl	$_2813,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2782
+	jne	_2815
 	call	_brl_blitz_NullObjectError
-_2782:
+_2815:
 	movl	-8(%ebp),%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	80(%ebx),%eax
 	decl	4(%eax)
-	jnz	_2787
+	jnz	_2820
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_2787:
+_2820:
 	movl	%esi,80(%ebx)
 	mov	$0,%ebx
-	jmp	_323
-_323:
+	jmp	_327
+_327:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$20,%esp
@@ -9089,58 +9204,58 @@ __bb_TGui_DetermineType:
 	movl	%eax,-4(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2831,(%esp)
+	movl	$_2864,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2791,(%esp)
+	movl	$_2824,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2793
+	jne	_2826
 	call	_brl_blitz_NullObjectError
-_2793:
+_2826:
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
 	cmp	$-1,%eax
-	jne	_2794
+	jne	_2827
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2796,(%esp)
+	movl	$_2829,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2795,(%esp)
+	movl	$_2828,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_326
-_2794:
-	movl	$_2797,(%esp)
+	jmp	_330
+_2827:
+	movl	$_2830,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%eax
 	movl	%eax,-8(%ebp)
 	cmpl	$_bbNullObject,-8(%ebp)
-	jne	_2799
+	jne	_2832
 	call	_brl_blitz_NullObjectError
-_2799:
+_2832:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2801
+	jne	_2834
 	call	_brl_blitz_NullObjectError
-_2801:
+_2834:
 	movl	12(%ebx),%edi
 	cmp	$_bbNullObject,%edi
-	jne	_2803
+	jne	_2836
 	call	_brl_blitz_NullObjectError
-_2803:
+_2836:
 	movl	-4(%ebp),%esi
 	cmp	$_bbNullObject,%esi
-	jne	_2805
+	jne	_2838
 	call	_brl_blitz_NullObjectError
-_2805:
+_2838:
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2807
+	jne	_2840
 	call	_brl_blitz_NullObjectError
-_2807:
+_2840:
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectedGadgetItem
@@ -9157,74 +9272,74 @@ _2807:
 	movl	%eax,(%esp)
 	movl	-8(%ebp),%eax
 	movl	(%eax),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%ebx,4(%esp)
 	movl	%eax,(%esp)
 	call	_bbStringConcat
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$2,%eax
-	jne	_2808
+	jne	_2841
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2817,(%esp)
+	movl	$_2850,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2809,(%esp)
+	movl	$_2842,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2811
+	jne	_2844
 	call	_brl_blitz_NullObjectError
-_2811:
+_2844:
 	mov	$_67,%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	84(%ebx),%eax
 	decl	4(%eax)
-	jnz	_2816
+	jnz	_2849
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_2816:
+_2849:
 	movl	%esi,84(%ebx)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_2818
-_2808:
+	jmp	_2851
+_2841:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2827,(%esp)
+	movl	$_2860,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2819,(%esp)
+	movl	$_2852,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2821
+	jne	_2854
 	call	_brl_blitz_NullObjectError
-_2821:
+_2854:
 	mov	$_68,%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	84(%ebx),%eax
 	decl	4(%eax)
-	jnz	_2826
+	jnz	_2859
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_2826:
+_2859:
 	movl	%esi,84(%ebx)
 	calll	*_bbOnDebugLeaveScope
-_2818:
-	movl	$_2828,(%esp)
+_2851:
+	movl	$_2861,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2830
+	jne	_2863
 	call	_brl_blitz_NullObjectError
-_2830:
+_2863:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*180(%eax)
+	calll	*184(%eax)
 	mov	$0,%ebx
-	jmp	_326
-_326:
+	jmp	_330
+_330:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$20,%esp
@@ -9244,31 +9359,31 @@ __bb_TGui_UpdateStatusBar:
 	movl	%eax,-4(%ebp)
 	movl	$_bbEmptyString,-8(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_2845,(%esp)
+	movl	$_2878,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2832,(%esp)
+	movl	$_2865,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_1,-8(%ebp)
-	movl	$_2834,(%esp)
+	movl	$_2867,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2836
+	jne	_2869
 	call	_brl_blitz_NullObjectError
-_2836:
+_2869:
 	movl	84(%ebx),%eax
 	cmpl	$0,8(%eax)
-	jle	_2837
+	jle	_2870
 	movl	%ebp,4(%esp)
-	movl	$_2841,(%esp)
+	movl	$_2874,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2838,(%esp)
+	movl	$_2871,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2840
+	jne	_2873
 	call	_brl_blitz_NullObjectError
-_2840:
+_2873:
 	movl	84(%ebx),%ebx
 	movl	$_69,4(%esp)
 	movl	-8(%ebp),%eax
@@ -9279,22 +9394,22 @@ _2840:
 	call	_bbStringConcat
 	movl	%eax,-8(%ebp)
 	calll	*_bbOnDebugLeaveScope
-_2837:
-	movl	$_2842,(%esp)
+_2870:
+	movl	$_2875,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2844
+	jne	_2877
 	call	_brl_blitz_NullObjectError
-_2844:
+_2877:
 	movl	-8(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	16(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SetStatusText
 	mov	$0,%ebx
-	jmp	_329
-_329:
+	jmp	_333
+_333:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$12,%esp
@@ -9314,18 +9429,18 @@ __bb_TGui_EnsurePath:
 	movl	%eax,-8(%ebp)
 	movl	$_bbEmptyString,-12(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_2860,(%esp)
+	movl	$_2893,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2847,(%esp)
+	movl	$_2880,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bbEmptyString,-12(%ebp)
-	movl	$_2849,(%esp)
+	movl	$_2882,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2851
+	jne	_2884
 	call	_brl_blitz_NullObjectError
-_2851:
+_2884:
 	movl	60(%ebx),%ebx
 	movl	$1,8(%esp)
 	movl	-8(%ebp),%eax
@@ -9338,26 +9453,26 @@ _2851:
 	movl	%eax,(%esp)
 	call	_bbStringCompare
 	cmp	$0,%eax
-	jne	_2852
+	jne	_2885
 	movl	%ebp,4(%esp)
-	movl	$_2854,(%esp)
+	movl	$_2887,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2853,(%esp)
+	movl	$_2886,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_333
-_2852:
+	jmp	_337
+_2885:
 	movl	%ebp,4(%esp)
-	movl	$_2859,(%esp)
+	movl	$_2892,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2856,(%esp)
+	movl	$_2889,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2858
+	jne	_2891
 	call	_brl_blitz_NullObjectError
-_2858:
+_2891:
 	movl	60(%ebx),%eax
 	movl	%eax,4(%esp)
 	movl	-8(%ebp),%eax
@@ -9365,8 +9480,8 @@ _2858:
 	call	_bbStringConcat
 	mov	%eax,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_333
-_333:
+	jmp	_337
+_337:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$24,%esp
@@ -9386,105 +9501,105 @@ __bb_TGui_PopulateList:
 	movl	%eax,-8(%ebp)
 	movl	$_bbEmptyString,-12(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_2887,(%esp)
+	movl	$_2920,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2862,(%esp)
+	movl	$_2895,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2864
+	jne	_2897
 	call	_brl_blitz_NullObjectError
-_2864:
+_2897:
 	movl	-8(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*184(%eax)
+	calll	*188(%eax)
 	movl	%eax,-12(%ebp)
-	movl	$_2866,(%esp)
+	movl	$_2899,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bbEmptyString,4(%esp)
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_bbStringCompare
 	cmp	$0,%eax
-	jne	_2867
+	jne	_2900
 	movl	%ebp,4(%esp)
-	movl	$_2869,(%esp)
+	movl	$_2902,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2868,(%esp)
+	movl	$_2901,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_337
-_2867:
-	movl	$_2870,(%esp)
+	jmp	_341
+_2900:
+	movl	$_2903,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2872
+	jne	_2905
 	call	_brl_blitz_NullObjectError
-_2872:
+_2905:
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_ClearGadgetItems
-	movl	$_2873,(%esp)
+	movl	$_2906,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2875
+	jne	_2908
 	call	_brl_blitz_NullObjectError
-_2875:
+_2908:
 	movl	$2,8(%esp)
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*192(%eax)
-	movl	$_2876,(%esp)
+	calll	*196(%eax)
+	movl	$_2909,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2878
+	jne	_2911
 	call	_brl_blitz_NullObjectError
-_2878:
+_2911:
 	movl	$1,8(%esp)
 	movl	-12(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
-	calll	*192(%eax)
-	movl	$_2879,(%esp)
+	calll	*196(%eax)
+	movl	$_2912,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2881
+	jne	_2914
 	call	_brl_blitz_NullObjectError
-_2881:
+_2914:
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_CountGadgetItems
 	cmp	$0,%eax
-	jle	_2882
+	jle	_2915
 	movl	%ebp,4(%esp)
-	movl	$_2886,(%esp)
+	movl	$_2919,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2883,(%esp)
+	movl	$_2916,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2885
+	jne	_2918
 	call	_brl_blitz_NullObjectError
-_2885:
+_2918:
 	movl	$0,4(%esp)
 	movl	52(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_SelectGadgetItem
 	calll	*_bbOnDebugLeaveScope
-_2882:
+_2915:
 	mov	$0,%ebx
-	jmp	_337
-_337:
+	jmp	_341
+_341:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$24,%esp
@@ -9507,58 +9622,58 @@ __bb_TGui_PopulateListWithType:
 	movl	$0,-16(%ebp)
 	movl	$_bbEmptyString,-20(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_2918,(%esp)
+	movl	$_2951,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2888,(%esp)
+	movl	$_2921,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_ReadDir
 	movl	%eax,-16(%ebp)
-	movl	$_2890,(%esp)
+	movl	$_2923,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$0,-16(%ebp)
-	jne	_2891
+	jne	_2924
 	movl	%ebp,4(%esp)
-	movl	$_2893,(%esp)
+	movl	$_2926,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2892,(%esp)
+	movl	$_2925,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_342
-_2891:
-	movl	$_2894,(%esp)
+	jmp	_346
+_2924:
+	movl	$_2927,(%esp)
 	calll	*_bbOnDebugEnterStm
 _72:
 _70:
 	movl	%ebp,4(%esp)
-	movl	$_2915,(%esp)
+	movl	$_2948,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2895,(%esp)
+	movl	$_2928,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-16(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_NextFile
 	movl	%eax,-20(%ebp)
-	movl	$_2897,(%esp)
+	movl	$_2930,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_1,4(%esp)
 	movl	-20(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_bbStringCompare
 	cmp	$0,%eax
-	jne	_2898
+	jne	_2931
 	movl	%ebp,4(%esp)
-	movl	$_2900,(%esp)
+	movl	$_2933,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2899,(%esp)
+	movl	$_2932,(%esp)
 	calll	*_bbOnDebugEnterStm
 	calll	*_bbOnDebugLeaveScope
 	calll	*_bbOnDebugLeaveScope
 	jmp	_71
-_2898:
-	movl	$_2901,(%esp)
+_2931:
+	movl	$_2934,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_73,4(%esp)
 	movl	-20(%ebp),%eax
@@ -9568,7 +9683,7 @@ _2898:
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	jne	_2902
+	jne	_2935
 	movl	$_74,4(%esp)
 	movl	-20(%ebp),%eax
 	movl	%eax,(%esp)
@@ -9576,9 +9691,9 @@ _2898:
 	cmp	$0,%eax
 	sete	%al
 	movzbl	%al,%eax
-_2902:
+_2935:
 	cmp	$0,%eax
-	jne	_2904
+	jne	_2937
 	movl	$_75,4(%esp)
 	movl	-20(%ebp),%eax
 	movl	%eax,(%esp)
@@ -9586,19 +9701,19 @@ _2902:
 	cmp	$0,%eax
 	sete	%al
 	movzbl	%al,%eax
-_2904:
+_2937:
 	cmp	$0,%eax
-	je	_2906
+	je	_2939
 	movl	%ebp,4(%esp)
-	movl	$_2908,(%esp)
+	movl	$_2941,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2907,(%esp)
+	movl	$_2940,(%esp)
 	calll	*_bbOnDebugEnterStm
 	calll	*_bbOnDebugLeaveScope
 	calll	*_bbOnDebugLeaveScope
 	jmp	_70
-_2906:
-	movl	$_2909,(%esp)
+_2939:
+	movl	$_2942,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-20(%ebp),%eax
 	movl	%eax,4(%esp)
@@ -9608,17 +9723,17 @@ _2906:
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmpl	-12(%ebp),%eax
-	jne	_2910
+	jne	_2943
 	movl	%ebp,4(%esp)
-	movl	$_2914,(%esp)
+	movl	$_2947,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2911,(%esp)
+	movl	$_2944,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2913
+	jne	_2946
 	call	_brl_blitz_NullObjectError
-_2913:
+_2946:
 	movl	$_bbNullObject,20(%esp)
 	movl	$_1,16(%esp)
 	movl	$-1,12(%esp)
@@ -9629,18 +9744,18 @@ _2913:
 	movl	%eax,(%esp)
 	call	_maxgui_maxgui_AddGadgetItem
 	calll	*_bbOnDebugLeaveScope
-_2910:
+_2943:
 	calll	*_bbOnDebugLeaveScope
 	jmp	_72
 _71:
-	movl	$_2917,(%esp)
+	movl	$_2950,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-16(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_CloseDir
 	mov	$0,%ebx
-	jmp	_342
-_342:
+	jmp	_346
+_346:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$32,%esp
@@ -9657,7 +9772,7 @@ __bb_Settings_New:
 	movl	8(%ebp),%eax
 	movl	%eax,-4(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_2924,(%esp)
+	movl	$_2957,(%esp)
 	calll	*_bbOnDebugEnterScope
 	movl	-4(%ebp),%eax
 	movl	%eax,(%esp)
@@ -9681,12 +9796,12 @@ __bb_Settings_New:
 	movl	-4(%ebp),%eax
 	movl	%edx,28(%eax)
 	movl	%ebp,4(%esp)
-	movl	$_2923,(%esp)
+	movl	$_2956,(%esp)
 	calll	*_bbOnDebugEnterScope
 	calll	*_bbOnDebugLeaveScope
 	mov	$0,%ebx
-	jmp	_345
-_345:
+	jmp	_349
+_349:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -9700,22 +9815,22 @@ __bb_Settings_Delete:
 	push	%ebx
 	sub	$4,%esp
 	movl	8(%ebp),%ebx
-_348:
+_352:
 	movl	28(%ebx),%eax
 	decl	4(%eax)
-	jnz	_2927
+	jnz	_2960
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_2927:
+_2960:
 	movl	24(%ebx),%eax
 	decl	4(%eax)
-	jnz	_2929
+	jnz	_2962
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_2929:
+_2962:
 	mov	$0,%eax
-	jmp	_2925
-_2925:
+	jmp	_2958
+_2958:
 	add	$4,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -9739,71 +9854,71 @@ __bb_Settings_Create:
 	movl	$_bbNullObject,-20(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2957,(%esp)
+	movl	$_2990,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2930,(%esp)
+	movl	$_2963,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bb_Settings,(%esp)
 	call	_bbObjectNew
 	movl	%eax,-20(%ebp)
-	movl	$_2932,(%esp)
+	movl	$_2965,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-20(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2934
+	jne	_2967
 	call	_brl_blitz_NullObjectError
-_2934:
+_2967:
 	movl	-4(%ebp),%eax
 	movl	%eax,8(%ebx)
-	movl	$_2936,(%esp)
+	movl	$_2969,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-20(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2938
+	jne	_2971
 	call	_brl_blitz_NullObjectError
-_2938:
+_2971:
 	movl	-8(%ebp),%eax
 	movl	%eax,12(%ebx)
-	movl	$_2940,(%esp)
+	movl	$_2973,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-20(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2942
+	jne	_2975
 	call	_brl_blitz_NullObjectError
-_2942:
+_2975:
 	movl	-12(%ebp),%eax
 	movl	%eax,16(%ebx)
-	movl	$_2944,(%esp)
+	movl	$_2977,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-20(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2946
+	jne	_2979
 	call	_brl_blitz_NullObjectError
-_2946:
+_2979:
 	movl	-16(%ebp),%eax
 	movl	%eax,20(%ebx)
-	movl	$_2948,(%esp)
+	movl	$_2981,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-20(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2950
+	jne	_2983
 	call	_brl_blitz_NullObjectError
-_2950:
+_2983:
 	call	_brl_map_CreateMap
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	28(%ebx),%eax
 	decl	4(%eax)
-	jnz	_2955
+	jnz	_2988
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_2955:
+_2988:
 	movl	%esi,28(%ebx)
-	movl	$_2956,(%esp)
+	movl	$_2989,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-20(%ebp),%ebx
-	jmp	_354
-_354:
+	jmp	_358
+_358:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$12,%esp
@@ -9829,9 +9944,9 @@ __bb_Settings_LoadAssociations:
 	movl	$0,-24(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_3003,(%esp)
+	movl	$_3036,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2959,(%esp)
+	movl	$_2992,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$1,8(%esp)
 	movl	$1,4(%esp)
@@ -9839,37 +9954,37 @@ __bb_Settings_LoadAssociations:
 	movl	%eax,(%esp)
 	call	_brl_filesystem_OpenFile
 	movl	%eax,-12(%ebp)
-	movl	$_2961,(%esp)
+	movl	$_2994,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	cmp	$_bbNullObject,%eax
 	setne	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	jne	_2962
+	jne	_2995
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2970,(%esp)
+	movl	$_3003,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2963,(%esp)
+	movl	$_2996,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_WriteFile
 	movl	%eax,-12(%ebp)
-	movl	$_2964,(%esp)
+	movl	$_2997,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	cmp	$_bbNullObject,%eax
 	setne	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	jne	_2965
+	jne	_2998
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2967,(%esp)
+	movl	$_3000,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2966,(%esp)
+	movl	$_2999,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,4(%esp)
@@ -9878,100 +9993,100 @@ __bb_Settings_LoadAssociations:
 	movl	%eax,(%esp)
 	call	_brl_blitz_RuntimeError
 	calll	*_bbOnDebugLeaveScope
-_2965:
-	movl	$_2968,(%esp)
+_2998:
+	movl	$_3001,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_stream_CloseStream
-	movl	$_2969,(%esp)
+	movl	$_3002,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_358
-_2962:
-	movl	$_2971,(%esp)
+	jmp	_362
+_2995:
+	movl	$_3004,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2973
+	jne	_3006
 	call	_brl_blitz_NullObjectError
-_2973:
+_3006:
 	call	_brl_map_CreateMap
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	28(%ebx),%eax
 	decl	4(%eax)
-	jnz	_2978
+	jnz	_3011
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_2978:
+_3011:
 	movl	%esi,28(%ebx)
-	movl	$_2979,(%esp)
+	movl	$_3012,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bbEmptyString,-16(%ebp)
-	movl	$_2981,(%esp)
+	movl	$_3014,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bbEmptyString,-20(%ebp)
-	movl	$_2983,(%esp)
+	movl	$_3016,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,-24(%ebp)
-	movl	$_2985,(%esp)
+	movl	$_3018,(%esp)
 	calll	*_bbOnDebugEnterStm
 	jmp	_77
 _79:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_3001,(%esp)
+	movl	$_3034,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2986,(%esp)
+	movl	$_3019,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$0,-24(%ebp)
-	jne	_2987
+	jne	_3020
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2990,(%esp)
+	movl	$_3023,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2988,(%esp)
+	movl	$_3021,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$1,-24(%ebp)
-	movl	$_2989,(%esp)
+	movl	$_3022,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_stream_ReadLine
 	movl	%eax,-16(%ebp)
 	calll	*_bbOnDebugLeaveScope
-	jmp	_2991
-_2987:
+	jmp	_3024
+_3020:
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_3000,(%esp)
+	movl	$_3033,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2992,(%esp)
+	movl	$_3025,(%esp)
 	calll	*_bbOnDebugEnterStm
 	cmpl	$1,-24(%ebp)
-	jne	_2993
+	jne	_3026
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_2999,(%esp)
+	movl	$_3032,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_2994,(%esp)
+	movl	$_3027,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$0,-24(%ebp)
-	movl	$_2995,(%esp)
+	movl	$_3028,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_stream_ReadLine
 	movl	%eax,-20(%ebp)
-	movl	$_2996,(%esp)
+	movl	$_3029,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_2998
+	jne	_3031
 	call	_brl_blitz_NullObjectError
-_2998:
+_3031:
 	movl	-20(%ebp),%eax
 	movl	%eax,8(%esp)
 	movl	-16(%ebp),%eax
@@ -9980,9 +10095,9 @@ _2998:
 	movl	%eax,(%esp)
 	call	_brl_map_MapInsert
 	calll	*_bbOnDebugLeaveScope
-_2993:
+_3026:
 	calll	*_bbOnDebugLeaveScope
-_2991:
+_3024:
 	calll	*_bbOnDebugLeaveScope
 _77:
 	movl	-12(%ebp),%eax
@@ -9991,14 +10106,14 @@ _77:
 	cmp	$0,%eax
 	je	_79
 _78:
-	movl	$_3002,(%esp)
+	movl	$_3035,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_stream_CloseStream
 	mov	$0,%ebx
-	jmp	_358
-_358:
+	jmp	_362
+_362:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$24,%esp
@@ -10023,27 +10138,27 @@ __bb_Settings_SaveAssociations:
 	movl	$_bbNullObject,-16(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_3034,(%esp)
+	movl	$_3067,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_3006,(%esp)
+	movl	$_3039,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_WriteFile
 	movl	%eax,-12(%ebp)
-	movl	$_3008,(%esp)
+	movl	$_3041,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	cmp	$_bbNullObject,%eax
 	setne	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	jne	_3009
+	jne	_3042
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_3011,(%esp)
+	movl	$_3044,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_3010,(%esp)
+	movl	$_3043,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,4(%esp)
@@ -10052,24 +10167,24 @@ __bb_Settings_SaveAssociations:
 	movl	%eax,(%esp)
 	call	_brl_blitz_RuntimeError
 	calll	*_bbOnDebugLeaveScope
-_3009:
-	movl	$_3012,(%esp)
+_3042:
+	movl	$_3045,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bbNullObject,-16(%ebp)
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3015
+	jne	_3048
 	call	_brl_blitz_NullObjectError
-_3015:
+_3048:
 	movl	28(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_map_MapKeys
 	mov	%eax,%edi
 	mov	%edi,%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3018
+	jne	_3051
 	call	_brl_blitz_NullObjectError
-_3018:
+_3051:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*48(%eax)
@@ -10078,9 +10193,9 @@ _3018:
 _83:
 	mov	%esi,%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3023
+	jne	_3056
 	call	_brl_blitz_NullObjectError
-_3023:
+_3056:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*52(%eax)
@@ -10089,29 +10204,29 @@ _3023:
 	je	_81
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_3032,(%esp)
+	movl	$_3065,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_3024,(%esp)
+	movl	$_3057,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bbStringClass,4(%esp)
 	movl	-16(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_bbObjectDowncast
 	cmp	$_bbNullObject,%eax
-	jne	_3026
+	jne	_3059
 	mov	$_bbEmptyString,%eax
-_3026:
+_3059:
 	movl	%eax,4(%esp)
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_stream_WriteLine
-	movl	$_3027,(%esp)
+	movl	$_3060,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3029
+	jne	_3062
 	call	_brl_blitz_NullObjectError
-_3029:
+_3062:
 	movl	-16(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	28(%ebx),%eax
@@ -10121,9 +10236,9 @@ _3029:
 	movl	%eax,(%esp)
 	call	_bbObjectDowncast
 	cmp	$_bbNullObject,%eax
-	jne	_3031
+	jne	_3064
 	mov	$_bbEmptyString,%eax
-_3031:
+_3064:
 	movl	%eax,4(%esp)
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
@@ -10132,23 +10247,23 @@ _3031:
 _81:
 	mov	%esi,%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3021
+	jne	_3054
 	call	_brl_blitz_NullObjectError
-_3021:
+_3054:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*48(%eax)
 	cmp	$0,%eax
 	jne	_83
 _82:
-	movl	$_3033,(%esp)
+	movl	$_3066,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_CloseFile
 	mov	$0,%ebx
-	jmp	_362
-_362:
+	jmp	_366
+_366:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$12,%esp
@@ -10167,7 +10282,7 @@ __bb_Favorites_New:
 	movl	8(%ebp),%eax
 	movl	%eax,-4(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_3038,(%esp)
+	movl	$_3071,(%esp)
 	calll	*_bbOnDebugEnterScope
 	movl	-4(%ebp),%eax
 	movl	%eax,(%esp)
@@ -10183,12 +10298,12 @@ __bb_Favorites_New:
 	movl	-4(%ebp),%eax
 	movl	%edx,12(%eax)
 	movl	%ebp,4(%esp)
-	movl	$_3037,(%esp)
+	movl	$_3070,(%esp)
 	calll	*_bbOnDebugEnterScope
 	calll	*_bbOnDebugLeaveScope
 	mov	$0,%ebx
-	jmp	_365
-_365:
+	jmp	_369
+_369:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -10202,22 +10317,22 @@ __bb_Favorites_Delete:
 	push	%ebx
 	sub	$4,%esp
 	movl	8(%ebp),%ebx
-_368:
+_372:
 	movl	12(%ebx),%eax
 	decl	4(%eax)
-	jnz	_3042
+	jnz	_3075
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3042:
+_3075:
 	movl	8(%ebx),%eax
 	decl	4(%eax)
-	jnz	_3044
+	jnz	_3077
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3044:
+_3077:
 	mov	$0,%eax
-	jmp	_3040
-_3040:
+	jmp	_3073
+_3073:
 	add	$4,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -10235,63 +10350,63 @@ __bb_Favorites_Create:
 	movl	$_bbNullObject,-8(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_3067,(%esp)
+	movl	$_3100,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_3045,(%esp)
+	movl	$_3078,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bb_Favorites,(%esp)
 	call	_bbObjectNew
 	movl	%eax,-8(%ebp)
-	movl	$_3047,(%esp)
+	movl	$_3080,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3049
+	jne	_3082
 	call	_brl_blitz_NullObjectError
-_3049:
+_3082:
 	movl	-4(%ebp),%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	8(%ebx),%eax
 	decl	4(%eax)
-	jnz	_3054
+	jnz	_3087
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3054:
+_3087:
 	movl	%esi,8(%ebx)
-	movl	$_3055,(%esp)
+	movl	$_3088,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3057
+	jne	_3090
 	call	_brl_blitz_NullObjectError
-_3057:
+_3090:
 	movl	$_brl_linkedlist_TList,(%esp)
 	call	_bbObjectNew
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	12(%ebx),%eax
 	decl	4(%eax)
-	jnz	_3062
+	jnz	_3095
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3062:
+_3095:
 	movl	%esi,12(%ebx)
-	movl	$_3063,(%esp)
+	movl	$_3096,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3065
+	jne	_3098
 	call	_brl_blitz_NullObjectError
-_3065:
+_3098:
 	movl	%ebx,(%esp)
 	movl	(%ebx),%eax
 	calll	*52(%eax)
-	movl	$_3066,(%esp)
+	movl	$_3099,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%ebx
-	jmp	_371
-_371:
+	jmp	_375
+_375:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$8,%esp
@@ -10311,84 +10426,84 @@ __bb_Favorites_LoadFile:
 	movl	$_bbNullObject,-8(%ebp)
 	movl	$_bbEmptyString,-12(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_3093,(%esp)
+	movl	$_3126,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_3070,(%esp)
+	movl	$_3103,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3072
+	jne	_3105
 	call	_brl_blitz_NullObjectError
-_3072:
+_3105:
 	movl	8(%ebx),%eax
 	movl	8(%eax),%eax
 	cmp	$0,%eax
 	sete	%al
 	movzbl	%al,%eax
 	cmp	$0,%eax
-	jne	_3075
+	jne	_3108
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3074
+	jne	_3107
 	call	_brl_blitz_NullObjectError
-_3074:
+_3107:
 	movl	8(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$0,%eax
 	sete	%al
 	movzbl	%al,%eax
-_3075:
+_3108:
 	cmp	$0,%eax
-	je	_3077
+	je	_3110
 	movl	%ebp,4(%esp)
-	movl	$_3079,(%esp)
+	movl	$_3112,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_3078,(%esp)
+	movl	$_3111,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_374
-_3077:
-	movl	$_3080,(%esp)
+	jmp	_378
+_3110:
+	movl	$_3113,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3082
+	jne	_3115
 	call	_brl_blitz_NullObjectError
-_3082:
+_3115:
 	movl	8(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_ReadFile
 	movl	%eax,-8(%ebp)
-	movl	$_3084,(%esp)
+	movl	$_3117,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bbEmptyString,-12(%ebp)
-	movl	$_3086,(%esp)
+	movl	$_3119,(%esp)
 	calll	*_bbOnDebugEnterStm
 	jmp	_84
 _86:
 	movl	%ebp,4(%esp)
-	movl	$_3091,(%esp)
+	movl	$_3124,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_3087,(%esp)
+	movl	$_3120,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_stream_ReadLine
 	movl	%eax,-12(%ebp)
-	movl	$_3088,(%esp)
+	movl	$_3121,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-12(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_FileType
 	cmp	$0,%eax
-	jle	_3089
+	jle	_3122
 	movl	%ebp,4(%esp)
-	movl	$_3090,(%esp)
+	movl	$_3123,(%esp)
 	calll	*_bbOnDebugEnterScope
 	calll	*_bbOnDebugLeaveScope
-_3089:
+_3122:
 	calll	*_bbOnDebugLeaveScope
 _84:
 	movl	-8(%ebp),%eax
@@ -10397,14 +10512,14 @@ _84:
 	cmp	$0,%eax
 	je	_86
 _85:
-	movl	$_3092,(%esp)
+	movl	$_3125,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_stream_CloseStream
 	mov	$0,%ebx
-	jmp	_374
-_374:
+	jmp	_378
+_378:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$8,%esp
@@ -10423,11 +10538,11 @@ __bb_Favorites_Add:
 	movl	12(%ebp),%eax
 	movl	%eax,-8(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_3094,(%esp)
+	movl	$_3127,(%esp)
 	calll	*_bbOnDebugEnterScope
 	mov	$0,%ebx
-	jmp	_378
-_378:
+	jmp	_382
+_382:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$12,%esp
@@ -10446,11 +10561,11 @@ __bb_Favorites_Remove:
 	movl	12(%ebp),%eax
 	movl	%eax,-8(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_3095,(%esp)
+	movl	$_3128,(%esp)
 	calll	*_bbOnDebugEnterScope
 	mov	$0,%ebx
-	jmp	_382
-_382:
+	jmp	_386
+_386:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$12,%esp
@@ -10467,11 +10582,11 @@ __bb_Favorites_Save:
 	movl	8(%ebp),%eax
 	movl	%eax,-4(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_3096,(%esp)
+	movl	$_3129,(%esp)
 	calll	*_bbOnDebugEnterScope
 	mov	$0,%ebx
-	jmp	_385
-_385:
+	jmp	_389
+_389:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -10488,11 +10603,11 @@ __bb_Favorites_Clear:
 	movl	8(%ebp),%eax
 	movl	%eax,-4(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_3097,(%esp)
+	movl	$_3130,(%esp)
 	calll	*_bbOnDebugEnterScope
 	mov	$0,%ebx
-	jmp	_388
-_388:
+	jmp	_392
+_392:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -10509,7 +10624,7 @@ __bb_FavoriteNode_New:
 	movl	8(%ebp),%eax
 	movl	%eax,-4(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_3101,(%esp)
+	movl	$_3134,(%esp)
 	calll	*_bbOnDebugEnterScope
 	movl	-4(%ebp),%eax
 	movl	%eax,(%esp)
@@ -10525,12 +10640,12 @@ __bb_FavoriteNode_New:
 	movl	-4(%ebp),%eax
 	movl	%edx,12(%eax)
 	movl	%ebp,4(%esp)
-	movl	$_3100,(%esp)
+	movl	$_3133,(%esp)
 	calll	*_bbOnDebugEnterScope
 	calll	*_bbOnDebugLeaveScope
 	mov	$0,%ebx
-	jmp	_391
-_391:
+	jmp	_395
+_395:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -10544,22 +10659,22 @@ __bb_FavoriteNode_Delete:
 	push	%ebx
 	sub	$4,%esp
 	movl	8(%ebp),%ebx
-_394:
+_398:
 	movl	12(%ebx),%eax
 	decl	4(%eax)
-	jnz	_3104
+	jnz	_3137
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3104:
+_3137:
 	movl	8(%ebx),%eax
 	decl	4(%eax)
-	jnz	_3106
+	jnz	_3139
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3106:
+_3139:
 	mov	$0,%eax
-	jmp	_3102
-_3102:
+	jmp	_3135
+_3135:
 	add	$4,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -10577,37 +10692,37 @@ __bb_FavoriteNode_Create:
 	movl	$_bbNullObject,-8(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_3126,(%esp)
+	movl	$_3159,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_3107,(%esp)
+	movl	$_3140,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bb_FavoriteNode,(%esp)
 	call	_bbObjectNew
 	movl	%eax,-8(%ebp)
-	movl	$_3109,(%esp)
+	movl	$_3142,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3111
+	jne	_3144
 	call	_brl_blitz_NullObjectError
-_3111:
+_3144:
 	movl	-4(%ebp),%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	8(%ebx),%eax
 	decl	4(%eax)
-	jnz	_3116
+	jnz	_3149
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3116:
+_3149:
 	movl	%esi,8(%ebx)
-	movl	$_3117,(%esp)
+	movl	$_3150,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3119
+	jne	_3152
 	call	_brl_blitz_NullObjectError
-_3119:
+_3152:
 	movl	-4(%ebp),%eax
 	movl	%eax,(%esp)
 	call	_brl_filesystem_StripDir
@@ -10615,16 +10730,16 @@ _3119:
 	mov	%eax,%esi
 	movl	12(%ebx),%eax
 	decl	4(%eax)
-	jnz	_3124
+	jnz	_3157
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3124:
+_3157:
 	movl	%esi,12(%ebx)
-	movl	$_3125,(%esp)
+	movl	$_3158,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%ebx
-	jmp	_397
-_397:
+	jmp	_401
+_401:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$8,%esp
@@ -10642,7 +10757,7 @@ __bb_Node_New:
 	movl	8(%ebp),%eax
 	movl	%eax,-4(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_3131,(%esp)
+	movl	$_3164,(%esp)
 	calll	*_bbOnDebugEnterScope
 	movl	-4(%ebp),%eax
 	movl	%eax,(%esp)
@@ -10662,12 +10777,12 @@ __bb_Node_New:
 	movl	-4(%ebp),%eax
 	movl	%edx,16(%eax)
 	movl	%ebp,4(%esp)
-	movl	$_3130,(%esp)
+	movl	$_3163,(%esp)
 	calll	*_bbOnDebugEnterScope
 	calll	*_bbOnDebugLeaveScope
 	mov	$0,%ebx
-	jmp	_400
-_400:
+	jmp	_404
+_404:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -10681,28 +10796,28 @@ __bb_Node_Delete:
 	push	%ebx
 	sub	$4,%esp
 	movl	8(%ebp),%ebx
-_403:
+_407:
 	movl	16(%ebx),%eax
 	decl	4(%eax)
-	jnz	_3134
+	jnz	_3167
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3134:
+_3167:
 	movl	12(%ebx),%eax
 	decl	4(%eax)
-	jnz	_3136
+	jnz	_3169
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3136:
+_3169:
 	movl	8(%ebx),%eax
 	decl	4(%eax)
-	jnz	_3138
+	jnz	_3171
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3138:
+_3171:
 	mov	$0,%eax
-	jmp	_3132
-_3132:
+	jmp	_3165
+_3165:
 	add	$4,%esp
 	pop	%ebx
 	mov	%ebp,%esp
@@ -10717,7 +10832,7 @@ __bb_NavigationManager_New:
 	movl	8(%ebp),%eax
 	movl	%eax,-4(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_3141,(%esp)
+	movl	$_3174,(%esp)
 	calll	*_bbOnDebugEnterScope
 	movl	-4(%ebp),%eax
 	movl	%eax,(%esp)
@@ -10729,12 +10844,12 @@ __bb_NavigationManager_New:
 	movl	-4(%ebp),%eax
 	movl	%edx,8(%eax)
 	movl	%ebp,4(%esp)
-	movl	$_3140,(%esp)
+	movl	$_3173,(%esp)
 	calll	*_bbOnDebugEnterScope
 	calll	*_bbOnDebugLeaveScope
 	mov	$0,%ebx
-	jmp	_406
-_406:
+	jmp	_410
+_410:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -10747,16 +10862,16 @@ __bb_NavigationManager_Delete:
 	mov	%esp,%ebp
 	sub	$8,%esp
 	movl	8(%ebp),%eax
-_409:
+_413:
 	movl	8(%eax),%eax
 	decl	4(%eax)
-	jnz	_3144
+	jnz	_3177
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3144:
+_3177:
 	mov	$0,%eax
-	jmp	_3142
-_3142:
+	jmp	_3175
+_3175:
 	mov	%ebp,%esp
 	pop	%ebp
 	ret
@@ -10772,58 +10887,58 @@ __bb_NavigationManager_Create:
 	movl	$_bbNullObject,-8(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_3166,(%esp)
+	movl	$_3199,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_3145,(%esp)
+	movl	$_3178,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	$_bb_NavigationManager,(%esp)
 	call	_bbObjectNew
 	movl	%eax,-8(%ebp)
-	movl	$_3147,(%esp)
+	movl	$_3180,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3149
+	jne	_3182
 	call	_brl_blitz_NullObjectError
-_3149:
+_3182:
 	movl	$_bb_Node,(%esp)
 	call	_bbObjectNew
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	8(%ebx),%eax
 	decl	4(%eax)
-	jnz	_3154
+	jnz	_3187
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3154:
+_3187:
 	movl	%esi,8(%ebx)
-	movl	$_3155,(%esp)
+	movl	$_3188,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3157
+	jne	_3190
 	call	_brl_blitz_NullObjectError
-_3157:
+_3190:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3159
+	jne	_3192
 	call	_brl_blitz_NullObjectError
-_3159:
+_3192:
 	movl	-4(%ebp),%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	8(%ebx),%eax
 	decl	4(%eax)
-	jnz	_3164
+	jnz	_3197
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3164:
+_3197:
 	movl	%esi,8(%ebx)
-	movl	$_3165,(%esp)
+	movl	$_3198,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-8(%ebp),%ebx
-	jmp	_412
-_412:
+	jmp	_416
+_416:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$8,%esp
@@ -10845,122 +10960,122 @@ __bb_NavigationManager_GoLeft:
 	movl	%eax,-8(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_3216,(%esp)
+	movl	$_3249,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_3168,(%esp)
+	movl	$_3201,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3170
+	jne	_3203
 	call	_brl_blitz_NullObjectError
-_3170:
+_3203:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3172
+	jne	_3205
 	call	_brl_blitz_NullObjectError
-_3172:
+_3205:
 	movl	$_bb_Node,(%esp)
 	call	_bbObjectNew
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	12(%ebx),%eax
 	decl	4(%eax)
-	jnz	_3177
+	jnz	_3210
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3177:
+_3210:
 	movl	%esi,12(%ebx)
-	movl	$_3178,(%esp)
+	movl	$_3211,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3180
+	jne	_3213
 	call	_brl_blitz_NullObjectError
-_3180:
+_3213:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3182
+	jne	_3215
 	call	_brl_blitz_NullObjectError
-_3182:
+_3215:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3184
+	jne	_3217
 	call	_brl_blitz_NullObjectError
-_3184:
+_3217:
 	movl	-8(%ebp),%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	8(%ebx),%eax
 	decl	4(%eax)
-	jnz	_3189
+	jnz	_3222
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3189:
+_3222:
 	movl	%esi,8(%ebx)
-	movl	$_3190,(%esp)
+	movl	$_3223,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3192
+	jne	_3225
 	call	_brl_blitz_NullObjectError
-_3192:
+_3225:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3194
+	jne	_3227
 	call	_brl_blitz_NullObjectError
-_3194:
+_3227:
 	movl	12(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3196
+	jne	_3229
 	call	_brl_blitz_NullObjectError
-_3196:
+_3229:
 	mov	%ebx,%esi
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3199
+	jne	_3232
 	call	_brl_blitz_NullObjectError
-_3199:
+_3232:
 	movl	8(%ebx),%eax
 	incl	4(%eax)
 	mov	%eax,%ebx
 	movl	16(%esi),%eax
 	decl	4(%eax)
-	jnz	_3203
+	jnz	_3236
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3203:
+_3236:
 	movl	%ebx,16(%esi)
-	movl	$_3204,(%esp)
+	movl	$_3237,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3206
+	jne	_3239
 	call	_brl_blitz_NullObjectError
-_3206:
+_3239:
 	mov	%ebx,%esi
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3209
+	jne	_3242
 	call	_brl_blitz_NullObjectError
-_3209:
+_3242:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3211
+	jne	_3244
 	call	_brl_blitz_NullObjectError
-_3211:
+_3244:
 	movl	12(%ebx),%eax
 	incl	4(%eax)
 	mov	%eax,%ebx
 	movl	8(%esi),%eax
 	decl	4(%eax)
-	jnz	_3215
+	jnz	_3248
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3215:
+_3248:
 	movl	%ebx,8(%esi)
 	mov	$0,%ebx
-	jmp	_416
-_416:
+	jmp	_420
+_420:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$8,%esp
@@ -10982,122 +11097,122 @@ __bb_NavigationManager_GoInside:
 	movl	%eax,-8(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_3265,(%esp)
+	movl	$_3298,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_3217,(%esp)
+	movl	$_3250,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3219
+	jne	_3252
 	call	_brl_blitz_NullObjectError
-_3219:
+_3252:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3221
+	jne	_3254
 	call	_brl_blitz_NullObjectError
-_3221:
+_3254:
 	movl	$_bb_Node,(%esp)
 	call	_bbObjectNew
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	16(%ebx),%eax
 	decl	4(%eax)
-	jnz	_3226
+	jnz	_3259
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3226:
+_3259:
 	movl	%esi,16(%ebx)
-	movl	$_3227,(%esp)
+	movl	$_3260,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3229
+	jne	_3262
 	call	_brl_blitz_NullObjectError
-_3229:
+_3262:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3231
+	jne	_3264
 	call	_brl_blitz_NullObjectError
-_3231:
+_3264:
 	movl	16(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3233
+	jne	_3266
 	call	_brl_blitz_NullObjectError
-_3233:
+_3266:
 	movl	-8(%ebp),%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	8(%ebx),%eax
 	decl	4(%eax)
-	jnz	_3238
+	jnz	_3271
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3238:
+_3271:
 	movl	%esi,8(%ebx)
-	movl	$_3239,(%esp)
+	movl	$_3272,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3241
+	jne	_3274
 	call	_brl_blitz_NullObjectError
-_3241:
+_3274:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3243
+	jne	_3276
 	call	_brl_blitz_NullObjectError
-_3243:
+_3276:
 	movl	16(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3245
+	jne	_3278
 	call	_brl_blitz_NullObjectError
-_3245:
+_3278:
 	mov	%ebx,%esi
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3248
+	jne	_3281
 	call	_brl_blitz_NullObjectError
-_3248:
+_3281:
 	movl	8(%ebx),%eax
 	incl	4(%eax)
 	mov	%eax,%ebx
 	movl	12(%esi),%eax
 	decl	4(%eax)
-	jnz	_3252
+	jnz	_3285
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3252:
+_3285:
 	movl	%ebx,12(%esi)
-	movl	$_3253,(%esp)
+	movl	$_3286,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3255
+	jne	_3288
 	call	_brl_blitz_NullObjectError
-_3255:
+_3288:
 	mov	%ebx,%esi
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3258
+	jne	_3291
 	call	_brl_blitz_NullObjectError
-_3258:
+_3291:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3260
+	jne	_3293
 	call	_brl_blitz_NullObjectError
-_3260:
+_3293:
 	movl	16(%ebx),%eax
 	incl	4(%eax)
 	mov	%eax,%ebx
 	movl	8(%esi),%eax
 	decl	4(%eax)
-	jnz	_3264
+	jnz	_3297
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3264:
+_3297:
 	movl	%ebx,8(%esi)
 	mov	$0,%ebx
-	jmp	_420
-_420:
+	jmp	_424
+_424:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$8,%esp
@@ -11117,65 +11232,65 @@ __bb_NavigationManager_GoRight:
 	movl	%eax,-4(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_3287,(%esp)
+	movl	$_3320,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_3266,(%esp)
+	movl	$_3299,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3268
+	jne	_3301
 	call	_brl_blitz_NullObjectError
-_3268:
+_3301:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3270
+	jne	_3303
 	call	_brl_blitz_NullObjectError
-_3270:
+_3303:
 	cmpl	$_bbNullObject,16(%ebx)
-	je	_3271
+	je	_3304
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_3285,(%esp)
+	movl	$_3318,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_3272,(%esp)
+	movl	$_3305,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3274
+	jne	_3307
 	call	_brl_blitz_NullObjectError
-_3274:
+_3307:
 	mov	%ebx,%esi
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3277
+	jne	_3310
 	call	_brl_blitz_NullObjectError
-_3277:
+_3310:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3279
+	jne	_3312
 	call	_brl_blitz_NullObjectError
-_3279:
+_3312:
 	movl	16(%ebx),%eax
 	incl	4(%eax)
 	mov	%eax,%ebx
 	movl	8(%esi),%eax
 	decl	4(%eax)
-	jnz	_3283
+	jnz	_3316
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3283:
+_3316:
 	movl	%ebx,8(%esi)
-	movl	$_3284,(%esp)
+	movl	$_3317,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$1,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_423
-_3271:
-	movl	$_3286,(%esp)
+	jmp	_427
+_3304:
+	movl	$_3319,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
-	jmp	_423
-_423:
+	jmp	_427
+_427:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$12,%esp
@@ -11197,87 +11312,87 @@ __bb_NavigationManager_RemoveIfRight:
 	movl	%eax,-8(%ebp)
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_3315,(%esp)
+	movl	$_3348,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_3288,(%esp)
+	movl	$_3321,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3290
+	jne	_3323
 	call	_brl_blitz_NullObjectError
-_3290:
+_3323:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3292
+	jne	_3325
 	call	_brl_blitz_NullObjectError
-_3292:
+_3325:
 	cmpl	$_bbNullObject,16(%ebx)
-	jne	_3293
+	jne	_3326
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_3295,(%esp)
+	movl	$_3328,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_3294,(%esp)
+	movl	$_3327,(%esp)
 	calll	*_bbOnDebugEnterStm
 	mov	$0,%ebx
 	calll	*_bbOnDebugLeaveScope
-	jmp	_427
-_3293:
-	movl	$_3296,(%esp)
+	jmp	_431
+_3326:
+	movl	$_3329,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3298
+	jne	_3331
 	call	_brl_blitz_NullObjectError
-_3298:
+_3331:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3300
+	jne	_3333
 	call	_brl_blitz_NullObjectError
-_3300:
+_3333:
 	movl	16(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3302
+	jne	_3335
 	call	_brl_blitz_NullObjectError
-_3302:
+_3335:
 	movl	-8(%ebp),%eax
 	movl	%eax,4(%esp)
 	movl	8(%ebx),%eax
 	movl	%eax,(%esp)
 	call	_bbStringCompare
 	cmp	$0,%eax
-	jne	_3303
+	jne	_3336
 	mov	%ebp,%eax
 	movl	%eax,4(%esp)
-	movl	$_3314,(%esp)
+	movl	$_3347,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_3304,(%esp)
+	movl	$_3337,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3306
+	jne	_3339
 	call	_brl_blitz_NullObjectError
-_3306:
+_3339:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3308
+	jne	_3341
 	call	_brl_blitz_NullObjectError
-_3308:
+_3341:
 	mov	$_bbNullObject,%eax
 	incl	4(%eax)
 	mov	%eax,%esi
 	movl	16(%ebx),%eax
 	decl	4(%eax)
-	jnz	_3313
+	jnz	_3346
 	movl	%eax,(%esp)
 	call	_bbGCFree
-_3313:
+_3346:
 	movl	%esi,16(%ebx)
 	calll	*_bbOnDebugLeaveScope
-_3303:
+_3336:
 	mov	$0,%ebx
-	jmp	_427
-_427:
+	jmp	_431
+_431:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$8,%esp
@@ -11295,23 +11410,23 @@ __bb_NavigationManager_Path:
 	movl	8(%ebp),%eax
 	movl	%eax,-4(%ebp)
 	movl	%ebp,4(%esp)
-	movl	$_3321,(%esp)
+	movl	$_3354,(%esp)
 	calll	*_bbOnDebugEnterScope
-	movl	$_3316,(%esp)
+	movl	$_3349,(%esp)
 	calll	*_bbOnDebugEnterStm
 	movl	-4(%ebp),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3318
+	jne	_3351
 	call	_brl_blitz_NullObjectError
-_3318:
+_3351:
 	movl	8(%ebx),%ebx
 	cmp	$_bbNullObject,%ebx
-	jne	_3320
+	jne	_3353
 	call	_brl_blitz_NullObjectError
-_3320:
+_3353:
 	movl	8(%ebx),%ebx
-	jmp	_430
-_430:
+	jmp	_434
+_434:
 	calll	*_bbOnDebugLeaveScope
 	mov	%ebx,%eax
 	add	$16,%esp
@@ -11321,21 +11436,21 @@ _430:
 	ret
 	.data	
 	.align	4
-_443:
+_447:
 	.long	0
-_440:
+_444:
 	.asciz	"pathfinder"
-_441:
+_445:
 	.asciz	"program"
-_442:
+_446:
 	.asciz	":TGui"
 	.align	4
-_439:
+_443:
 	.long	1
-	.long	_440
+	.long	_444
 	.long	2
-	.long	_441
-	.long	_442
+	.long	_445
+	.long	_446
 	.long	-4
 	.long	0
 _88:
@@ -11433,84 +11548,86 @@ _129:
 _130:
 	.asciz	"SaveFavorites"
 _131:
-	.asciz	"AddFavorite"
+	.asciz	"LoadFavorites"
 _132:
-	.asciz	"RemoveFavorite"
+	.asciz	"AddFavorite"
 _133:
-	.asciz	"DoCloseActiveWindow"
+	.asciz	"RemoveFavorite"
 _134:
-	.asciz	"(:TGadget)i"
+	.asciz	"DoCloseActiveWindow"
 _135:
-	.asciz	"SelectFile"
+	.asciz	"(:TGadget)i"
 _136:
-	.asciz	"($)i"
+	.asciz	"SelectFile"
 _137:
-	.asciz	"DoNewFileFolder"
+	.asciz	"($)i"
 _138:
-	.asciz	"(i)i"
+	.asciz	"DoNewFileFolder"
 _139:
-	.asciz	"DoNewFolder"
+	.asciz	"(i)i"
 _140:
-	.asciz	"DoNewFile"
+	.asciz	"DoNewFolder"
 _141:
-	.asciz	"DoRename"
+	.asciz	"DoNewFile"
 _142:
-	.asciz	"DoExecute"
+	.asciz	"DoRename"
 _143:
-	.asciz	"DoSave"
+	.asciz	"DoExecute"
 _144:
-	.asciz	"DeleteThisFile"
+	.asciz	"DoSave"
 _145:
-	.asciz	"DoDelete"
+	.asciz	"DeleteThisFile"
 _146:
-	.asciz	"DoSelectAll"
+	.asciz	"DoDelete"
 _147:
-	.asciz	"DoCopy"
+	.asciz	"DoSelectAll"
 _148:
-	.asciz	"DoCut"
+	.asciz	"DoCopy"
 _149:
-	.asciz	"DoPaste"
+	.asciz	"DoCut"
 _150:
-	.asciz	"AttemptFileFolderPaste"
+	.asciz	"DoPaste"
 _151:
-	.asciz	"AttemptFileFolderDelete"
+	.asciz	"AttemptFileFolderPaste"
 _152:
-	.asciz	"GetUniqueName"
+	.asciz	"AttemptFileFolderDelete"
 _153:
-	.asciz	"($,$)$"
+	.asciz	"GetUniqueName"
 _154:
-	.asciz	"DoSelect"
+	.asciz	"($,$)$"
 _155:
-	.asciz	"DoSelectAction"
+	.asciz	"DoSelect"
 _156:
-	.asciz	"DoGoWithItem"
+	.asciz	"DoSelectAction"
 _157:
-	.asciz	"DoGo"
+	.asciz	"DoGoWithItem"
 _158:
-	.asciz	"DoRightViaKeys"
+	.asciz	"DoGo"
 _159:
-	.asciz	"DoRight"
+	.asciz	"DoRightViaKeys"
 _160:
-	.asciz	"DoLeftViaKeys"
+	.asciz	"DoRight"
 _161:
-	.asciz	"DoLeft"
+	.asciz	"DoLeftViaKeys"
 _162:
-	.asciz	"GoDirectionInList"
+	.asciz	"DoLeft"
 _163:
-	.asciz	"(:TGadget,i)i"
+	.asciz	"GoDirectionInList"
 _164:
-	.asciz	"DetermineType"
+	.asciz	"(:TGadget,i)i"
 _165:
-	.asciz	"UpdateStatusBar"
+	.asciz	"DetermineType"
 _166:
-	.asciz	"EnsurePath"
+	.asciz	"UpdateStatusBar"
 _167:
-	.asciz	"($)$"
+	.asciz	"EnsurePath"
 _168:
-	.asciz	"PopulateList"
+	.asciz	"($)$"
 _169:
-	.asciz	"PopulateListWithType"
+	.asciz	"PopulateList"
 _170:
+	.asciz	"PopulateListWithType"
+_171:
 	.asciz	"($,i)i"
 	.align	4
 _87:
@@ -11642,19 +11759,19 @@ _87:
 	.long	68
 	.long	6
 	.long	_133
-	.long	_134
+	.long	_123
 	.long	72
 	.long	6
+	.long	_134
 	.long	_135
-	.long	_136
 	.long	76
 	.long	6
+	.long	_136
 	.long	_137
-	.long	_138
 	.long	80
 	.long	6
+	.long	_138
 	.long	_139
-	.long	_123
 	.long	84
 	.long	6
 	.long	_140
@@ -11674,11 +11791,11 @@ _87:
 	.long	100
 	.long	6
 	.long	_144
-	.long	_136
+	.long	_123
 	.long	104
 	.long	6
 	.long	_145
-	.long	_123
+	.long	_137
 	.long	108
 	.long	6
 	.long	_146
@@ -11706,11 +11823,11 @@ _87:
 	.long	132
 	.long	6
 	.long	_152
-	.long	_153
+	.long	_123
 	.long	136
 	.long	6
+	.long	_153
 	.long	_154
-	.long	_123
 	.long	140
 	.long	6
 	.long	_155
@@ -11722,11 +11839,11 @@ _87:
 	.long	148
 	.long	6
 	.long	_157
-	.long	_136
+	.long	_123
 	.long	152
 	.long	6
 	.long	_158
-	.long	_123
+	.long	_137
 	.long	156
 	.long	6
 	.long	_159
@@ -11742,11 +11859,11 @@ _87:
 	.long	168
 	.long	6
 	.long	_162
-	.long	_163
+	.long	_123
 	.long	172
 	.long	6
+	.long	_163
 	.long	_164
-	.long	_123
 	.long	176
 	.long	6
 	.long	_165
@@ -11754,16 +11871,20 @@ _87:
 	.long	180
 	.long	6
 	.long	_166
-	.long	_167
+	.long	_123
 	.long	184
 	.long	6
+	.long	_167
 	.long	_168
-	.long	_136
 	.long	188
 	.long	6
 	.long	_169
-	.long	_170
+	.long	_137
 	.long	192
+	.long	6
+	.long	_170
+	.long	_171
+	.long	196
 	.long	0
 	.align	4
 _bb_TGui:
@@ -11783,6 +11904,7 @@ _bb_TGui:
 	.long	__bb_TGui_Run
 	.long	__bb_TGui_LastSelected
 	.long	__bb_TGui_SaveFavorites
+	.long	__bb_TGui_LoadFavorites
 	.long	__bb_TGui_AddFavorite
 	.long	__bb_TGui_RemoveFavorite
 	.long	__bb_TGui_DoCloseActiveWindow
@@ -11816,52 +11938,52 @@ _bb_TGui:
 	.long	__bb_TGui_EnsurePath
 	.long	__bb_TGui_PopulateList
 	.long	__bb_TGui_PopulateListWithType
-_172:
-	.asciz	"Settings"
 _173:
-	.asciz	"x"
+	.asciz	"Settings"
 _174:
-	.asciz	"y"
+	.asciz	"x"
 _175:
-	.asciz	"width"
+	.asciz	"y"
 _176:
-	.asciz	"height"
+	.asciz	"width"
 _177:
-	.asciz	"lastPath"
+	.asciz	"height"
 _178:
-	.asciz	"map"
+	.asciz	"lastPath"
 _179:
-	.asciz	"(i,i,i,i):Settings"
+	.asciz	"map"
 _180:
-	.asciz	"LoadAssociations"
+	.asciz	"(i,i,i,i):Settings"
 _181:
+	.asciz	"LoadAssociations"
+_182:
 	.asciz	"SaveAssociations"
 	.align	4
-_171:
+_172:
 	.long	2
-	.long	_172
-	.long	3
 	.long	_173
-	.long	_90
-	.long	8
 	.long	3
 	.long	_174
 	.long	_90
-	.long	12
+	.long	8
 	.long	3
 	.long	_175
 	.long	_90
-	.long	16
+	.long	12
 	.long	3
 	.long	_176
 	.long	_90
-	.long	20
+	.long	16
 	.long	3
 	.long	_177
+	.long	_90
+	.long	20
+	.long	3
+	.long	_178
 	.long	_113
 	.long	24
 	.long	3
-	.long	_178
+	.long	_179
 	.long	_116
 	.long	28
 	.long	6
@@ -11874,22 +11996,22 @@ _171:
 	.long	20
 	.long	7
 	.long	_125
-	.long	_179
+	.long	_180
 	.long	48
 	.long	6
-	.long	_180
-	.long	_136
+	.long	_181
+	.long	_137
 	.long	52
 	.long	6
-	.long	_181
-	.long	_136
+	.long	_182
+	.long	_137
 	.long	56
 	.long	0
 	.align	4
 _bb_Settings:
 	.long	_bbObjectClass
 	.long	_bbObjectFree
-	.long	_171
+	.long	_172
 	.long	32
 	.long	__bb_Settings_New
 	.long	__bb_Settings_Delete
@@ -11902,34 +12024,34 @@ _bb_Settings:
 	.long	__bb_Settings_Create
 	.long	__bb_Settings_LoadAssociations
 	.long	__bb_Settings_SaveAssociations
-_183:
-	.asciz	"Favorites"
 _184:
-	.asciz	"filePathName"
+	.asciz	"Favorites"
 _185:
-	.asciz	"list"
+	.asciz	"filePathName"
 _186:
-	.asciz	"($):Favorites"
+	.asciz	"list"
 _187:
-	.asciz	"LoadFile"
+	.asciz	"($):Favorites"
 _188:
-	.asciz	"Add"
+	.asciz	"LoadFile"
 _189:
-	.asciz	"Remove"
+	.asciz	"Add"
 _190:
-	.asciz	"Save"
+	.asciz	"Remove"
 _191:
+	.asciz	"Save"
+_192:
 	.asciz	"Clear"
 	.align	4
-_182:
+_183:
 	.long	2
-	.long	_183
-	.long	3
 	.long	_184
+	.long	3
+	.long	_185
 	.long	_113
 	.long	8
 	.long	3
-	.long	_185
+	.long	_186
 	.long	_111
 	.long	12
 	.long	6
@@ -11942,26 +12064,26 @@ _182:
 	.long	20
 	.long	7
 	.long	_125
-	.long	_186
+	.long	_187
 	.long	48
 	.long	6
-	.long	_187
+	.long	_188
 	.long	_123
 	.long	52
 	.long	6
-	.long	_188
-	.long	_136
+	.long	_189
+	.long	_137
 	.long	56
 	.long	6
-	.long	_189
-	.long	_136
+	.long	_190
+	.long	_137
 	.long	60
 	.long	6
-	.long	_190
+	.long	_191
 	.long	_123
 	.long	64
 	.long	6
-	.long	_191
+	.long	_192
 	.long	_123
 	.long	68
 	.long	0
@@ -11969,7 +12091,7 @@ _182:
 _bb_Favorites:
 	.long	_bbObjectClass
 	.long	_bbObjectFree
-	.long	_182
+	.long	_183
 	.long	16
 	.long	__bb_Favorites_New
 	.long	__bb_Favorites_Delete
@@ -11985,24 +12107,24 @@ _bb_Favorites:
 	.long	__bb_Favorites_Remove
 	.long	__bb_Favorites_Save
 	.long	__bb_Favorites_Clear
-_193:
-	.asciz	"FavoriteNode"
 _194:
-	.asciz	"path"
+	.asciz	"FavoriteNode"
 _195:
-	.asciz	"name"
+	.asciz	"path"
 _196:
+	.asciz	"name"
+_197:
 	.asciz	"($):FavoriteNode"
 	.align	4
-_192:
+_193:
 	.long	2
-	.long	_193
-	.long	3
 	.long	_194
+	.long	3
+	.long	_195
 	.long	_113
 	.long	8
 	.long	3
-	.long	_195
+	.long	_196
 	.long	_113
 	.long	12
 	.long	6
@@ -12015,14 +12137,14 @@ _192:
 	.long	20
 	.long	7
 	.long	_125
-	.long	_196
+	.long	_197
 	.long	48
 	.long	0
 	.align	4
 _bb_FavoriteNode:
 	.long	_bbObjectClass
 	.long	_bbObjectFree
-	.long	_192
+	.long	_193
 	.long	16
 	.long	__bb_FavoriteNode_New
 	.long	__bb_FavoriteNode_Delete
@@ -12033,29 +12155,29 @@ _bb_FavoriteNode:
 	.long	_bbObjectReserved
 	.long	_bbObjectReserved
 	.long	__bb_FavoriteNode_Create
-_198:
-	.asciz	"Node"
 _199:
-	.asciz	"leftNode"
+	.asciz	"Node"
 _200:
-	.asciz	":Node"
+	.asciz	"leftNode"
 _201:
+	.asciz	":Node"
+_202:
 	.asciz	"rightNode"
 	.align	4
-_197:
+_198:
 	.long	2
-	.long	_198
+	.long	_199
 	.long	3
-	.long	_194
+	.long	_195
 	.long	_113
 	.long	8
 	.long	3
-	.long	_199
 	.long	_200
+	.long	_201
 	.long	12
 	.long	3
+	.long	_202
 	.long	_201
-	.long	_200
 	.long	16
 	.long	6
 	.long	_122
@@ -12070,7 +12192,7 @@ _197:
 _bb_Node:
 	.long	_bbObjectClass
 	.long	_bbObjectFree
-	.long	_197
+	.long	_198
 	.long	20
 	.long	__bb_Node_New
 	.long	__bb_Node_Delete
@@ -12080,31 +12202,31 @@ _bb_Node:
 	.long	_bbObjectReserved
 	.long	_bbObjectReserved
 	.long	_bbObjectReserved
-_203:
-	.asciz	"NavigationManager"
 _204:
-	.asciz	"currentNode"
+	.asciz	"NavigationManager"
 _205:
-	.asciz	"($):NavigationManager"
+	.asciz	"currentNode"
 _206:
-	.asciz	"GoLeft"
+	.asciz	"($):NavigationManager"
 _207:
-	.asciz	"GoInside"
+	.asciz	"GoLeft"
 _208:
-	.asciz	"GoRight"
+	.asciz	"GoInside"
 _209:
-	.asciz	"RemoveIfRight"
+	.asciz	"GoRight"
 _210:
-	.asciz	"Path"
+	.asciz	"RemoveIfRight"
 _211:
+	.asciz	"Path"
+_212:
 	.asciz	"()$"
 	.align	4
-_202:
+_203:
 	.long	2
-	.long	_203
-	.long	3
 	.long	_204
-	.long	_200
+	.long	3
+	.long	_205
+	.long	_201
 	.long	8
 	.long	6
 	.long	_122
@@ -12116,34 +12238,34 @@ _202:
 	.long	20
 	.long	7
 	.long	_125
-	.long	_205
+	.long	_206
 	.long	48
 	.long	6
-	.long	_206
-	.long	_136
+	.long	_207
+	.long	_137
 	.long	52
 	.long	6
-	.long	_207
-	.long	_136
+	.long	_208
+	.long	_137
 	.long	56
 	.long	6
-	.long	_208
+	.long	_209
 	.long	_123
 	.long	60
 	.long	6
-	.long	_209
-	.long	_136
+	.long	_210
+	.long	_137
 	.long	64
 	.long	6
-	.long	_210
 	.long	_211
+	.long	_212
 	.long	68
 	.long	0
 	.align	4
 _bb_NavigationManager:
 	.long	_bbObjectClass
 	.long	_bbObjectFree
-	.long	_202
+	.long	_203
 	.long	12
 	.long	__bb_NavigationManager_New
 	.long	__bb_NavigationManager_Delete
@@ -12159,112 +12281,112 @@ _bb_NavigationManager:
 	.long	__bb_NavigationManager_GoRight
 	.long	__bb_NavigationManager_RemoveIfRight
 	.long	__bb_NavigationManager_Path
-_433:
+_437:
 	.asciz	"/op/apps/PathFinder/code/pathfinder.bmx"
 	.align	4
-_432:
-	.long	_433
+_436:
+	.long	_437
 	.long	23
 	.long	1
 	.align	4
-_435:
-	.long	_433
+_439:
+	.long	_437
 	.long	24
 	.long	1
 	.align	4
-_438:
-	.long	_433
+_442:
+	.long	_437
 	.long	25
 	.long	1
-_467:
+_471:
 	.asciz	"Self"
 	.align	4
-_466:
+_470:
 	.long	1
 	.long	_122
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	0
 	.align	4
-_465:
+_469:
 	.long	3
 	.long	0
 	.long	0
-_779:
+_776:
 	.asciz	"g"
-_780:
+_777:
 	.asciz	"padding"
-_781:
+_778:
 	.asciz	"btnHeight"
-_782:
+_779:
 	.asciz	"txtPadding"
-_783:
+_780:
 	.asciz	"txtFieldHeight"
-_784:
+_781:
 	.asciz	"topButtonsCount"
-_785:
+_782:
 	.asciz	"btnNavigationWidth"
-_786:
+_783:
 	.asciz	"btnGoWidth"
-_787:
+_784:
 	.asciz	"txtPathX"
-_788:
+_785:
 	.asciz	"lbl"
 	.align	4
-_778:
+_775:
 	.long	1
 	.long	_125
 	.long	2
-	.long	_779
-	.long	_442
+	.long	_776
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_780
+	.long	_777
 	.long	_90
 	.long	-8
 	.long	2
-	.long	_781
+	.long	_778
 	.long	_90
 	.long	-12
 	.long	2
-	.long	_782
+	.long	_779
 	.long	_90
 	.long	-16
 	.long	2
-	.long	_783
+	.long	_780
 	.long	_90
 	.long	-20
 	.long	2
-	.long	_784
+	.long	_781
 	.long	_90
 	.long	-24
 	.long	2
-	.long	_785
+	.long	_782
 	.long	_90
 	.long	-28
 	.long	2
-	.long	_786
+	.long	_783
 	.long	_90
 	.long	-32
 	.long	2
-	.long	_787
+	.long	_784
 	.long	_90
 	.long	-36
 	.long	2
-	.long	_788
+	.long	_785
 	.long	_99
 	.long	-40
 	.long	0
 	.align	4
-_509:
-	.long	_433
+_513:
+	.long	_437
 	.long	52
 	.long	3
 	.align	4
-_511:
-	.long	_433
+_515:
+	.long	_437
 	.long	53
 	.long	3
 	.align	4
@@ -12274,41 +12396,41 @@ _12:
 	.long	1
 	.short	47
 	.align	4
-_519:
-	.long	_433
+_523:
+	.long	_437
 	.long	58
 	.long	3
 	.align	4
-_521:
-	.long	_433
+_525:
+	.long	_437
 	.long	59
 	.long	3
 	.align	4
-_523:
-	.long	_433
+_527:
+	.long	_437
 	.long	60
 	.long	3
 	.align	4
-_525:
-	.long	_433
+_529:
+	.long	_437
 	.long	61
 	.long	3
 	.align	4
-_527:
-	.long	_433
+_531:
+	.long	_437
 	.long	62
 	.long	3
 	.align	4
-_529:
-	.long	_433
+_533:
+	.long	_437
 	.long	64
 	.long	3
 	.align	4
-_3330:
+_3363:
 	.long	0x3f400000
 	.align	4
-_537:
-	.long	_433
+_541:
+	.long	_437
 	.long	65
 	.long	3
 	.align	4
@@ -12318,13 +12440,13 @@ _13:
 	.long	10
 	.short	80,97,116,104,70,105,110,100,101,114
 	.align	4
-_561:
-	.long	_433
+_565:
+	.long	_437
 	.long	67
 	.long	3
 	.align	4
-_563:
-	.long	_433
+_567:
+	.long	_437
 	.long	68
 	.long	3
 	.align	4
@@ -12334,13 +12456,13 @@ _14:
 	.long	1
 	.short	60
 	.align	4
-_573:
-	.long	_433
+_577:
+	.long	_437
 	.long	69
 	.long	4
 	.align	4
-_576:
-	.long	_433
+_580:
+	.long	_437
 	.long	70
 	.long	3
 	.align	4
@@ -12350,18 +12472,18 @@ _2:
 	.long	1
 	.short	62
 	.align	4
-_588:
-	.long	_433
+_592:
+	.long	_437
 	.long	71
 	.long	4
 	.align	4
-_591:
-	.long	_433
+_595:
+	.long	_437
 	.long	73
 	.long	3
 	.align	4
-_593:
-	.long	_433
+_597:
+	.long	_437
 	.long	74
 	.long	3
 	.align	4
@@ -12371,66 +12493,66 @@ _15:
 	.long	2
 	.short	71,111
 	.align	4
-_605:
-	.long	_433
+_609:
+	.long	_437
 	.long	75
 	.long	4
 	.align	4
-_608:
-	.long	_433
+_612:
+	.long	_437
 	.long	76
 	.long	3
 	.align	4
-_614:
-	.long	_433
+_618:
+	.long	_437
 	.long	77
 	.long	3
 	.align	4
-_626:
-	.long	_433
+_630:
+	.long	_437
 	.long	78
 	.long	4
 	.align	4
-_629:
-	.long	_433
+_633:
+	.long	_437
 	.long	79
 	.long	4
 	.align	4
-_634:
-	.long	_433
+_638:
+	.long	_437
 	.long	81
 	.long	3
 	.align	4
-_648:
-	.long	_433
+_652:
+	.long	_437
 	.long	82
 	.long	4
 	.align	4
-_651:
-	.long	_433
+_655:
+	.long	_437
 	.long	83
 	.long	4
 	.align	4
-_3331:
+_3364:
 	.long	0x3fc00000
 	.align	4
-_656:
-	.long	_433
+_660:
+	.long	_437
 	.long	84
 	.long	4
 	.align	4
-_659:
-	.long	_433
+_663:
+	.long	_437
 	.long	85
 	.long	3
 	.align	4
-_669:
-	.long	_433
+_673:
+	.long	_437
 	.long	86
 	.long	3
 	.align	4
-_679:
-	.long	_433
+_683:
+	.long	_437
 	.long	88
 	.long	3
 	.align	4
@@ -12440,19 +12562,24 @@ _16:
 	.long	9
 	.short	70,97,118,111,114,105,116,101,115
 	.align	4
-_683:
-	.long	_433
+_687:
+	.long	_437
 	.long	89
-	.long	3
-	.align	4
-_697:
-	.long	_433
-	.long	90
 	.long	4
 	.align	4
-_700:
-	.long	_433
+_688:
+	.long	_437
+	.long	90
+	.long	3
+	.align	4
+_702:
+	.long	_437
 	.long	91
+	.long	4
+	.align	4
+_705:
+	.long	_437
+	.long	92
 	.long	4
 	.align	4
 _17:
@@ -12461,494 +12588,512 @@ _17:
 	.long	13
 	.short	102,97,118,111,114,105,116,101,115,46,116,120,116
 	.align	4
-_708:
-	.long	_433
-	.long	92
-	.long	4
-	.align	4
-_716:
-	.long	_433
-	.long	94
+_713:
+	.long	_437
+	.long	95
 	.long	3
 	.align	4
-_730:
-	.long	_433
-	.long	95
-	.long	4
-	.align	4
-_733:
-	.long	_433
+_727:
+	.long	_437
 	.long	96
 	.long	4
 	.align	4
-_738:
-	.long	_433
-	.long	98
+_730:
+	.long	_437
+	.long	97
+	.long	4
+	.align	4
+_735:
+	.long	_437
+	.long	99
 	.long	3
 	.align	4
-_748:
-	.long	_433
-	.long	102
-	.long	3
-	.align	4
-_749:
-	.long	_433
+_745:
+	.long	_437
 	.long	103
 	.long	3
 	.align	4
-_750:
-	.long	_433
+_746:
+	.long	_437
 	.long	104
 	.long	3
 	.align	4
-_751:
-	.long	_433
+_747:
+	.long	_437
 	.long	105
 	.long	3
 	.align	4
-_752:
-	.long	_433
-	.long	107
+_748:
+	.long	_437
+	.long	106
 	.long	3
 	.align	4
-_753:
-	.long	_433
+_749:
+	.long	_437
 	.long	108
 	.long	3
 	.align	4
-_754:
-	.long	_433
+_750:
+	.long	_437
 	.long	109
 	.long	3
 	.align	4
-_755:
-	.long	_433
+_751:
+	.long	_437
 	.long	110
 	.long	3
 	.align	4
-_756:
-	.long	_433
-	.long	113
+_752:
+	.long	_437
+	.long	111
 	.long	3
 	.align	4
-_757:
-	.long	_433
+_753:
+	.long	_437
 	.long	114
 	.long	3
 	.align	4
-_758:
-	.long	_433
+_754:
+	.long	_437
 	.long	115
 	.long	3
 	.align	4
-_759:
-	.long	_433
+_755:
+	.long	_437
 	.long	116
 	.long	3
 	.align	4
-_760:
-	.long	_433
+_756:
+	.long	_437
 	.long	117
 	.long	3
 	.align	4
-_761:
-	.long	_433
+_757:
+	.long	_437
 	.long	118
 	.long	3
 	.align	4
-_762:
-	.long	_433
+_758:
+	.long	_437
 	.long	119
 	.long	3
 	.align	4
-_763:
-	.long	_433
+_759:
+	.long	_437
 	.long	120
 	.long	3
 	.align	4
-_764:
-	.long	_433
+_760:
+	.long	_437
 	.long	121
 	.long	3
 	.align	4
-_765:
-	.long	_433
+_761:
+	.long	_437
 	.long	122
 	.long	3
 	.align	4
-_766:
-	.long	_433
+_762:
+	.long	_437
 	.long	123
 	.long	3
 	.align	4
-_767:
-	.long	_433
+_763:
+	.long	_437
 	.long	124
 	.long	3
 	.align	4
-_768:
-	.long	_433
+_764:
+	.long	_437
 	.long	125
 	.long	3
 	.align	4
-_769:
-	.long	_433
-	.long	128
+_765:
+	.long	_437
+	.long	126
 	.long	3
 	.align	4
-_777:
-	.long	_433
+_766:
+	.long	_437
 	.long	129
 	.long	3
 	.align	4
-_1096:
+_774:
+	.long	_437
+	.long	130
+	.long	3
+	.align	4
+_1050:
 	.long	1
 	.long	_127
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	0
 	.align	4
-_789:
-	.long	_433
-	.long	135
+_786:
+	.long	_437
+	.long	136
 	.long	3
-_832:
-	.asciz	"fileIn"
-_833:
-	.asciz	":TStream"
-_834:
-	.asciz	"line"
 	.align	4
-_831:
+_789:
+	.long	_437
+	.long	139
+	.long	3
+	.align	4
+_855:
 	.long	3
 	.long	0
 	.long	2
-	.long	_832
-	.long	_833
+	.long	_202
+	.long	_201
 	.long	-8
-	.long	2
-	.long	_834
-	.long	_113
-	.long	-12
 	.long	0
 	.align	4
 _793:
-	.long	_433
-	.long	136
+	.long	_437
+	.long	140
 	.long	4
 	.align	4
-_797:
-	.long	_433
-	.long	137
-	.long	4
-	.align	4
-_799:
-	.long	_433
-	.long	138
-	.long	4
-	.align	4
-_829:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_800:
-	.long	_433
-	.long	139
-	.long	5
-	.align	4
-_801:
-	.long	_433
+_796:
+	.long	_437
 	.long	141
-	.long	5
-_827:
-	.asciz	"fn"
-_828:
-	.asciz	":FavoriteNode"
+	.long	4
+	.align	4
+_798:
+	.long	_437
+	.long	142
+	.long	4
+	.align	4
+_810:
+	.long	_437
+	.long	143
+	.long	4
 	.align	4
 _826:
-	.long	3
-	.long	0
-	.long	2
-	.long	_827
-	.long	_828
-	.long	-16
-	.long	0
-	.align	4
-_805:
-	.long	_433
-	.long	142
-	.long	6
-	.align	4
-_807:
-	.long	_433
-	.long	143
-	.long	6
-	.align	4
-_825:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_813:
-	.long	_433
+	.long	_437
 	.long	144
-	.long	7
-	.align	4
-_820:
-	.long	_433
-	.long	145
-	.long	7
-	.align	4
-_1:
-	.long	_bbStringClass
-	.long	2147483647
-	.long	0
-	.align	4
-_830:
-	.long	_433
-	.long	149
-	.long	4
-	.align	4
-_835:
-	.long	_433
-	.long	153
-	.long	3
-	.align	4
-_901:
-	.long	3
-	.long	0
-	.long	2
-	.long	_201
-	.long	_200
-	.long	-20
-	.long	0
-	.align	4
-_839:
-	.long	_433
-	.long	154
 	.long	4
 	.align	4
 _842:
-	.long	_433
-	.long	155
-	.long	4
+	.long	3
+	.long	0
+	.long	0
 	.align	4
-_844:
-	.long	_433
-	.long	156
+_830:
+	.long	_437
+	.long	145
+	.long	5
+	.align	4
+_843:
+	.long	_437
+	.long	147
 	.long	4
 	.align	4
 _856:
-	.long	_433
-	.long	157
-	.long	4
+	.long	_437
+	.long	150
+	.long	3
 	.align	4
-_872:
-	.long	_433
-	.long	158
-	.long	4
+_859:
+	.long	_437
+	.long	151
+	.long	3
 	.align	4
-_888:
+_1049:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_860:
+	.long	_437
+	.long	152
+	.long	7
+	.align	4
+_861:
+	.long	_437
+	.long	153
+	.long	7
+	.align	4
+_875:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_869:
+	.long	_437
+	.long	154
+	.long	37
+	.align	4
+_874:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_873:
+	.long	_437
+	.long	154
+	.long	86
+	.align	4
+_879:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
 _876:
-	.long	_433
-	.long	159
-	.long	5
-	.align	4
-_889:
-	.long	_433
-	.long	161
-	.long	4
-	.align	4
-_902:
-	.long	_433
-	.long	164
-	.long	3
-	.align	4
-_905:
-	.long	_433
-	.long	165
-	.long	3
-	.align	4
-_1095:
-	.long	3
-	.long	0
-	.long	0
+	.long	_437
+	.long	156
+	.long	32
 	.align	4
 _906:
-	.long	_433
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_880:
+	.long	_437
+	.long	158
+	.long	6
+	.align	4
+_895:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_892:
+	.long	_437
+	.long	159
+	.long	23
+	.align	4
+_899:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_896:
+	.long	_437
+	.long	160
+	.long	24
+	.align	4
+_905:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_900:
+	.long	_437
+	.long	161
+	.long	22
+	.align	4
+_1035:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_907:
+	.long	_437
+	.long	165
+	.long	6
+	.align	4
+_1034:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_909:
+	.long	_437
 	.long	166
 	.long	7
 	.align	4
-_907:
-	.long	_433
+_936:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_933:
+	.long	_437
 	.long	167
-	.long	7
+	.long	22
 	.align	4
-_921:
+_940:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_915:
-	.long	_433
+_937:
+	.long	_437
 	.long	168
-	.long	37
+	.long	22
 	.align	4
-_920:
+_946:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_919:
-	.long	_433
-	.long	168
-	.long	86
-	.align	4
-_925:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_922:
-	.long	_433
-	.long	170
-	.long	32
+_941:
+	.long	_437
+	.long	169
+	.long	22
 	.align	4
 _952:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_926:
-	.long	_433
-	.long	172
-	.long	6
-	.align	4
-_941:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_938:
-	.long	_433
-	.long	173
-	.long	23
-	.align	4
-_945:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_942:
-	.long	_433
-	.long	174
-	.long	24
-	.align	4
-_951:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_946:
-	.long	_433
-	.long	175
+_947:
+	.long	_437
+	.long	170
 	.long	22
 	.align	4
-_1081:
+_956:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
 _953:
-	.long	_433
+	.long	_437
+	.long	172
+	.long	22
+	.align	4
+_960:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_957:
+	.long	_437
+	.long	173
+	.long	22
+	.align	4
+_964:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_961:
+	.long	_437
+	.long	174
+	.long	22
+	.align	4
+_968:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_965:
+	.long	_437
+	.long	175
+	.long	22
+	.align	4
+_972:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_969:
+	.long	_437
+	.long	176
+	.long	22
+	.align	4
+_976:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_973:
+	.long	_437
+	.long	177
+	.long	22
+	.align	4
+_980:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_977:
+	.long	_437
+	.long	178
+	.long	22
+	.align	4
+_984:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_981:
+	.long	_437
 	.long	179
-	.long	6
+	.long	22
 	.align	4
-_1080:
+_988:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_955:
-	.long	_433
+_985:
+	.long	_437
 	.long	180
-	.long	7
-	.align	4
-_982:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_979:
-	.long	_433
-	.long	181
-	.long	22
-	.align	4
-_986:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_983:
-	.long	_433
-	.long	182
-	.long	22
+	.long	28
 	.align	4
 _992:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_987:
-	.long	_433
-	.long	183
-	.long	22
+_989:
+	.long	_437
+	.long	181
+	.long	26
 	.align	4
-_998:
+_996:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
 _993:
-	.long	_433
+	.long	_437
+	.long	183
+	.long	28
+	.align	4
+_1000:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_997:
+	.long	_437
 	.long	184
 	.long	22
 	.align	4
-_1002:
+_1004:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_999:
-	.long	_433
+_1001:
+	.long	_437
+	.long	185
+	.long	22
+	.align	4
+_1008:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1005:
+	.long	_437
 	.long	186
-	.long	22
+	.long	25
 	.align	4
-_1006:
+_1015:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1003:
-	.long	_433
+_1009:
+	.long	_437
 	.long	187
-	.long	22
-	.align	4
-_1010:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1007:
-	.long	_433
-	.long	188
 	.long	22
 	.align	4
 _1014:
@@ -12956,645 +13101,661 @@ _1014:
 	.long	0
 	.long	0
 	.align	4
-_1011:
-	.long	_433
-	.long	189
-	.long	22
+_1013:
+	.long	_437
+	.long	187
+	.long	63
 	.align	4
-_1018:
+_1024:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1015:
-	.long	_433
+_1016:
+	.long	_437
+	.long	188
+	.long	22
+	.align	4
+_1021:
+	.long	_437
+	.long	189
+	.long	14
+	.align	4
+_1033:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1025:
+	.long	_437
 	.long	190
 	.long	22
 	.align	4
-_1022:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1019:
-	.long	_433
-	.long	191
-	.long	22
-	.align	4
-_1026:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1023:
-	.long	_433
-	.long	192
-	.long	22
-	.align	4
 _1030:
+	.long	_437
+	.long	191
+	.long	14
+	.align	4
+_1048:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1027:
-	.long	_433
-	.long	193
-	.long	22
-	.align	4
-_1034:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1031:
-	.long	_433
-	.long	194
-	.long	28
-	.align	4
-_1038:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1035:
-	.long	_433
+_1036:
+	.long	_437
 	.long	195
-	.long	26
-	.align	4
-_1042:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1039:
-	.long	_433
-	.long	197
-	.long	28
-	.align	4
-_1046:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1043:
-	.long	_433
-	.long	198
-	.long	22
-	.align	4
-_1050:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1047:
-	.long	_433
-	.long	199
-	.long	22
-	.align	4
-_1054:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1051:
-	.long	_433
-	.long	200
-	.long	25
-	.align	4
-_1061:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1055:
-	.long	_433
-	.long	201
-	.long	22
-	.align	4
-_1060:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1059:
-	.long	_433
-	.long	201
-	.long	63
-	.align	4
-_1070:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1062:
-	.long	_433
-	.long	202
-	.long	22
-	.align	4
-_1067:
-	.long	_433
-	.long	203
-	.long	14
-	.align	4
-_1079:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1071:
-	.long	_433
-	.long	204
-	.long	22
-	.align	4
-_1076:
-	.long	_433
-	.long	205
-	.long	14
-	.align	4
-_1094:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1082:
-	.long	_433
-	.long	209
 	.long	6
 	.align	4
-_1093:
+_1047:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1088:
-	.long	_433
-	.long	210
+_1042:
+	.long	_437
+	.long	196
 	.long	7
-_1117:
+_1071:
 	.asciz	"obj"
-_1118:
+_1072:
 	.asciz	":Object"
-_1119:
+_1073:
 	.asciz	"gadget"
 	.align	4
-_1116:
+_1070:
 	.long	1
 	.long	_128
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_1117
-	.long	_1118
+	.long	_1071
+	.long	_1072
 	.long	-8
 	.long	2
-	.long	_1119
+	.long	_1073
 	.long	_99
 	.long	-12
 	.long	0
 	.align	4
-_1097:
-	.long	_433
-	.long	218
+_1051:
+	.long	_437
+	.long	204
 	.long	3
+	.align	4
+_1053:
+	.long	_437
+	.long	205
+	.long	3
+	.align	4
+_1069:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1061:
+	.long	_437
+	.long	206
+	.long	4
+_1097:
+	.asciz	"fileOut"
+_1098:
+	.asciz	":TStream"
+	.align	4
+_1096:
+	.long	1
+	.long	_130
+	.long	2
+	.long	_471
+	.long	_446
+	.long	-4
+	.long	2
+	.long	_1097
+	.long	_1098
+	.long	-8
+	.long	0
+	.align	4
+_1074:
+	.long	_437
+	.long	211
+	.long	3
+	.align	4
+_1078:
+	.long	_437
+	.long	212
+	.long	4
+_1094:
+	.asciz	"value"
+	.align	4
+_1093:
+	.long	3
+	.long	0
+	.long	2
+	.long	_1094
+	.long	_1072
+	.long	-12
+	.long	0
+	.align	4
+_1090:
+	.long	_437
+	.long	213
+	.long	5
+	.align	4
+_1095:
+	.long	_437
+	.long	215
+	.long	3
+	.align	4
+_1163:
+	.long	1
+	.long	_131
+	.long	2
+	.long	_471
+	.long	_446
+	.long	-4
+	.long	0
 	.align	4
 _1099:
-	.long	_433
+	.long	_437
 	.long	219
 	.long	3
+_1161:
+	.asciz	"fileIn"
+_1162:
+	.asciz	"line"
 	.align	4
-_1115:
+_1160:
+	.long	3
+	.long	0
+	.long	2
+	.long	_1161
+	.long	_1098
+	.long	-8
+	.long	2
+	.long	_1162
+	.long	_113
+	.long	-12
+	.long	0
+	.align	4
+_1103:
+	.long	_437
+	.long	220
+	.long	4
+	.align	4
+_1110:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
 _1107:
-	.long	_433
+	.long	_437
 	.long	220
+	.long	27
+	.align	4
+_1111:
+	.long	_437
+	.long	221
 	.long	4
-_1143:
-	.asciz	"fileOut"
 	.align	4
-_1142:
-	.long	1
-	.long	_130
-	.long	2
-	.long	_467
-	.long	_442
-	.long	-4
-	.long	2
-	.long	_1143
-	.long	_833
-	.long	-8
-	.long	0
+_1114:
+	.long	_437
+	.long	223
+	.long	4
 	.align	4
-_1120:
-	.long	_433
+_1122:
+	.long	_437
+	.long	224
+	.long	4
+	.align	4
+_1126:
+	.long	_437
 	.long	225
-	.long	3
+	.long	4
 	.align	4
-_1124:
-	.long	_433
+_1128:
+	.long	_437
 	.long	226
 	.long	4
-_1140:
-	.asciz	"value"
 	.align	4
-_1139:
+_1158:
 	.long	3
 	.long	0
-	.long	2
-	.long	_1140
-	.long	_1118
-	.long	-12
 	.long	0
 	.align	4
-_1136:
-	.long	_433
+_1129:
+	.long	_437
 	.long	227
 	.long	5
 	.align	4
-_1141:
-	.long	_433
+_1130:
+	.long	_437
 	.long	229
-	.long	3
-_1184:
-	.asciz	"selectedIndex"
-_1185:
-	.asciz	"selectedName"
+	.long	5
+_1156:
+	.asciz	"fn"
+_1157:
+	.asciz	":FavoriteNode"
 	.align	4
-_1183:
-	.long	1
-	.long	_131
+_1155:
+	.long	3
+	.long	0
 	.long	2
-	.long	_467
-	.long	_442
-	.long	-4
-	.long	2
-	.long	_1184
-	.long	_90
-	.long	-8
-	.long	2
-	.long	_1185
-	.long	_113
-	.long	-12
-	.long	2
-	.long	_827
-	.long	_828
+	.long	_1156
+	.long	_1157
 	.long	-16
 	.long	0
 	.align	4
-_1144:
-	.long	_433
+_1134:
+	.long	_437
+	.long	230
+	.long	6
+	.align	4
+_1136:
+	.long	_437
+	.long	231
+	.long	6
+	.align	4
+_1154:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1142:
+	.long	_437
+	.long	232
+	.long	7
+	.align	4
+_1149:
+	.long	_437
 	.long	233
-	.long	3
+	.long	7
 	.align	4
-_1148:
-	.long	_433
-	.long	234
-	.long	3
-	.align	4
-_1151:
-	.long	3
-	.long	0
+_1:
+	.long	_bbStringClass
+	.long	2147483647
 	.long	0
 	.align	4
-_1150:
-	.long	_433
-	.long	234
-	.long	27
+_1159:
+	.long	_437
+	.long	237
+	.long	4
+_1204:
+	.asciz	"selectedIndex"
+_1205:
+	.asciz	"selectedName"
 	.align	4
-_1152:
-	.long	_433
-	.long	235
-	.long	3
-	.align	4
-_1156:
-	.long	_433
-	.long	236
-	.long	3
-	.align	4
-_1161:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1160:
-	.long	_433
-	.long	236
-	.long	47
-	.align	4
-_1162:
-	.long	_433
-	.long	238
-	.long	3
-	.align	4
-_1168:
-	.long	_433
-	.long	239
-	.long	3
-	.align	4
-_1175:
-	.long	_433
-	.long	240
-	.long	3
-	.align	4
-_1180:
-	.long	_433
-	.long	242
-	.long	3
-	.align	4
-_1213:
+_1203:
 	.long	1
 	.long	_132
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_1184
+	.long	_1204
 	.long	_90
 	.long	-8
 	.long	2
-	.long	_1185
+	.long	_1205
 	.long	_113
 	.long	-12
-	.long	0
-	.align	4
-_1186:
-	.long	_433
-	.long	246
-	.long	3
-	.align	4
-_1190:
-	.long	_433
-	.long	247
-	.long	3
-	.align	4
-_1193:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1192:
-	.long	_433
-	.long	247
-	.long	27
-	.align	4
-_1194:
-	.long	_433
-	.long	248
-	.long	3
-	.align	4
-_1198:
-	.long	_433
-	.long	249
-	.long	3
-	.align	4
-_1203:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1202:
-	.long	_433
-	.long	249
-	.long	49
-	.align	4
-_1204:
-	.long	_433
-	.long	250
-	.long	3
-	.align	4
-_1207:
-	.long	_433
-	.long	251
-	.long	3
-	.align	4
-_1210:
-	.long	_433
-	.long	252
-	.long	3
-_1255:
-	.asciz	"possibleActiveWindow"
-_1256:
-	.asciz	"theActiveGadget"
-	.align	4
-_1254:
-	.long	1
-	.long	_133
 	.long	2
-	.long	_467
-	.long	_442
-	.long	-4
-	.long	2
-	.long	_1255
-	.long	_99
-	.long	-8
-	.long	2
-	.long	_1256
-	.long	_99
-	.long	-12
-	.long	0
-	.align	4
-_1214:
-	.long	_433
-	.long	258
-	.long	3
-	.align	4
-_1216:
-	.long	_433
-	.long	259
-	.long	3
-	.align	4
-_1219:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1218:
-	.long	_433
-	.long	259
-	.long	31
-	.align	4
-_1220:
-	.long	_433
-	.long	261
-	.long	3
-	.align	4
-_1222:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1221:
-	.long	_433
-	.long	262
-	.long	4
-	.align	4
-_1223:
-	.long	_433
-	.long	265
-	.long	3
-_1251:
-	.asciz	"tempBox"
-_1252:
-	.asciz	":TWindow"
-	.align	4
-_1250:
-	.long	3
-	.long	0
-	.long	2
-	.long	_1251
-	.long	_1252
+	.long	_1156
+	.long	_1157
 	.long	-16
 	.long	0
 	.align	4
-_1235:
-	.long	_433
-	.long	266
-	.long	4
+_1164:
+	.long	_437
+	.long	243
+	.long	3
 	.align	4
-_1249:
+_1168:
+	.long	_437
+	.long	244
+	.long	3
+	.align	4
+_1171:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1239:
-	.long	_433
-	.long	267
-	.long	5
+_1170:
+	.long	_437
+	.long	244
+	.long	27
 	.align	4
-_1242:
-	.long	_433
-	.long	268
-	.long	5
-	.align	4
-_1245:
-	.long	_433
-	.long	269
-	.long	5
-	.align	4
-_1248:
-	.long	_433
-	.long	270
-	.long	5
-	.align	4
-_1253:
-	.long	_433
-	.long	274
+_1172:
+	.long	_437
+	.long	245
 	.long	3
-_1272:
-	.asciz	"index"
 	.align	4
-_1271:
+_1176:
+	.long	_437
+	.long	246
+	.long	3
+	.align	4
+_1181:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1180:
+	.long	_437
+	.long	246
+	.long	47
+	.align	4
+_1182:
+	.long	_437
+	.long	248
+	.long	3
+	.align	4
+_1188:
+	.long	_437
+	.long	249
+	.long	3
+	.align	4
+_1195:
+	.long	_437
+	.long	250
+	.long	3
+	.align	4
+_1200:
+	.long	_437
+	.long	252
+	.long	3
+	.align	4
+_1233:
 	.long	1
-	.long	_135
+	.long	_133
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_195
-	.long	_113
+	.long	_1204
+	.long	_90
 	.long	-8
 	.long	2
-	.long	_1272
-	.long	_90
+	.long	_1205
+	.long	_113
 	.long	-12
 	.long	0
 	.align	4
-_1257:
-	.long	_433
-	.long	279
+_1206:
+	.long	_437
+	.long	256
 	.long	3
 	.align	4
-_1259:
-	.long	_433
-	.long	281
+_1210:
+	.long	_437
+	.long	257
 	.long	3
+	.align	4
+_1213:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1212:
+	.long	_437
+	.long	257
+	.long	27
+	.align	4
+_1214:
+	.long	_437
+	.long	258
+	.long	3
+	.align	4
+_1218:
+	.long	_437
+	.long	259
+	.long	3
+	.align	4
+_1223:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1222:
+	.long	_437
+	.long	259
+	.long	49
+	.align	4
+_1224:
+	.long	_437
+	.long	260
+	.long	3
+	.align	4
+_1227:
+	.long	_437
+	.long	261
+	.long	3
+	.align	4
+_1230:
+	.long	_437
+	.long	262
+	.long	3
+_1275:
+	.asciz	"possibleActiveWindow"
+_1276:
+	.asciz	"theActiveGadget"
+	.align	4
+_1274:
+	.long	1
+	.long	_134
+	.long	2
+	.long	_471
+	.long	_446
+	.long	-4
+	.long	2
+	.long	_1275
+	.long	_99
+	.long	-8
+	.long	2
+	.long	_1276
+	.long	_99
+	.long	-12
+	.long	0
+	.align	4
+_1234:
+	.long	_437
+	.long	268
+	.long	3
+	.align	4
+_1236:
+	.long	_437
+	.long	269
+	.long	3
+	.align	4
+_1239:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1238:
+	.long	_437
+	.long	269
+	.long	31
+	.align	4
+_1240:
+	.long	_437
+	.long	271
+	.long	3
+	.align	4
+_1242:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1241:
+	.long	_437
+	.long	272
+	.long	4
+	.align	4
+_1243:
+	.long	_437
+	.long	275
+	.long	3
+_1271:
+	.asciz	"tempBox"
+_1272:
+	.asciz	":TWindow"
 	.align	4
 _1270:
 	.long	3
 	.long	0
+	.long	2
+	.long	_1271
+	.long	_1272
+	.long	-16
 	.long	0
 	.align	4
-_1260:
-	.long	_433
-	.long	282
+_1255:
+	.long	_437
+	.long	276
 	.long	4
 	.align	4
-_1268:
+_1269:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1264:
-	.long	_433
-	.long	283
+_1259:
+	.long	_437
+	.long	277
 	.long	5
 	.align	4
-_1267:
-	.long	_433
+_1262:
+	.long	_437
+	.long	278
+	.long	5
+	.align	4
+_1265:
+	.long	_437
+	.long	279
+	.long	5
+	.align	4
+_1268:
+	.long	_437
+	.long	280
+	.long	5
+	.align	4
+_1273:
+	.long	_437
 	.long	284
-	.long	5
+	.long	3
+_1292:
+	.asciz	"index"
 	.align	4
-_1269:
-	.long	_433
-	.long	286
-	.long	4
-_1343:
-	.asciz	"which"
-_1344:
-	.asciz	"typeString"
-_1345:
-	.asciz	"pathName"
-_1346:
-	.asciz	"fileState"
-_1347:
-	.asciz	"created"
-	.align	4
-_1342:
+_1291:
 	.long	1
-	.long	_137
+	.long	_136
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_1343
+	.long	_196
+	.long	_113
+	.long	-8
+	.long	2
+	.long	_1292
+	.long	_90
+	.long	-12
+	.long	0
+	.align	4
+_1277:
+	.long	_437
+	.long	289
+	.long	3
+	.align	4
+_1279:
+	.long	_437
+	.long	291
+	.long	3
+	.align	4
+_1290:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1280:
+	.long	_437
+	.long	292
+	.long	4
+	.align	4
+_1288:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1284:
+	.long	_437
+	.long	293
+	.long	5
+	.align	4
+_1287:
+	.long	_437
+	.long	294
+	.long	5
+	.align	4
+_1289:
+	.long	_437
+	.long	296
+	.long	4
+_1363:
+	.asciz	"which"
+_1364:
+	.asciz	"typeString"
+_1365:
+	.asciz	"pathName"
+_1366:
+	.asciz	"fileState"
+_1367:
+	.asciz	"created"
+	.align	4
+_1362:
+	.long	1
+	.long	_138
+	.long	2
+	.long	_471
+	.long	_446
+	.long	-4
+	.long	2
+	.long	_1363
 	.long	_90
 	.long	-8
 	.long	2
-	.long	_1344
+	.long	_1364
 	.long	_113
 	.long	-12
 	.long	2
-	.long	_195
+	.long	_196
 	.long	_113
 	.long	-16
 	.long	2
-	.long	_194
+	.long	_195
 	.long	_113
 	.long	-20
 	.long	2
-	.long	_1345
+	.long	_1365
 	.long	_113
 	.long	-24
 	.long	2
-	.long	_1346
+	.long	_1366
 	.long	_90
 	.long	-28
 	.long	2
-	.long	_1347
+	.long	_1367
 	.long	_90
 	.long	-32
 	.long	0
 	.align	4
-_1273:
-	.long	_433
-	.long	292
+_1293:
+	.long	_437
+	.long	302
 	.long	3
 	.align	4
 _36:
@@ -13603,19 +13764,19 @@ _36:
 	.long	4
 	.short	102,105,108,101
 	.align	4
-_1275:
-	.long	_433
-	.long	294
+_1295:
+	.long	_437
+	.long	304
 	.long	3
 	.align	4
-_1278:
+_1298:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1277:
-	.long	_433
-	.long	295
+_1297:
+	.long	_437
+	.long	305
 	.long	4
 	.align	4
 _37:
@@ -13624,9 +13785,9 @@ _37:
 	.long	6
 	.short	102,111,108,100,101,114
 	.align	4
-_1279:
-	.long	_433
-	.long	298
+_1299:
+	.long	_437
+	.long	308
 	.long	3
 	.align	4
 _11:
@@ -13647,39 +13808,39 @@ _38:
 	.long	8
 	.short	78,97,109,101,32,111,102,32
 	.align	4
-_1283:
-	.long	_433
-	.long	299
+_1303:
+	.long	_437
+	.long	309
 	.long	3
 	.align	4
-_1286:
+_1306:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1285:
-	.long	_433
-	.long	299
+_1305:
+	.long	_437
+	.long	309
 	.long	18
 	.align	4
-_1287:
-	.long	_433
-	.long	301
+_1307:
+	.long	_437
+	.long	311
 	.long	3
 	.align	4
-_1295:
-	.long	_433
-	.long	302
+_1315:
+	.long	_437
+	.long	312
 	.long	3
 	.align	4
-_1297:
-	.long	_433
-	.long	304
+_1317:
+	.long	_437
+	.long	314
 	.long	3
 	.align	4
-_1299:
-	.long	_433
-	.long	305
+_1319:
+	.long	_437
+	.long	315
 	.long	3
 	.align	4
 _39:
@@ -13689,69 +13850,69 @@ _39:
 	.short	32,101,120,105,115,116,115,44,32,114,101,112,108,97,99,101
 	.short	63
 	.align	4
-_1304:
+_1324:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1303:
-	.long	_433
-	.long	305
+_1323:
+	.long	_437
+	.long	315
 	.long	66
 	.align	4
-_1305:
-	.long	_433
-	.long	307
-	.long	3
-	.align	4
-_1307:
-	.long	_433
-	.long	308
-	.long	3
-	.align	4
-_1310:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1309:
-	.long	_433
-	.long	309
-	.long	4
-	.align	4
-_1316:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1312:
-	.long	_433
-	.long	310
-	.long	8
-	.align	4
-_1315:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1314:
-	.long	_433
-	.long	311
-	.long	4
-	.align	4
-_1317:
-	.long	_433
-	.long	314
+_1325:
+	.long	_437
+	.long	317
 	.long	3
 	.align	4
 _1327:
+	.long	_437
+	.long	318
+	.long	3
+	.align	4
+_1330:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1319:
-	.long	_433
-	.long	315
+_1329:
+	.long	_437
+	.long	319
+	.long	4
+	.align	4
+_1336:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1332:
+	.long	_437
+	.long	320
+	.long	8
+	.align	4
+_1335:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1334:
+	.long	_437
+	.long	321
+	.long	4
+	.align	4
+_1337:
+	.long	_437
+	.long	324
+	.long	3
+	.align	4
+_1347:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1339:
+	.long	_437
+	.long	325
 	.long	4
 	.align	4
 _40:
@@ -13767,130 +13928,130 @@ _41:
 	.long	1
 	.short	32
 	.align	4
-_1338:
+_1358:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1329:
-	.long	_433
-	.long	317
+_1349:
+	.long	_437
+	.long	327
 	.long	4
 	.align	4
-_1332:
-	.long	_433
-	.long	318
-	.long	4
-	.align	4
-_1335:
-	.long	_433
-	.long	319
-	.long	4
-	.align	4
-_1339:
-	.long	_433
-	.long	322
-	.long	3
-	.align	4
-_1351:
-	.long	1
-	.long	_139
-	.long	2
-	.long	_467
-	.long	_442
-	.long	-4
-	.long	0
-	.align	4
-_1348:
-	.long	_433
+_1352:
+	.long	_437
 	.long	328
-	.long	3
+	.long	4
 	.align	4
 _1355:
+	.long	_437
+	.long	329
+	.long	4
+	.align	4
+_1359:
+	.long	_437
+	.long	332
+	.long	3
+	.align	4
+_1371:
 	.long	1
 	.long	_140
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	0
 	.align	4
-_1352:
-	.long	_433
-	.long	332
+_1368:
+	.long	_437
+	.long	338
 	.long	3
-_1438:
-	.asciz	"oldName"
-_1439:
-	.asciz	"newName"
-_1440:
-	.asciz	"oldPathName"
-_1441:
-	.asciz	"newPathName"
-_1442:
-	.asciz	"result"
 	.align	4
-_1437:
+_1375:
 	.long	1
 	.long	_141
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
+	.long	-4
+	.long	0
+	.align	4
+_1372:
+	.long	_437
+	.long	342
+	.long	3
+_1458:
+	.asciz	"oldName"
+_1459:
+	.asciz	"newName"
+_1460:
+	.asciz	"oldPathName"
+_1461:
+	.asciz	"newPathName"
+_1462:
+	.asciz	"result"
+	.align	4
+_1457:
+	.long	1
+	.long	_142
+	.long	2
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_1272
+	.long	_1292
 	.long	_90
 	.long	-8
 	.long	2
-	.long	_1438
+	.long	_1458
 	.long	_113
 	.long	-12
 	.long	2
-	.long	_1439
+	.long	_1459
 	.long	_113
 	.long	-16
 	.long	2
-	.long	_1440
+	.long	_1460
 	.long	_113
 	.long	-20
 	.long	2
-	.long	_1441
+	.long	_1461
 	.long	_113
 	.long	-24
 	.long	2
-	.long	_1442
+	.long	_1462
 	.long	_90
 	.long	-28
 	.long	0
 	.align	4
-_1356:
-	.long	_433
-	.long	336
+_1376:
+	.long	_437
+	.long	346
 	.long	3
 	.align	4
-_1360:
-	.long	_433
-	.long	337
+_1380:
+	.long	_437
+	.long	347
 	.long	3
 	.align	4
-_1363:
+_1383:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1362:
-	.long	_433
-	.long	337
+_1382:
+	.long	_437
+	.long	347
 	.long	19
 	.align	4
-_1364:
-	.long	_433
-	.long	338
+_1384:
+	.long	_437
+	.long	348
 	.long	3
 	.align	4
-_1368:
-	.long	_433
-	.long	339
+_1388:
+	.long	_437
+	.long	349
 	.long	3
 	.align	4
 _44:
@@ -13911,39 +14072,9 @@ _43:
 	.long	1
 	.short	39
 	.align	4
-_1372:
-	.long	_433
-	.long	340
-	.long	3
-	.align	4
-_1375:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1374:
-	.long	_433
-	.long	340
-	.long	21
-	.align	4
-_1376:
-	.long	_433
-	.long	342
-	.long	3
-	.align	4
-_1382:
-	.long	_433
-	.long	343
-	.long	3
-	.align	4
-_1388:
-	.long	_433
-	.long	345
-	.long	3
-	.align	4
-_1390:
-	.long	_433
-	.long	347
+_1392:
+	.long	_437
+	.long	350
 	.long	3
 	.align	4
 _1395:
@@ -13951,215 +14082,245 @@ _1395:
 	.long	0
 	.long	0
 	.align	4
-_1392:
-	.long	_433
-	.long	348
-	.long	4
+_1394:
+	.long	_437
+	.long	350
+	.long	21
 	.align	4
 _1396:
-	.long	_433
-	.long	351
-	.long	3
-	.align	4
-_1397:
-	.long	_433
+	.long	_437
 	.long	352
 	.long	3
 	.align	4
-_1400:
+_1402:
+	.long	_437
+	.long	353
+	.long	3
+	.align	4
+_1408:
+	.long	_437
+	.long	355
+	.long	3
+	.align	4
+_1410:
+	.long	_437
+	.long	357
+	.long	3
+	.align	4
+_1415:
 	.long	3
 	.long	0
-	.long	0
-	.align	4
-_1399:
-	.long	_433
-	.long	352
-	.long	19
-	.align	4
-_1401:
-	.long	_433
-	.long	354
-	.long	3
-	.align	4
-_1404:
-	.long	_433
-	.long	356
-	.long	3
-_1436:
-	.asciz	"node"
-	.align	4
-_1435:
-	.long	3
-	.long	0
-	.long	2
-	.long	_1436
-	.long	_200
-	.long	-32
 	.long	0
 	.align	4
 _1412:
-	.long	_433
-	.long	357
-	.long	4
-	.align	4
-_1420:
-	.long	_433
+	.long	_437
 	.long	358
 	.long	4
 	.align	4
-_1434:
+_1416:
+	.long	_437
+	.long	361
+	.long	3
+	.align	4
+_1417:
+	.long	_437
+	.long	362
+	.long	3
+	.align	4
+_1420:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
+_1419:
+	.long	_437
+	.long	362
+	.long	19
+	.align	4
 _1421:
-	.long	_433
-	.long	359
+	.long	_437
+	.long	364
+	.long	3
+	.align	4
+_1424:
+	.long	_437
+	.long	366
+	.long	3
+_1456:
+	.asciz	"node"
+	.align	4
+_1455:
+	.long	3
+	.long	0
+	.long	2
+	.long	_1456
+	.long	_201
+	.long	-32
+	.long	0
+	.align	4
+_1432:
+	.long	_437
+	.long	367
+	.long	4
+	.align	4
+_1440:
+	.long	_437
+	.long	368
+	.long	4
+	.align	4
+_1454:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1441:
+	.long	_437
+	.long	369
 	.long	5
 	.align	4
-_1431:
-	.long	_433
-	.long	360
+_1451:
+	.long	_437
+	.long	370
 	.long	5
-_1500:
+_1520:
 	.asciz	"currentGadget"
-_1501:
+_1521:
 	.asciz	"pathExe"
-_1502:
+_1522:
 	.asciz	"openStr"
 	.align	4
-_1499:
+_1519:
 	.long	1
-	.long	_142
+	.long	_143
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_1500
+	.long	_1520
 	.long	_99
 	.long	-8
 	.long	2
-	.long	_1272
+	.long	_1292
 	.long	_90
 	.long	-12
 	.long	2
-	.long	_195
+	.long	_196
 	.long	_113
 	.long	-16
 	.long	2
-	.long	_1501
+	.long	_1521
 	.long	_113
 	.long	-20
 	.long	2
-	.long	_1502
+	.long	_1522
 	.long	_113
 	.long	-24
 	.long	0
 	.align	4
-_1443:
-	.long	_433
-	.long	367
-	.long	3
-	.align	4
-_1447:
-	.long	_433
-	.long	368
-	.long	3
-	.align	4
-_1450:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1449:
-	.long	_433
-	.long	368
-	.long	29
-	.align	4
-_1451:
-	.long	_433
-	.long	369
-	.long	3
-	.align	4
-_1460:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1459:
-	.long	_433
-	.long	369
-	.long	78
-	.align	4
-_1461:
-	.long	_433
-	.long	371
-	.long	3
-	.align	4
 _1463:
-	.long	_433
-	.long	372
+	.long	_437
+	.long	377
 	.long	3
-	.align	4
-_1466:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1465:
-	.long	_433
-	.long	372
-	.long	19
 	.align	4
 _1467:
-	.long	_433
-	.long	373
+	.long	_437
+	.long	378
 	.long	3
+	.align	4
+_1470:
+	.long	3
+	.long	0
+	.long	0
 	.align	4
 _1469:
-	.long	_433
-	.long	375
-	.long	3
+	.long	_437
+	.long	378
+	.long	29
 	.align	4
 _1471:
-	.long	_433
-	.long	376
-	.long	3
-	.align	4
-_1482:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1475:
-	.long	_433
-	.long	377
-	.long	4
-	.align	4
-_1494:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1484:
-	.long	_433
-	.long	378
-	.long	8
-	.align	4
-_1493:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1488:
-	.long	_433
+	.long	_437
 	.long	379
-	.long	4
+	.long	3
+	.align	4
+_1480:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1479:
+	.long	_437
+	.long	379
+	.long	78
+	.align	4
+_1481:
+	.long	_437
+	.long	381
+	.long	3
+	.align	4
+_1483:
+	.long	_437
+	.long	382
+	.long	3
+	.align	4
+_1486:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1485:
+	.long	_437
+	.long	382
+	.long	19
+	.align	4
+_1487:
+	.long	_437
+	.long	383
+	.long	3
+	.align	4
+_1489:
+	.long	_437
+	.long	385
+	.long	3
+	.align	4
+_1491:
+	.long	_437
+	.long	386
+	.long	3
+	.align	4
+_1502:
+	.long	3
+	.long	0
+	.long	0
 	.align	4
 _1495:
-	.long	_433
-	.long	382
+	.long	_437
+	.long	387
+	.long	4
+	.align	4
+_1514:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1504:
+	.long	_437
+	.long	388
+	.long	8
+	.align	4
+_1513:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1508:
+	.long	_437
+	.long	389
+	.long	4
+	.align	4
+_1515:
+	.long	_437
+	.long	392
 	.long	3
 	.align	4
 _48:
@@ -14168,164 +14329,164 @@ _48:
 	.long	5
 	.short	111,112,101,110,32
 	.align	4
-_1497:
-	.long	_433
-	.long	390
+_1517:
+	.long	_437
+	.long	400
 	.long	4
 	.align	4
-_1498:
+_1518:
 	.long	_bbStringClass
 	.long	2147483647
 	.long	1
 	.short	34
 	.align	4
-_1537:
+_1557:
 	.long	1
-	.long	_143
+	.long	_144
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_1256
+	.long	_1276
 	.long	_99
 	.long	-8
 	.long	0
 	.align	4
-_1503:
-	.long	_433
-	.long	397
-	.long	3
-	.align	4
-_1505:
-	.long	_433
-	.long	398
-	.long	3
-	.align	4
-_1508:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1507:
-	.long	_433
-	.long	398
-	.long	31
-	.align	4
-_1509:
-	.long	_433
-	.long	399
-	.long	3
-	.align	4
-_1536:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1511:
-	.long	_433
-	.long	400
-	.long	4
-_1535:
-	.asciz	"aWindow"
-	.align	4
-_1534:
-	.long	3
-	.long	0
-	.long	2
-	.long	_1535
-	.long	_1252
-	.long	-12
-	.long	0
-	.align	4
 _1523:
-	.long	_433
-	.long	401
-	.long	5
+	.long	_437
+	.long	407
+	.long	3
 	.align	4
-_1533:
+_1525:
+	.long	_437
+	.long	408
+	.long	3
+	.align	4
+_1528:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
 _1527:
-	.long	_433
-	.long	402
+	.long	_437
+	.long	408
+	.long	31
+	.align	4
+_1529:
+	.long	_437
+	.long	409
+	.long	3
+	.align	4
+_1556:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1531:
+	.long	_437
+	.long	410
+	.long	4
+_1555:
+	.asciz	"aWindow"
+	.align	4
+_1554:
+	.long	3
+	.long	0
+	.long	2
+	.long	_1555
+	.long	_1272
+	.long	-12
+	.long	0
+	.align	4
+_1543:
+	.long	_437
+	.long	411
+	.long	5
+	.align	4
+_1553:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1547:
+	.long	_437
+	.long	412
 	.long	6
 	.align	4
-_1532:
-	.long	_433
-	.long	403
+_1552:
+	.long	_437
+	.long	413
 	.long	6
-_1607:
+_1627:
 	.asciz	"item"
-_1608:
+_1628:
 	.asciz	"deleted"
 	.align	4
-_1606:
+_1626:
 	.long	1
-	.long	_144
+	.long	_145
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_1607
+	.long	_1627
 	.long	_113
 	.long	-8
 	.long	2
-	.long	_1345
+	.long	_1365
 	.long	_113
 	.long	-12
 	.long	2
-	.long	_1608
+	.long	_1628
 	.long	_90
 	.long	-16
 	.long	0
 	.align	4
-_1538:
-	.long	_433
-	.long	411
+_1558:
+	.long	_437
+	.long	421
 	.long	3
 	.align	4
-_1546:
-	.long	_433
-	.long	413
+_1566:
+	.long	_437
+	.long	423
 	.long	3
 	.align	4
-_1548:
-	.long	_433
-	.long	414
+_1568:
+	.long	_437
+	.long	424
 	.long	3
 	.align	4
-_1551:
+_1571:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1550:
-	.long	_433
-	.long	415
+_1570:
+	.long	_437
+	.long	425
 	.long	4
 	.align	4
-_1560:
+_1580:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1553:
-	.long	_433
-	.long	416
+_1573:
+	.long	_437
+	.long	426
 	.long	8
 	.align	4
-_1559:
+_1579:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1555:
-	.long	_433
-	.long	417
+_1575:
+	.long	_437
+	.long	427
 	.long	4
 	.align	4
 _52:
@@ -14341,778 +14502,778 @@ _53:
 	.short	32,102,111,108,100,101,114,32,97,110,100,32,105,116,115,32
 	.short	99,111,110,116,101,110,116,115,63
 	.align	4
-_1558:
+_1578:
 	.long	3
 	.long	0
 	.long	0
-	.align	4
-_1557:
-	.long	_433
-	.long	418
-	.long	5
-	.align	4
-_1561:
-	.long	_433
-	.long	422
-	.long	3
-	.align	4
-_1602:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1563:
-	.long	_433
-	.long	423
-	.long	4
-	.align	4
-_1600:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1571:
-	.long	_433
-	.long	424
-	.long	5
-	.align	4
-_1576:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1573:
-	.long	_433
-	.long	424
-	.long	44
 	.align	4
 _1577:
-	.long	_433
-	.long	425
+	.long	_437
+	.long	428
 	.long	5
 	.align	4
-_1599:
+_1581:
+	.long	_437
+	.long	432
+	.long	3
+	.align	4
+_1622:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1587:
-	.long	_433
-	.long	426
+_1583:
+	.long	_437
+	.long	433
+	.long	4
+	.align	4
+_1620:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1591:
+	.long	_437
+	.long	434
+	.long	5
+	.align	4
+_1596:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1593:
+	.long	_437
+	.long	434
+	.long	44
+	.align	4
+_1597:
+	.long	_437
+	.long	435
+	.long	5
+	.align	4
+_1619:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1607:
+	.long	_437
+	.long	436
 	.long	6
 	.align	4
-_1601:
-	.long	_433
-	.long	429
+_1621:
+	.long	_437
+	.long	439
 	.long	4
 	.align	4
-_1605:
+_1625:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1604:
-	.long	_433
-	.long	431
+_1624:
+	.long	_437
+	.long	441
 	.long	4
 	.align	4
-_1694:
+_1714:
 	.long	1
-	.long	_145
+	.long	_146
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_1256
+	.long	_1276
 	.long	_99
 	.long	-8
 	.long	0
 	.align	4
-_1609:
-	.long	_433
-	.long	437
-	.long	3
-	.align	4
-_1611:
-	.long	_433
-	.long	438
-	.long	3
-	.align	4
-_1616:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1613:
-	.long	_433
-	.long	438
-	.long	31
-	.align	4
-_1617:
-	.long	_433
-	.long	439
-	.long	3
-	.align	4
-_1624:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1621:
-	.long	_433
-	.long	439
-	.long	117
-	.align	4
-_1625:
-	.long	_433
-	.long	441
+_1629:
+	.long	_437
+	.long	447
 	.long	3
 	.align	4
 _1631:
+	.long	_437
+	.long	448
 	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1630:
-	.long	_433
-	.long	443
-	.long	5
-_1693:
-	.asciz	"nextIndex"
-	.align	4
-_1692:
-	.long	3
-	.long	0
-	.long	2
-	.long	_1272
-	.long	_90
-	.long	-12
-	.long	2
-	.long	_1693
-	.long	_90
-	.long	-16
-	.long	2
-	.long	_195
-	.long	_113
-	.long	-20
-	.long	0
-	.align	4
-_1632:
-	.long	_433
-	.long	446
-	.long	5
 	.align	4
 _1636:
-	.long	_433
-	.long	447
-	.long	5
-	.align	4
-_1639:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1638:
-	.long	_433
-	.long	447
-	.long	21
+_1633:
+	.long	_437
+	.long	448
+	.long	31
 	.align	4
-_1640:
-	.long	_433
+_1637:
+	.long	_437
 	.long	449
-	.long	5
-	.align	4
-_1642:
-	.long	_433
-	.long	451
-	.long	5
-	.align	4
-_1645:
 	.long	3
-	.long	0
-	.long	0
 	.align	4
 _1644:
-	.long	_433
-	.long	452
-	.long	6
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1641:
+	.long	_437
+	.long	449
+	.long	117
+	.align	4
+_1645:
+	.long	_437
+	.long	451
+	.long	3
 	.align	4
 _1651:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1647:
-	.long	_433
-	.long	453
-	.long	10
-	.align	4
 _1650:
+	.long	_437
+	.long	453
+	.long	5
+_1713:
+	.asciz	"nextIndex"
+	.align	4
+_1712:
 	.long	3
 	.long	0
+	.long	2
+	.long	_1292
+	.long	_90
+	.long	-12
+	.long	2
+	.long	_1713
+	.long	_90
+	.long	-16
+	.long	2
+	.long	_196
+	.long	_113
+	.long	-20
 	.long	0
 	.align	4
-_1649:
-	.long	_433
-	.long	454
-	.long	6
-	.align	4
 _1652:
-	.long	_433
-	.long	457
+	.long	_437
+	.long	456
 	.long	5
 	.align	4
 _1656:
-	.long	_433
-	.long	458
+	.long	_437
+	.long	457
 	.long	5
 	.align	4
-_1661:
+_1659:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1660:
-	.long	_433
-	.long	458
-	.long	35
+_1658:
+	.long	_437
+	.long	457
+	.long	21
 	.align	4
-_1662:
-	.long	_433
+_1660:
+	.long	_437
 	.long	459
 	.long	5
 	.align	4
-_1665:
-	.long	_433
-	.long	460
+_1662:
+	.long	_437
+	.long	461
 	.long	5
 	.align	4
-_1675:
+_1665:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1664:
+	.long	_437
+	.long	462
+	.long	6
+	.align	4
+_1671:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1667:
+	.long	_437
+	.long	463
+	.long	10
+	.align	4
+_1670:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
 _1669:
-	.long	_433
-	.long	461
+	.long	_437
+	.long	464
 	.long	6
 	.align	4
 _1672:
-	.long	_433
-	.long	462
-	.long	6
+	.long	_437
+	.long	467
+	.long	5
 	.align	4
 _1676:
-	.long	_433
-	.long	464
+	.long	_437
+	.long	468
 	.long	5
 	.align	4
-_1689:
-	.long	_433
-	.long	465
-	.long	5
-	.align	4
-_1710:
-	.long	1
-	.long	_146
-	.long	2
-	.long	_467
-	.long	_442
-	.long	-4
-	.long	2
-	.long	_1256
-	.long	_99
-	.long	-8
+_1681:
+	.long	3
 	.long	0
+	.long	0
+	.align	4
+_1680:
+	.long	_437
+	.long	468
+	.long	35
+	.align	4
+_1682:
+	.long	_437
+	.long	469
+	.long	5
+	.align	4
+_1685:
+	.long	_437
+	.long	470
+	.long	5
 	.align	4
 _1695:
-	.long	_433
-	.long	470
-	.long	3
-	.align	4
-_1697:
-	.long	_433
-	.long	471
-	.long	3
-	.align	4
-_1700:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1699:
-	.long	_433
+_1689:
+	.long	_437
 	.long	471
-	.long	31
+	.long	6
 	.align	4
-_1701:
-	.long	_433
+_1692:
+	.long	_437
 	.long	472
-	.long	3
+	.long	6
 	.align	4
-_1707:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1706:
-	.long	_433
+_1696:
+	.long	_437
 	.long	474
 	.long	5
 	.align	4
 _1709:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1708:
-	.long	_433
-	.long	476
-	.long	5
-	.align	4
-_1770:
-	.long	1
-	.long	_147
-	.long	2
-	.long	_467
-	.long	_442
-	.long	-4
-	.long	2
-	.long	_1256
-	.long	_99
-	.long	-8
-	.long	0
-	.align	4
-_1711:
-	.long	_433
-	.long	481
-	.long	3
-	.align	4
-_1713:
-	.long	_433
-	.long	482
-	.long	3
-	.align	4
-_1718:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1715:
-	.long	_433
-	.long	482
-	.long	31
-	.align	4
-_1719:
-	.long	_433
-	.long	483
-	.long	3
-	.align	4
-_1725:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1724:
-	.long	_433
-	.long	485
-	.long	5
-_1769:
-	.asciz	"tempGadget"
-	.align	4
-_1768:
-	.long	3
-	.long	0
-	.long	2
-	.long	_1607
-	.long	_90
-	.long	-12
-	.long	2
-	.long	_1769
-	.long	_99
-	.long	-16
-	.long	0
-	.align	4
-_1726:
-	.long	_433
-	.long	487
+	.long	_437
+	.long	475
 	.long	5
 	.align	4
 _1730:
-	.long	_433
-	.long	488
-	.long	5
-	.align	4
-_1733:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1732:
-	.long	_433
-	.long	488
-	.long	20
-	.align	4
-_1734:
-	.long	_433
-	.long	489
-	.long	5
-	.align	4
-_1736:
-	.long	_433
-	.long	490
-	.long	5
-	.align	4
-_1747:
-	.long	_433
-	.long	491
-	.long	5
-	.align	4
-_1750:
-	.long	_433
-	.long	492
-	.long	5
-	.align	4
-_1753:
-	.long	_433
-	.long	493
-	.long	5
-	.align	4
-_1763:
-	.long	_433
-	.long	494
-	.long	5
-	.align	4
-_1764:
-	.long	_433
-	.long	495
-	.long	5
-	.align	4
-_1829:
 	.long	1
-	.long	_148
+	.long	_147
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_1256
+	.long	_1276
 	.long	_99
 	.long	-8
 	.long	0
 	.align	4
-_1771:
-	.long	_433
-	.long	501
+_1715:
+	.long	_437
+	.long	480
 	.long	3
 	.align	4
-_1773:
-	.long	_433
-	.long	502
+_1717:
+	.long	_437
+	.long	481
 	.long	3
 	.align	4
-_1778:
+_1720:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1775:
-	.long	_433
-	.long	502
+_1719:
+	.long	_437
+	.long	481
 	.long	31
 	.align	4
-_1779:
-	.long	_433
-	.long	503
+_1721:
+	.long	_437
+	.long	482
 	.long	3
 	.align	4
-_1785:
+_1727:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1784:
-	.long	_433
-	.long	505
+_1726:
+	.long	_437
+	.long	484
 	.long	5
 	.align	4
-_1828:
+_1729:
 	.long	3
 	.long	0
-	.long	2
-	.long	_1607
-	.long	_90
-	.long	-12
-	.long	2
-	.long	_1769
-	.long	_99
-	.long	-16
 	.long	0
 	.align	4
-_1786:
-	.long	_433
-	.long	507
+_1728:
+	.long	_437
+	.long	486
 	.long	5
 	.align	4
 _1790:
-	.long	_433
-	.long	508
-	.long	5
-	.align	4
-_1793:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1792:
-	.long	_433
-	.long	508
-	.long	20
-	.align	4
-_1794:
-	.long	_433
-	.long	509
-	.long	5
-	.align	4
-_1796:
-	.long	_433
-	.long	510
-	.long	5
-	.align	4
-_1807:
-	.long	_433
-	.long	511
-	.long	5
-	.align	4
-_1810:
-	.long	_433
-	.long	512
-	.long	5
-	.align	4
-_1813:
-	.long	_433
-	.long	513
-	.long	5
-	.align	4
-_1823:
-	.long	_433
-	.long	514
-	.long	5
-	.align	4
-_1824:
-	.long	_433
-	.long	515
-	.long	5
-	.align	4
-_1960:
 	.long	1
-	.long	_149
+	.long	_148
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_1256
+	.long	_1276
 	.long	_99
 	.long	-8
 	.long	0
 	.align	4
-_1830:
-	.long	_433
-	.long	520
+_1731:
+	.long	_437
+	.long	491
 	.long	3
 	.align	4
-_1832:
-	.long	_433
-	.long	521
+_1733:
+	.long	_437
+	.long	492
 	.long	3
 	.align	4
-_1837:
+_1738:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1834:
-	.long	_433
-	.long	521
+_1735:
+	.long	_437
+	.long	492
 	.long	31
 	.align	4
-_1838:
-	.long	_433
-	.long	523
+_1739:
+	.long	_437
+	.long	493
 	.long	3
 	.align	4
-_1845:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1842:
-	.long	_433
-	.long	523
-	.long	117
-	.align	4
-_1846:
-	.long	_433
-	.long	525
-	.long	3
-	.align	4
-_1852:
+_1745:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1851:
-	.long	_433
-	.long	527
+_1744:
+	.long	_437
+	.long	495
 	.long	5
-_1959:
-	.asciz	"operationState"
+_1789:
+	.asciz	"tempGadget"
 	.align	4
-_1958:
+_1788:
 	.long	3
 	.long	0
 	.long	2
-	.long	_1959
+	.long	_1627
+	.long	_90
+	.long	-12
+	.long	2
+	.long	_1789
+	.long	_99
+	.long	-16
+	.long	0
+	.align	4
+_1746:
+	.long	_437
+	.long	497
+	.long	5
+	.align	4
+_1750:
+	.long	_437
+	.long	498
+	.long	5
+	.align	4
+_1753:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1752:
+	.long	_437
+	.long	498
+	.long	20
+	.align	4
+_1754:
+	.long	_437
+	.long	499
+	.long	5
+	.align	4
+_1756:
+	.long	_437
+	.long	500
+	.long	5
+	.align	4
+_1767:
+	.long	_437
+	.long	501
+	.long	5
+	.align	4
+_1770:
+	.long	_437
+	.long	502
+	.long	5
+	.align	4
+_1773:
+	.long	_437
+	.long	503
+	.long	5
+	.align	4
+_1783:
+	.long	_437
+	.long	504
+	.long	5
+	.align	4
+_1784:
+	.long	_437
+	.long	505
+	.long	5
+	.align	4
+_1849:
+	.long	1
+	.long	_149
+	.long	2
+	.long	_471
+	.long	_446
+	.long	-4
+	.long	2
+	.long	_1276
+	.long	_99
+	.long	-8
+	.long	0
+	.align	4
+_1791:
+	.long	_437
+	.long	511
+	.long	3
+	.align	4
+_1793:
+	.long	_437
+	.long	512
+	.long	3
+	.align	4
+_1798:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1795:
+	.long	_437
+	.long	512
+	.long	31
+	.align	4
+_1799:
+	.long	_437
+	.long	513
+	.long	3
+	.align	4
+_1805:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1804:
+	.long	_437
+	.long	515
+	.long	5
+	.align	4
+_1848:
+	.long	3
+	.long	0
+	.long	2
+	.long	_1627
+	.long	_90
+	.long	-12
+	.long	2
+	.long	_1789
+	.long	_99
+	.long	-16
+	.long	0
+	.align	4
+_1806:
+	.long	_437
+	.long	517
+	.long	5
+	.align	4
+_1810:
+	.long	_437
+	.long	518
+	.long	5
+	.align	4
+_1813:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1812:
+	.long	_437
+	.long	518
+	.long	20
+	.align	4
+_1814:
+	.long	_437
+	.long	519
+	.long	5
+	.align	4
+_1816:
+	.long	_437
+	.long	520
+	.long	5
+	.align	4
+_1827:
+	.long	_437
+	.long	521
+	.long	5
+	.align	4
+_1830:
+	.long	_437
+	.long	522
+	.long	5
+	.align	4
+_1833:
+	.long	_437
+	.long	523
+	.long	5
+	.align	4
+_1843:
+	.long	_437
+	.long	524
+	.long	5
+	.align	4
+_1844:
+	.long	_437
+	.long	525
+	.long	5
+	.align	4
+_1980:
+	.long	1
+	.long	_150
+	.long	2
+	.long	_471
+	.long	_446
+	.long	-4
+	.long	2
+	.long	_1276
+	.long	_99
+	.long	-8
+	.long	0
+	.align	4
+_1850:
+	.long	_437
+	.long	530
+	.long	3
+	.align	4
+_1852:
+	.long	_437
+	.long	531
+	.long	3
+	.align	4
+_1857:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1854:
+	.long	_437
+	.long	531
+	.long	31
+	.align	4
+_1858:
+	.long	_437
+	.long	533
+	.long	3
+	.align	4
+_1865:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1862:
+	.long	_437
+	.long	533
+	.long	117
+	.align	4
+_1866:
+	.long	_437
+	.long	535
+	.long	3
+	.align	4
+_1872:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1871:
+	.long	_437
+	.long	537
+	.long	5
+_1979:
+	.asciz	"operationState"
+	.align	4
+_1978:
+	.long	3
+	.long	0
+	.long	2
+	.long	_1979
 	.long	_90
 	.long	-12
 	.long	0
 	.align	4
-_1853:
-	.long	_433
-	.long	529
-	.long	5
-	.align	4
-_1858:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1857:
-	.long	_433
-	.long	529
-	.long	30
-	.align	4
-_1859:
-	.long	_433
-	.long	530
-	.long	5
-	.align	4
-_1864:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1863:
-	.long	_433
-	.long	530
-	.long	37
-	.align	4
-_1865:
-	.long	_433
-	.long	533
-	.long	5
-_1906:
-	.asciz	"fileName"
-	.align	4
-_1905:
-	.long	3
-	.long	0
-	.long	2
-	.long	_1906
-	.long	_113
-	.long	-16
-	.long	0
-	.align	4
-_1869:
-	.long	_433
-	.long	534
-	.long	6
-	.align	4
 _1873:
-	.long	_433
-	.long	535
-	.long	6
+	.long	_437
+	.long	539
+	.long	5
 	.align	4
-_1880:
+_1878:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
 _1877:
-	.long	_433
-	.long	535
-	.long	49
+	.long	_437
+	.long	539
+	.long	30
 	.align	4
-_1881:
-	.long	_433
-	.long	537
+_1879:
+	.long	_437
+	.long	540
+	.long	5
+	.align	4
+_1884:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1883:
+	.long	_437
+	.long	540
+	.long	37
+	.align	4
+_1885:
+	.long	_437
+	.long	543
+	.long	5
+_1926:
+	.asciz	"fileName"
+	.align	4
+_1925:
+	.long	3
+	.long	0
+	.long	2
+	.long	_1926
+	.long	_113
+	.long	-16
+	.long	0
+	.align	4
+_1889:
+	.long	_437
+	.long	544
 	.long	6
 	.align	4
-_1904:
+_1893:
+	.long	_437
+	.long	545
+	.long	6
+	.align	4
+_1900:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1891:
-	.long	_433
-	.long	538
-	.long	7
+_1897:
+	.long	_437
+	.long	545
+	.long	49
 	.align	4
-_1895:
-	.long	_433
-	.long	539
-	.long	7
-	.align	4
-_1903:
-	.long	_433
-	.long	540
-	.long	7
-	.align	4
-_1907:
-	.long	_433
-	.long	544
-	.long	5
-	.align	4
-_1909:
-	.long	_433
-	.long	546
-	.long	5
-	.align	4
-_1944:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1913:
-	.long	_433
+_1901:
+	.long	_437
 	.long	547
 	.long	6
 	.align	4
-_1933:
+_1924:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1921:
-	.long	_433
+_1911:
+	.long	_437
 	.long	548
 	.long	7
 	.align	4
-_1929:
-	.long	_433
+_1915:
+	.long	_437
 	.long	549
 	.long	7
 	.align	4
-_1943:
+_1923:
+	.long	_437
+	.long	550
+	.long	7
+	.align	4
+_1927:
+	.long	_437
+	.long	554
+	.long	5
+	.align	4
+_1929:
+	.long	_437
+	.long	556
+	.long	5
+	.align	4
+_1964:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1935:
-	.long	_433
-	.long	551
+_1933:
+	.long	_437
+	.long	557
+	.long	6
+	.align	4
+_1953:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1941:
+	.long	_437
+	.long	558
+	.long	7
+	.align	4
+_1949:
+	.long	_437
+	.long	559
+	.long	7
+	.align	4
+_1963:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_1955:
+	.long	_437
+	.long	561
 	.long	7
 	.align	4
 _54:
@@ -15122,284 +15283,284 @@ _54:
 	.short	67,111,117,108,100,32,110,111,116,32,112,101,114,102,111,114
 	.short	109,32,111,112,101,114,97,116,105,111,110,46
 	.align	4
-_1954:
+_1974:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_1946:
-	.long	_433
-	.long	554
+_1966:
+	.long	_437
+	.long	564
 	.long	6
 	.align	4
-_1955:
-	.long	_433
-	.long	558
+_1975:
+	.long	_437
+	.long	568
 	.long	5
 	.align	4
-_2047:
+_2067:
 	.long	1
-	.long	_150
+	.long	_151
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_1906
+	.long	_1926
 	.long	_113
 	.long	-8
 	.long	2
-	.long	_184
+	.long	_185
 	.long	_113
 	.long	-12
 	.long	2
-	.long	_1959
+	.long	_1979
 	.long	_90
 	.long	-16
 	.long	0
 	.align	4
-_1961:
-	.long	_433
-	.long	564
-	.long	3
-	.align	4
-_1965:
-	.long	_433
-	.long	565
-	.long	3
-	.align	4
-_1972:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1969:
-	.long	_433
-	.long	565
-	.long	46
-	.align	4
-_1973:
-	.long	_433
-	.long	566
-	.long	3
-	.align	4
 _1981:
-	.long	_433
-	.long	569
-	.long	3
-	.align	4
-_2001:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_1985:
-	.long	_433
-	.long	570
-	.long	4
-	.align	4
-_1994:
-	.long	_433
-	.long	571
-	.long	4
-	.align	4
-_2002:
-	.long	_433
+	.long	_437
 	.long	574
 	.long	3
 	.align	4
-_2004:
-	.long	_433
+_1985:
+	.long	_437
 	.long	575
 	.long	3
 	.align	4
-_2015:
+_1992:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2008:
-	.long	_433
-	.long	576
-	.long	4
+_1989:
+	.long	_437
+	.long	575
+	.long	46
 	.align	4
-_2011:
-	.long	_433
-	.long	577
+_1993:
+	.long	_437
+	.long	576
+	.long	3
+	.align	4
+_2001:
+	.long	_437
+	.long	579
+	.long	3
+	.align	4
+_2021:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2005:
+	.long	_437
+	.long	580
 	.long	4
 	.align	4
 _2014:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2013:
-	.long	_433
-	.long	577
-	.long	28
-	.align	4
-_2029:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2017:
-	.long	_433
-	.long	578
-	.long	8
-	.align	4
-_2028:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2021:
-	.long	_433
-	.long	579
+	.long	_437
+	.long	581
 	.long	4
+	.align	4
+_2022:
+	.long	_437
+	.long	584
+	.long	3
 	.align	4
 _2024:
-	.long	_433
-	.long	580
-	.long	4
-	.align	4
-_2027:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2026:
-	.long	_433
-	.long	580
-	.long	28
-	.align	4
-_2030:
-	.long	_433
-	.long	583
-	.long	3
-	.align	4
-_2045:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2032:
-	.long	_433
-	.long	584
-	.long	4
-	.align	4
-_2039:
-	.long	_433
+	.long	_437
 	.long	585
-	.long	4
+	.long	3
 	.align	4
-_2042:
-	.long	_433
+_2035:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2028:
+	.long	_437
 	.long	586
 	.long	4
 	.align	4
-_2046:
-	.long	_433
-	.long	589
-	.long	3
+_2031:
+	.long	_437
+	.long	587
+	.long	4
 	.align	4
-_2066:
-	.long	1
-	.long	_151
-	.long	2
-	.long	_467
-	.long	_442
-	.long	-4
+_2034:
+	.long	3
 	.long	0
+	.long	0
+	.align	4
+_2033:
+	.long	_437
+	.long	587
+	.long	28
+	.align	4
+_2049:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2037:
+	.long	_437
+	.long	588
+	.long	8
 	.align	4
 _2048:
-	.long	_433
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2041:
+	.long	_437
+	.long	589
+	.long	4
+	.align	4
+_2044:
+	.long	_437
+	.long	590
+	.long	4
+	.align	4
+_2047:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2046:
+	.long	_437
+	.long	590
+	.long	28
+	.align	4
+_2050:
+	.long	_437
 	.long	593
 	.long	3
-	.align	4
-_2055:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2052:
-	.long	_433
-	.long	594
-	.long	4
 	.align	4
 _2065:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2057:
-	.long	_433
-	.long	595
-	.long	8
+_2052:
+	.long	_437
+	.long	594
+	.long	4
 	.align	4
-_2064:
+_2059:
+	.long	_437
+	.long	595
+	.long	4
+	.align	4
+_2062:
+	.long	_437
+	.long	596
+	.long	4
+	.align	4
+_2066:
+	.long	_437
+	.long	599
+	.long	3
+	.align	4
+_2086:
+	.long	1
+	.long	_152
+	.long	2
+	.long	_471
+	.long	_446
+	.long	-4
+	.long	0
+	.align	4
+_2068:
+	.long	_437
+	.long	603
+	.long	3
+	.align	4
+_2075:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2061:
-	.long	_433
-	.long	596
+_2072:
+	.long	_437
+	.long	604
 	.long	4
-_2079:
+	.align	4
+_2085:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2077:
+	.long	_437
+	.long	605
+	.long	8
+	.align	4
+_2084:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2081:
+	.long	_437
+	.long	606
+	.long	4
+_2099:
 	.asciz	"tempName"
 	.align	4
-_2078:
+_2098:
 	.long	1
-	.long	_152
+	.long	_153
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
-	.long	2
-	.long	_194
-	.long	_113
-	.long	-8
 	.long	2
 	.long	_195
 	.long	_113
+	.long	-8
+	.long	2
+	.long	_196
+	.long	_113
 	.long	-12
 	.long	2
-	.long	_2079
+	.long	_2099
 	.long	_113
 	.long	-16
 	.long	2
-	.long	_184
+	.long	_185
 	.long	_113
 	.long	-20
 	.long	0
 	.align	4
-_2067:
-	.long	_433
-	.long	602
+_2087:
+	.long	_437
+	.long	612
 	.long	3
 	.align	4
-_2069:
-	.long	_433
-	.long	603
+_2089:
+	.long	_437
+	.long	613
 	.long	3
 	.align	4
-_2071:
-	.long	_433
-	.long	604
+_2091:
+	.long	_437
+	.long	614
 	.long	3
 	.align	4
-_2076:
+_2096:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2074:
-	.long	_433
-	.long	605
+_2094:
+	.long	_437
+	.long	615
 	.long	4
 	.align	8
-_3848:
+_3888:
 	.long	0x0,0x40590000
 	.align	4
 _58:
@@ -15414,261 +15575,241 @@ _59:
 	.long	1
 	.short	95
 	.align	4
-_2075:
-	.long	_433
-	.long	606
+_2095:
+	.long	_437
+	.long	616
 	.long	4
 	.align	4
-_2077:
-	.long	_433
-	.long	608
-	.long	3
-	.align	4
-_2089:
-	.long	1
-	.long	_154
-	.long	2
-	.long	_467
-	.long	_442
-	.long	-4
-	.long	0
-	.align	4
-_2080:
-	.long	_433
-	.long	613
-	.long	3
-	.align	4
-_2085:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2084:
-	.long	_433
-	.long	613
-	.long	42
-	.align	4
-_2086:
-	.long	_433
-	.long	614
-	.long	3
-	.align	4
-_2093:
-	.long	1
-	.long	_155
-	.long	2
-	.long	_467
-	.long	_442
-	.long	-4
-	.long	0
-	.align	4
-_2090:
-	.long	_433
+_2097:
+	.long	_437
 	.long	618
 	.long	3
 	.align	4
-_2253:
+_2109:
+	.long	1
+	.long	_155
+	.long	2
+	.long	_471
+	.long	_446
+	.long	-4
+	.long	0
+	.align	4
+_2100:
+	.long	_437
+	.long	623
+	.long	3
+	.align	4
+_2105:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2104:
+	.long	_437
+	.long	623
+	.long	42
+	.align	4
+_2106:
+	.long	_437
+	.long	624
+	.long	3
+	.align	4
+_2113:
 	.long	1
 	.long	_156
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
+	.long	-4
+	.long	0
+	.align	4
+_2110:
+	.long	_437
+	.long	628
+	.long	3
+	.align	4
+_2273:
+	.long	1
+	.long	_157
+	.long	2
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_1272
+	.long	_1292
 	.long	_90
 	.long	-8
 	.long	2
-	.long	_194
+	.long	_195
 	.long	_113
 	.long	-12
 	.long	0
 	.align	4
-_2094:
-	.long	_433
-	.long	622
+_2114:
+	.long	_437
+	.long	632
 	.long	3
 	.align	4
-_2101:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2100:
-	.long	_433
-	.long	622
-	.long	71
-	.align	4
-_2102:
-	.long	_433
-	.long	624
-	.long	3
-	.align	4
-_2106:
-	.long	_433
-	.long	625
-	.long	3
-	.align	4
-_2109:
+_2121:
 	.long	3
 	.long	0
 	.long	0
-	.align	4
-_2108:
-	.long	_433
-	.long	625
-	.long	19
-	.align	4
-_2110:
-	.long	_433
-	.long	627
-	.long	3
 	.align	4
 _2120:
-	.long	_433
-	.long	629
-	.long	3
-	.align	4
-_2149:
-	.long	3
-	.long	0
-	.long	0
+	.long	_437
+	.long	632
+	.long	71
 	.align	4
 _2122:
-	.long	_433
-	.long	630
-	.long	4
+	.long	_437
+	.long	634
+	.long	3
 	.align	4
-_2125:
-	.long	_433
-	.long	631
-	.long	4
+_2126:
+	.long	_437
+	.long	635
+	.long	3
+	.align	4
+_2129:
+	.long	3
+	.long	0
+	.long	0
 	.align	4
 _2128:
-	.long	_433
-	.long	632
-	.long	4
+	.long	_437
+	.long	635
+	.long	19
 	.align	4
-_2133:
-	.long	_433
-	.long	633
-	.long	4
+_2130:
+	.long	_437
+	.long	637
+	.long	3
 	.align	4
-_2138:
-	.long	_433
-	.long	634
-	.long	4
+_2140:
+	.long	_437
+	.long	639
+	.long	3
 	.align	4
-_2145:
+_2169:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
 _2142:
-	.long	_433
-	.long	634
-	.long	38
-	.align	4
-_2146:
-	.long	_433
-	.long	635
+	.long	_437
+	.long	640
 	.long	4
 	.align	4
-_2252:
-	.long	3
-	.long	0
-	.long	0
+_2145:
+	.long	_437
+	.long	641
+	.long	4
 	.align	4
-_2151:
-	.long	_433
-	.long	636
-	.long	8
-_2249:
-	.asciz	"found"
-_2250:
-	.asciz	"rightNodePathName"
-_2251:
-	.asciz	"newRightNode"
-	.align	4
-_2248:
-	.long	3
-	.long	0
-	.long	2
-	.long	_2249
-	.long	_90
-	.long	-16
-	.long	2
-	.long	_2250
-	.long	_113
-	.long	-20
-	.long	2
-	.long	_2251
-	.long	_200
-	.long	-24
-	.long	0
+_2148:
+	.long	_437
+	.long	642
+	.long	4
 	.align	4
 _2153:
-	.long	_433
-	.long	637
+	.long	_437
+	.long	643
 	.long	4
 	.align	4
-_2155:
-	.long	_433
-	.long	638
+_2158:
+	.long	_437
+	.long	644
 	.long	4
 	.align	4
-_2174:
+_2165:
 	.long	3
 	.long	0
-	.long	2
-	.long	_1535
-	.long	_1252
-	.long	-28
 	.long	0
 	.align	4
-_2167:
-	.long	_433
-	.long	639
-	.long	5
+_2162:
+	.long	_437
+	.long	644
+	.long	38
 	.align	4
-_2173:
+_2166:
+	.long	_437
+	.long	645
+	.long	4
+	.align	4
+_2272:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
 _2171:
-	.long	_433
-	.long	640
-	.long	6
+	.long	_437
+	.long	646
+	.long	8
+_2269:
+	.asciz	"found"
+_2270:
+	.asciz	"rightNodePathName"
+_2271:
+	.asciz	"newRightNode"
 	.align	4
-_2172:
-	.long	_433
-	.long	641
-	.long	6
+_2268:
+	.long	3
+	.long	0
+	.long	2
+	.long	_2269
+	.long	_90
+	.long	-16
+	.long	2
+	.long	_2270
+	.long	_113
+	.long	-20
+	.long	2
+	.long	_2271
+	.long	_201
+	.long	-24
+	.long	0
 	.align	4
-_2175:
-	.long	_433
-	.long	645
+_2173:
+	.long	_437
+	.long	647
 	.long	4
 	.align	4
-_2182:
+_2175:
+	.long	_437
+	.long	648
+	.long	4
+	.align	4
+_2194:
+	.long	3
+	.long	0
+	.long	2
+	.long	_1555
+	.long	_1272
+	.long	-28
+	.long	0
+	.align	4
+_2187:
+	.long	_437
+	.long	649
+	.long	5
+	.align	4
+_2193:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2177:
-	.long	_433
-	.long	645
-	.long	19
+_2191:
+	.long	_437
+	.long	650
+	.long	6
 	.align	4
-_2183:
-	.long	_433
-	.long	647
-	.long	4
+_2192:
+	.long	_437
+	.long	651
+	.long	6
 	.align	4
-_2185:
-	.long	_433
-	.long	648
+_2195:
+	.long	_437
+	.long	655
 	.long	4
 	.align	4
 _2202:
@@ -15676,484 +15817,514 @@ _2202:
 	.long	0
 	.long	0
 	.align	4
-_2193:
-	.long	_433
-	.long	649
-	.long	5
+_2197:
+	.long	_437
+	.long	655
+	.long	19
 	.align	4
 _2203:
-	.long	_433
-	.long	652
+	.long	_437
+	.long	657
 	.long	4
 	.align	4
 _2205:
-	.long	_433
-	.long	653
+	.long	_437
+	.long	658
 	.long	4
 	.align	4
-_2219:
-	.long	_433
-	.long	654
-	.long	4
-	.align	4
-_2231:
-	.long	_433
-	.long	656
-	.long	4
-	.align	4
-_2247:
+_2222:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2235:
-	.long	_433
-	.long	656
+_2213:
+	.long	_437
+	.long	659
+	.long	5
+	.align	4
+_2223:
+	.long	_437
+	.long	662
+	.long	4
+	.align	4
+_2225:
+	.long	_437
+	.long	663
+	.long	4
+	.align	4
+_2239:
+	.long	_437
+	.long	664
+	.long	4
+	.align	4
+_2251:
+	.long	_437
+	.long	666
+	.long	4
+	.align	4
+_2267:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2255:
+	.long	_437
+	.long	666
 	.long	54
-_2284:
+_2304:
 	.asciz	"absolutePath"
 	.align	4
-_2283:
-	.long	1
-	.long	_157
-	.long	2
-	.long	_467
-	.long	_442
-	.long	-4
-	.long	2
-	.long	_2284
-	.long	_113
-	.long	-8
-	.long	2
-	.long	_194
-	.long	_113
-	.long	-12
-	.long	0
-	.align	4
-_2254:
-	.long	_433
-	.long	661
-	.long	3
-	.align	4
-_2258:
-	.long	_433
-	.long	663
-	.long	3
-	.align	4
-_2261:
-	.long	_433
-	.long	664
-	.long	3
-	.align	4
-_2266:
-	.long	_433
-	.long	666
-	.long	3
-	.align	4
-_2279:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2272:
-	.long	_433
-	.long	666
-	.long	38
-	.align	4
-_2280:
-	.long	_433
-	.long	667
-	.long	3
-	.align	4
-_2338:
+_2303:
 	.long	1
 	.long	_158
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
-	.long	0
-	.align	4
-_2285:
-	.long	_433
-	.long	671
-	.long	3
-	.align	4
-_2292:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2291:
-	.long	_433
-	.long	671
-	.long	71
-	.align	4
-_2293:
-	.long	_433
-	.long	672
-	.long	3
-	.align	4
-_2332:
-	.long	3
-	.long	0
 	.long	2
-	.long	_1272
-	.long	_90
+	.long	_2304
+	.long	_113
 	.long	-8
 	.long	2
 	.long	_195
 	.long	_113
 	.long	-12
-	.long	2
-	.long	_1345
-	.long	_113
-	.long	-16
-	.long	2
-	.long	_194
-	.long	_113
-	.long	-20
 	.long	0
+	.align	4
+_2274:
+	.long	_437
+	.long	671
+	.long	3
+	.align	4
+_2278:
+	.long	_437
+	.long	673
+	.long	3
+	.align	4
+_2281:
+	.long	_437
+	.long	674
+	.long	3
+	.align	4
+_2286:
+	.long	_437
+	.long	676
+	.long	3
 	.align	4
 _2299:
-	.long	_433
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2292:
+	.long	_437
+	.long	676
+	.long	38
+	.align	4
+_2300:
+	.long	_437
 	.long	677
-	.long	4
-	.align	4
-_2303:
-	.long	_433
-	.long	678
-	.long	4
-	.align	4
-_2306:
 	.long	3
-	.long	0
-	.long	0
 	.align	4
-_2305:
-	.long	_433
-	.long	678
-	.long	20
-	.align	4
-_2307:
-	.long	_433
-	.long	679
-	.long	4
-	.align	4
-_2311:
-	.long	_433
-	.long	680
-	.long	4
-	.align	4
-_2317:
-	.long	_433
-	.long	681
-	.long	4
-	.align	4
-_2319:
-	.long	_433
-	.long	682
-	.long	4
-	.align	4
-_2322:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2321:
-	.long	_433
-	.long	682
-	.long	44
-	.align	4
-_2323:
-	.long	_433
-	.long	684
-	.long	4
-	.align	4
-_2326:
-	.long	_433
-	.long	686
-	.long	4
-	.align	4
-_2331:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2328:
-	.long	_433
-	.long	687
-	.long	5
-	.align	4
-_2337:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2334:
-	.long	_433
-	.long	691
-	.long	4
-	.align	4
-_2603:
+_2371:
 	.long	1
 	.long	_159
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
+	.long	0
+	.align	4
+_2305:
+	.long	_437
+	.long	681
+	.long	3
+	.align	4
+_2312:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2311:
+	.long	_437
+	.long	681
+	.long	71
+	.align	4
+_2313:
+	.long	_437
+	.long	682
+	.long	3
+	.align	4
+_2365:
+	.long	3
+	.long	0
 	.long	2
-	.long	_1272
+	.long	_1292
 	.long	_90
 	.long	-8
 	.long	2
-	.long	_195
+	.long	_196
 	.long	_113
 	.long	-12
-	.long	0
-	.align	4
-_2339:
-	.long	_433
-	.long	699
-	.long	3
-	.align	4
-_2351:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2347:
-	.long	_433
-	.long	700
-	.long	4
-	.align	4
-_2350:
-	.long	_433
-	.long	701
-	.long	4
-	.align	4
-_2352:
-	.long	_433
-	.long	704
-	.long	3
-	.align	4
-_2356:
-	.long	_433
-	.long	705
-	.long	3
-_2409:
-	.asciz	"toBeSelectedName"
-	.align	4
-_2408:
-	.long	3
-	.long	0
 	.long	2
-	.long	_2409
+	.long	_1365
 	.long	_113
 	.long	-16
-	.long	0
-	.align	4
-_2358:
-	.long	_433
-	.long	706
-	.long	4
-	.align	4
-_2360:
-	.long	_433
-	.long	707
-	.long	4
-	.align	4
-_2379:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2370:
-	.long	_433
-	.long	708
-	.long	5
-	.align	4
-_2401:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2381:
-	.long	_433
-	.long	709
-	.long	4
-	.align	4
-_2400:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2391:
-	.long	_433
-	.long	710
-	.long	5
-	.align	4
-_2402:
-	.long	_433
-	.long	713
-	.long	4
-	.align	4
-_2405:
-	.long	_433
-	.long	714
-	.long	4
-	.align	4
-_2410:
-	.long	_433
-	.long	717
-	.long	3
-	.align	4
-_2414:
-	.long	_433
-	.long	719
-	.long	3
-	.align	4
-_2423:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2420:
-	.long	_433
-	.long	720
-	.long	4
-	.align	4
-_2599:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2425:
-	.long	_433
-	.long	721
-	.long	3
-	.align	4
-_2598:
-	.long	3
-	.long	0
 	.long	2
-	.long	_1345
+	.long	_195
 	.long	_113
 	.long	-20
 	.long	0
 	.align	4
-_2431:
-	.long	_433
-	.long	722
+_2319:
+	.long	_437
+	.long	687
 	.long	4
 	.align	4
-_2439:
-	.long	_433
-	.long	724
+_2323:
+	.long	_437
+	.long	688
 	.long	4
 	.align	4
-_2462:
+_2326:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2457:
-	.long	_433
-	.long	725
-	.long	5
+_2325:
+	.long	_437
+	.long	688
+	.long	20
 	.align	4
-_2469:
+_2327:
+	.long	_437
+	.long	689
+	.long	4
+	.align	4
+_2331:
+	.long	_437
+	.long	690
+	.long	4
+	.align	4
+_2337:
+	.long	_437
+	.long	691
+	.long	4
+	.align	4
+_2339:
+	.long	_437
+	.long	692
+	.long	4
+	.align	4
+_2342:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2464:
-	.long	_433
-	.long	727
-	.long	5
+_2341:
+	.long	_437
+	.long	692
+	.long	44
 	.align	4
-_2470:
-	.long	_433
-	.long	730
+_2343:
+	.long	_437
+	.long	694
 	.long	4
 	.align	4
-_2473:
-	.long	_433
-	.long	731
+_2346:
+	.long	_437
+	.long	696
 	.long	4
 	.align	4
-_2476:
-	.long	_433
-	.long	733
-	.long	4
-	.align	4
-_2551:
+_2364:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2484:
-	.long	_433
-	.long	734
+_2348:
+	.long	_437
+	.long	697
 	.long	5
 	.align	4
-_2550:
+_2351:
+	.long	_437
+	.long	698
+	.long	5
+	.align	4
+_2354:
+	.long	_437
+	.long	699
+	.long	5
+	.align	4
+_2370:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2367:
+	.long	_437
+	.long	702
+	.long	4
+	.align	4
+_2636:
+	.long	1
+	.long	_160
+	.long	2
+	.long	_471
+	.long	_446
+	.long	-4
+	.long	2
+	.long	_1292
+	.long	_90
+	.long	-8
+	.long	2
+	.long	_196
+	.long	_113
+	.long	-12
+	.long	0
+	.align	4
+_2372:
+	.long	_437
+	.long	710
+	.long	3
+	.align	4
+_2384:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2380:
+	.long	_437
+	.long	711
+	.long	4
+	.align	4
+_2383:
+	.long	_437
+	.long	712
+	.long	4
+	.align	4
+_2385:
+	.long	_437
+	.long	715
+	.long	3
+	.align	4
+_2389:
+	.long	_437
+	.long	716
+	.long	3
+_2442:
+	.asciz	"toBeSelectedName"
+	.align	4
+_2441:
 	.long	3
 	.long	0
 	.long	2
+	.long	_2442
+	.long	_113
+	.long	-16
+	.long	0
+	.align	4
+_2391:
+	.long	_437
+	.long	717
+	.long	4
+	.align	4
+_2393:
+	.long	_437
+	.long	718
+	.long	4
+	.align	4
+_2412:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2403:
+	.long	_437
+	.long	719
+	.long	5
+	.align	4
+_2434:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2414:
+	.long	_437
+	.long	720
+	.long	4
+	.align	4
+_2433:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2424:
+	.long	_437
+	.long	721
+	.long	5
+	.align	4
+_2435:
+	.long	_437
+	.long	724
+	.long	4
+	.align	4
+_2438:
+	.long	_437
+	.long	725
+	.long	4
+	.align	4
+_2443:
+	.long	_437
+	.long	728
+	.long	3
+	.align	4
+_2447:
+	.long	_437
+	.long	730
+	.long	3
+	.align	4
+_2456:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2453:
+	.long	_437
+	.long	731
+	.long	4
+	.align	4
+_2632:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2458:
+	.long	_437
+	.long	732
+	.long	3
+	.align	4
+_2631:
+	.long	3
+	.long	0
+	.long	2
+	.long	_1365
+	.long	_113
+	.long	-20
+	.long	0
+	.align	4
+_2464:
+	.long	_437
+	.long	733
+	.long	4
+	.align	4
+_2472:
+	.long	_437
+	.long	735
+	.long	4
+	.align	4
+_2495:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2490:
+	.long	_437
+	.long	736
+	.long	5
+	.align	4
+_2502:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2497:
+	.long	_437
+	.long	738
+	.long	5
+	.align	4
+_2503:
+	.long	_437
+	.long	741
+	.long	4
+	.align	4
+_2506:
+	.long	_437
+	.long	742
+	.long	4
+	.align	4
+_2509:
+	.long	_437
+	.long	744
+	.long	4
+	.align	4
+_2584:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2517:
+	.long	_437
+	.long	745
+	.long	5
+	.align	4
+_2583:
+	.long	3
+	.long	0
+	.long	2
+	.long	_202
 	.long	_201
-	.long	_200
 	.long	-24
 	.long	0
 	.align	4
-_2488:
-	.long	_433
-	.long	735
-	.long	6
-	.align	4
-_2491:
-	.long	_433
-	.long	736
-	.long	6
-	.align	4
-_2493:
-	.long	_433
-	.long	737
-	.long	6
-	.align	4
-_2505:
-	.long	_433
-	.long	738
-	.long	6
-	.align	4
 _2521:
-	.long	_433
-	.long	739
+	.long	_437
+	.long	746
 	.long	6
 	.align	4
-_2537:
-	.long	3
-	.long	0
-	.long	0
+_2524:
+	.long	_437
+	.long	747
+	.long	6
 	.align	4
-_2525:
-	.long	_433
-	.long	740
-	.long	7
+_2526:
+	.long	_437
+	.long	748
+	.long	6
 	.align	4
 _2538:
-	.long	_433
-	.long	742
+	.long	_437
+	.long	749
 	.long	6
 	.align	4
-_2597:
+_2554:
+	.long	_437
+	.long	750
+	.long	6
+	.align	4
+_2570:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2553:
-	.long	_433
-	.long	745
+_2558:
+	.long	_437
+	.long	751
+	.long	7
+	.align	4
+_2571:
+	.long	_437
+	.long	753
+	.long	6
+	.align	4
+_2630:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2586:
+	.long	_437
+	.long	756
 	.long	5
 	.align	4
 _63:
@@ -16162,84 +16333,84 @@ _63:
 	.long	1
 	.short	92
 	.align	4
-_2582:
+_2615:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2573:
-	.long	_433
-	.long	746
+_2606:
+	.long	_437
+	.long	757
 	.long	6
 	.align	4
-_2593:
+_2626:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2584:
-	.long	_433
-	.long	748
+_2617:
+	.long	_437
+	.long	759
 	.long	6
 	.align	4
-_2594:
-	.long	_433
-	.long	750
+_2627:
+	.long	_437
+	.long	761
 	.long	5
 	.align	4
-_2600:
-	.long	_433
-	.long	753
+_2633:
+	.long	_437
+	.long	764
 	.long	3
 	.align	4
-_2615:
-	.long	1
-	.long	_160
-	.long	2
-	.long	_467
-	.long	_442
-	.long	-4
-	.long	0
-	.align	4
-_2604:
-	.long	_433
-	.long	758
-	.long	3
-	.align	4
-_2611:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2610:
-	.long	_433
-	.long	758
-	.long	71
-	.align	4
-_2612:
-	.long	_433
-	.long	759
-	.long	3
-_2756:
-	.asciz	"lastIndex"
-	.align	4
-_2755:
+_2648:
 	.long	1
 	.long	_161
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
+	.long	-4
+	.long	0
+	.align	4
+_2637:
+	.long	_437
+	.long	769
+	.long	3
+	.align	4
+_2644:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2643:
+	.long	_437
+	.long	769
+	.long	71
+	.align	4
+_2645:
+	.long	_437
+	.long	770
+	.long	3
+_2789:
+	.asciz	"lastIndex"
+	.align	4
+_2788:
+	.long	1
+	.long	_162
+	.long	2
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_1272
+	.long	_1292
 	.long	_90
 	.long	-8
 	.long	2
-	.long	_194
+	.long	_195
 	.long	_113
 	.long	-12
 	.long	2
-	.long	_2756
+	.long	_2789
 	.long	_90
 	.long	-16
 	.long	2
@@ -16248,297 +16419,297 @@ _2755:
 	.long	-20
 	.long	0
 	.align	4
-_2616:
-	.long	_433
-	.long	763
+_2649:
+	.long	_437
+	.long	774
 	.long	3
 	.align	4
-_2620:
-	.long	_433
-	.long	765
+_2653:
+	.long	_437
+	.long	776
 	.long	3
 	.align	4
-_2697:
+_2730:
 	.long	3
 	.long	0
 	.long	2
-	.long	_1345
+	.long	_1365
 	.long	_113
 	.long	-24
 	.long	2
+	.long	_202
 	.long	_201
-	.long	_200
 	.long	-28
 	.long	0
 	.align	4
-_2622:
-	.long	_433
-	.long	766
+_2655:
+	.long	_437
+	.long	777
 	.long	4
 	.align	4
-_2630:
-	.long	_433
-	.long	767
+_2663:
+	.long	_437
+	.long	778
 	.long	4
 	.align	4
-_2635:
+_2668:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2632:
-	.long	_433
-	.long	767
+_2665:
+	.long	_437
+	.long	778
 	.long	43
 	.align	4
-_2636:
-	.long	_433
-	.long	768
-	.long	4
-	.align	4
-_2638:
-	.long	_433
-	.long	769
-	.long	4
-	.align	4
-_2646:
-	.long	_433
-	.long	771
-	.long	4
-	.align	4
-_2696:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2672:
-	.long	_433
-	.long	772
-	.long	5
-	.align	4
-_2684:
-	.long	_433
-	.long	773
-	.long	5
-	.align	4
-_2698:
-	.long	_433
-	.long	777
-	.long	3
-	.align	4
-_2704:
-	.long	_433
-	.long	778
-	.long	3
-	.align	4
-_2706:
-	.long	_433
+_2669:
+	.long	_437
 	.long	779
-	.long	3
-	.align	4
-_2708:
-	.long	_433
-	.long	780
-	.long	3
-	.align	4
-_2720:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2711:
-	.long	_433
-	.long	781
 	.long	4
 	.align	4
-_2719:
-	.long	3
-	.long	0
-	.long	0
+_2671:
+	.long	_437
+	.long	780
+	.long	4
 	.align	4
-_2715:
-	.long	_433
+_2679:
+	.long	_437
 	.long	782
-	.long	5
+	.long	4
 	.align	4
-_2718:
+_2729:
 	.long	3
 	.long	0
 	.long	0
+	.align	4
+_2705:
+	.long	_437
+	.long	783
+	.long	5
 	.align	4
 _2717:
-	.long	_433
-	.long	783
-	.long	6
+	.long	_437
+	.long	784
+	.long	5
 	.align	4
-_2721:
-	.long	_433
+_2731:
+	.long	_437
 	.long	788
 	.long	3
+	.align	4
+_2737:
+	.long	_437
+	.long	789
+	.long	3
+	.align	4
+_2739:
+	.long	_437
+	.long	790
+	.long	3
+	.align	4
+_2741:
+	.long	_437
+	.long	791
+	.long	3
+	.align	4
+_2753:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2744:
+	.long	_437
+	.long	792
+	.long	4
+	.align	4
+_2752:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2748:
+	.long	_437
+	.long	793
+	.long	5
 	.align	4
 _2751:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2723:
-	.long	_433
-	.long	789
-	.long	4
+_2750:
+	.long	_437
+	.long	794
+	.long	6
 	.align	4
-_2726:
-	.long	_433
-	.long	790
-	.long	4
-	.align	4
-_2731:
-	.long	_433
-	.long	791
-	.long	4
-	.align	4
-_2740:
-	.long	_433
-	.long	792
-	.long	4
-	.align	4
-_2752:
-	.long	_433
-	.long	795
+_2754:
+	.long	_437
+	.long	799
 	.long	3
-_2789:
+	.align	4
+_2784:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2756:
+	.long	_437
+	.long	800
+	.long	4
+	.align	4
+_2759:
+	.long	_437
+	.long	801
+	.long	4
+	.align	4
+_2764:
+	.long	_437
+	.long	802
+	.long	4
+	.align	4
+_2773:
+	.long	_437
+	.long	803
+	.long	4
+	.align	4
+_2785:
+	.long	_437
+	.long	806
+	.long	3
+_2822:
 	.asciz	"listGadget"
-_2790:
+_2823:
 	.asciz	"direction"
 	.align	4
-_2788:
+_2821:
 	.long	1
-	.long	_162
+	.long	_163
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_2789
+	.long	_2822
 	.long	_99
 	.long	-8
 	.long	2
-	.long	_2790
+	.long	_2823
 	.long	_90
 	.long	-12
 	.long	0
 	.align	4
-_2757:
-	.long	_433
-	.long	800
+_2790:
+	.long	_437
+	.long	811
 	.long	3
-	.align	4
-_2758:
-	.long	_433
-	.long	801
-	.long	3
-	.align	4
-_2761:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2760:
-	.long	_433
-	.long	801
-	.long	41
-	.align	4
-_2762:
-	.long	_433
-	.long	802
-	.long	3
-	.align	4
-_2765:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2764:
-	.long	_433
-	.long	802
-	.long	44
-	.align	4
-_2766:
-	.long	_433
-	.long	804
-	.long	3
-	.align	4
-_2771:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2770:
-	.long	_433
-	.long	805
-	.long	4
-	.align	4
-_2779:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2773:
-	.long	_433
-	.long	806
-	.long	3
-	.align	4
-_2778:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2777:
-	.long	_433
-	.long	807
-	.long	4
-	.align	4
-_2780:
-	.long	_433
-	.long	809
-	.long	3
-	.align	4
-_2831:
-	.long	1
-	.long	_164
-	.long	2
-	.long	_467
-	.long	_442
-	.long	-4
-	.long	0
 	.align	4
 _2791:
-	.long	_433
-	.long	813
+	.long	_437
+	.long	812
 	.long	3
 	.align	4
-_2796:
+_2794:
 	.long	3
 	.long	0
 	.long	0
+	.align	4
+_2793:
+	.long	_437
+	.long	812
+	.long	41
 	.align	4
 _2795:
-	.long	_433
+	.long	_437
 	.long	813
-	.long	42
+	.long	3
+	.align	4
+_2798:
+	.long	3
+	.long	0
+	.long	0
 	.align	4
 _2797:
-	.long	_433
+	.long	_437
+	.long	813
+	.long	44
+	.align	4
+_2799:
+	.long	_437
 	.long	815
 	.long	3
 	.align	4
-_2817:
+_2804:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2809:
-	.long	_433
+_2803:
+	.long	_437
 	.long	816
+	.long	4
+	.align	4
+_2812:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2806:
+	.long	_437
+	.long	817
+	.long	3
+	.align	4
+_2811:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2810:
+	.long	_437
+	.long	818
+	.long	4
+	.align	4
+_2813:
+	.long	_437
+	.long	820
+	.long	3
+	.align	4
+_2864:
+	.long	1
+	.long	_165
+	.long	2
+	.long	_471
+	.long	_446
+	.long	-4
+	.long	0
+	.align	4
+_2824:
+	.long	_437
+	.long	824
+	.long	3
+	.align	4
+_2829:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2828:
+	.long	_437
+	.long	824
+	.long	42
+	.align	4
+_2830:
+	.long	_437
+	.long	826
+	.long	3
+	.align	4
+_2850:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2842:
+	.long	_437
+	.long	827
 	.long	4
 	.align	4
 _67:
@@ -16547,14 +16718,14 @@ _67:
 	.long	9
 	.short	68,105,114,101,99,116,111,114,121
 	.align	4
-_2827:
+_2860:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2819:
-	.long	_433
-	.long	818
+_2852:
+	.long	_437
+	.long	829
 	.long	4
 	.align	4
 _68:
@@ -16563,44 +16734,44 @@ _68:
 	.long	4
 	.short	70,105,108,101
 	.align	4
-_2828:
-	.long	_433
-	.long	821
+_2861:
+	.long	_437
+	.long	832
 	.long	3
-_2846:
+_2879:
 	.asciz	"cumulative"
 	.align	4
-_2845:
+_2878:
 	.long	1
-	.long	_165
+	.long	_166
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_2846
+	.long	_2879
 	.long	_113
 	.long	-8
 	.long	0
 	.align	4
-_2832:
-	.long	_433
-	.long	828
+_2865:
+	.long	_437
+	.long	839
 	.long	3
 	.align	4
-_2834:
-	.long	_433
-	.long	829
+_2867:
+	.long	_437
+	.long	840
 	.long	3
 	.align	4
-_2841:
+_2874:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2838:
-	.long	_433
-	.long	829
+_2871:
+	.long	_437
+	.long	840
 	.long	30
 	.align	4
 _69:
@@ -16609,211 +16780,211 @@ _69:
 	.long	15
 	.short	83,101,108,101,99,116,101,100,32,84,121,112,101,58,32
 	.align	4
-_2842:
-	.long	_433
-	.long	831
+_2875:
+	.long	_437
+	.long	842
 	.long	3
-_2861:
+_2894:
 	.asciz	"aPath"
 	.align	4
-_2860:
+_2893:
 	.long	1
-	.long	_166
+	.long	_167
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_2861
+	.long	_2894
 	.long	_113
 	.long	-8
 	.long	2
-	.long	_194
+	.long	_195
 	.long	_113
 	.long	-12
 	.long	0
 	.align	4
-_2847:
-	.long	_433
-	.long	837
-	.long	3
-	.align	4
-_2849:
-	.long	_433
-	.long	838
-	.long	3
-	.align	4
-_2854:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2853:
-	.long	_433
-	.long	839
-	.long	4
-	.align	4
-_2859:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2856:
-	.long	_433
-	.long	841
-	.long	4
-	.align	4
-_2887:
-	.long	1
-	.long	_168
-	.long	2
-	.long	_467
-	.long	_442
-	.long	-4
-	.long	2
-	.long	_2861
-	.long	_113
-	.long	-8
-	.long	2
-	.long	_194
-	.long	_113
-	.long	-12
-	.long	0
-	.align	4
-_2862:
-	.long	_433
-	.long	846
-	.long	3
-	.align	4
-_2866:
-	.long	_433
-	.long	847
-	.long	3
-	.align	4
-_2869:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2868:
-	.long	_433
-	.long	847
-	.long	20
-	.align	4
-_2870:
-	.long	_433
+_2880:
+	.long	_437
 	.long	848
 	.long	3
 	.align	4
-_2873:
-	.long	_433
-	.long	850
+_2882:
+	.long	_437
+	.long	849
 	.long	3
 	.align	4
-_2876:
-	.long	_433
-	.long	851
+_2887:
 	.long	3
-	.align	4
-_2879:
-	.long	_433
-	.long	853
-	.long	3
+	.long	0
+	.long	0
 	.align	4
 _2886:
+	.long	_437
+	.long	850
+	.long	4
+	.align	4
+_2892:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2883:
-	.long	_433
-	.long	854
+_2889:
+	.long	_437
+	.long	852
 	.long	4
-_2919:
-	.asciz	"specifiedType"
-_2920:
-	.asciz	"dir"
 	.align	4
-_2918:
+_2920:
 	.long	1
 	.long	_169
 	.long	2
-	.long	_467
-	.long	_442
+	.long	_471
+	.long	_446
 	.long	-4
 	.long	2
-	.long	_194
+	.long	_2894
 	.long	_113
 	.long	-8
 	.long	2
-	.long	_2919
+	.long	_195
+	.long	_113
+	.long	-12
+	.long	0
+	.align	4
+_2895:
+	.long	_437
+	.long	857
+	.long	3
+	.align	4
+_2899:
+	.long	_437
+	.long	858
+	.long	3
+	.align	4
+_2902:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2901:
+	.long	_437
+	.long	858
+	.long	20
+	.align	4
+_2903:
+	.long	_437
+	.long	859
+	.long	3
+	.align	4
+_2906:
+	.long	_437
+	.long	861
+	.long	3
+	.align	4
+_2909:
+	.long	_437
+	.long	862
+	.long	3
+	.align	4
+_2912:
+	.long	_437
+	.long	864
+	.long	3
+	.align	4
+_2919:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2916:
+	.long	_437
+	.long	865
+	.long	4
+_2952:
+	.asciz	"specifiedType"
+_2953:
+	.asciz	"dir"
+	.align	4
+_2951:
+	.long	1
+	.long	_170
+	.long	2
+	.long	_471
+	.long	_446
+	.long	-4
+	.long	2
+	.long	_195
+	.long	_113
+	.long	-8
+	.long	2
+	.long	_2952
 	.long	_90
 	.long	-12
 	.long	2
-	.long	_2920
+	.long	_2953
 	.long	_90
 	.long	-16
 	.long	0
 	.align	4
-_2888:
-	.long	_433
-	.long	859
-	.long	3
-	.align	4
-_2890:
-	.long	_433
-	.long	860
-	.long	3
-	.align	4
-_2893:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2892:
-	.long	_433
-	.long	860
-	.long	16
-	.align	4
-_2894:
-	.long	_433
+_2921:
+	.long	_437
 	.long	870
 	.long	3
-_2916:
+	.align	4
+_2923:
+	.long	_437
+	.long	871
+	.long	3
+	.align	4
+_2926:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_2925:
+	.long	_437
+	.long	871
+	.long	16
+	.align	4
+_2927:
+	.long	_437
+	.long	881
+	.long	3
+_2949:
 	.asciz	"file"
 	.align	4
-_2915:
+_2948:
 	.long	3
 	.long	0
 	.long	2
-	.long	_2916
+	.long	_2949
 	.long	_113
 	.long	-20
 	.long	0
 	.align	4
-_2895:
-	.long	_433
-	.long	862
+_2928:
+	.long	_437
+	.long	873
 	.long	4
 	.align	4
-_2897:
-	.long	_433
-	.long	863
+_2930:
+	.long	_437
+	.long	874
 	.long	4
 	.align	4
-_2900:
+_2933:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2899:
-	.long	_433
-	.long	863
+_2932:
+	.long	_437
+	.long	874
 	.long	19
 	.align	4
-_2901:
-	.long	_433
-	.long	864
+_2934:
+	.long	_437
+	.long	875
 	.long	4
 	.align	4
 _73:
@@ -16834,178 +17005,178 @@ _75:
 	.long	9
 	.short	46,68,83,95,83,116,111,114,101
 	.align	4
-_2908:
+_2941:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2907:
-	.long	_433
-	.long	864
+_2940:
+	.long	_437
+	.long	875
 	.long	57
 	.align	4
-_2909:
-	.long	_433
-	.long	867
+_2942:
+	.long	_437
+	.long	878
 	.long	4
 	.align	4
-_2914:
+_2947:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2911:
-	.long	_433
-	.long	868
+_2944:
+	.long	_437
+	.long	879
 	.long	5
 	.align	4
-_2917:
-	.long	_433
-	.long	871
+_2950:
+	.long	_437
+	.long	882
 	.long	3
-	.align	4
-_2924:
-	.long	1
-	.long	_122
-	.long	2
-	.long	_467
-	.long	_95
-	.long	-4
-	.long	0
-	.align	4
-_2923:
-	.long	3
-	.long	0
-	.long	0
-_2958:
-	.asciz	"s"
 	.align	4
 _2957:
 	.long	1
-	.long	_125
+	.long	_122
 	.long	2
-	.long	_173
-	.long	_90
+	.long	_471
+	.long	_95
 	.long	-4
+	.long	0
+	.align	4
+_2956:
+	.long	3
+	.long	0
+	.long	0
+_2991:
+	.asciz	"s"
+	.align	4
+_2990:
+	.long	1
+	.long	_125
 	.long	2
 	.long	_174
 	.long	_90
-	.long	-8
+	.long	-4
 	.long	2
 	.long	_175
 	.long	_90
-	.long	-12
+	.long	-8
 	.long	2
 	.long	_176
 	.long	_90
+	.long	-12
+	.long	2
+	.long	_177
+	.long	_90
 	.long	-16
 	.long	2
-	.long	_2958
+	.long	_2991
 	.long	_95
 	.long	-20
 	.long	0
 	.align	4
-_2930:
-	.long	_433
-	.long	885
+_2963:
+	.long	_437
+	.long	896
 	.long	9
 	.align	4
-_2932:
-	.long	_433
-	.long	886
+_2965:
+	.long	_437
+	.long	897
 	.long	9
 	.align	4
-_2936:
-	.long	_433
-	.long	887
+_2969:
+	.long	_437
+	.long	898
 	.long	9
 	.align	4
-_2940:
-	.long	_433
-	.long	888
+_2973:
+	.long	_437
+	.long	899
 	.long	9
 	.align	4
-_2944:
-	.long	_433
-	.long	889
+_2977:
+	.long	_437
+	.long	900
 	.long	9
 	.align	4
-_2948:
-	.long	_433
-	.long	890
+_2981:
+	.long	_437
+	.long	901
 	.long	3
 	.align	4
-_2956:
-	.long	_433
-	.long	891
+_2989:
+	.long	_437
+	.long	902
 	.long	9
-_3004:
+_3037:
 	.asciz	"key"
-_3005:
+_3038:
 	.asciz	"first"
 	.align	4
-_3003:
+_3036:
 	.long	1
-	.long	_180
+	.long	_181
 	.long	2
-	.long	_467
+	.long	_471
 	.long	_95
 	.long	-4
 	.long	2
-	.long	_1906
+	.long	_1926
 	.long	_113
 	.long	-8
 	.long	2
-	.long	_2916
-	.long	_833
+	.long	_2949
+	.long	_1098
 	.long	-12
 	.long	2
-	.long	_3004
+	.long	_3037
 	.long	_113
 	.long	-16
 	.long	2
-	.long	_1140
+	.long	_1094
 	.long	_113
 	.long	-20
 	.long	2
-	.long	_3005
+	.long	_3038
 	.long	_90
 	.long	-24
 	.long	0
 	.align	4
-_2959:
-	.long	_433
-	.long	895
+_2992:
+	.long	_437
+	.long	906
 	.long	3
 	.align	4
-_2961:
-	.long	_433
-	.long	896
+_2994:
+	.long	_437
+	.long	907
 	.long	3
 	.align	4
-_2970:
+_3003:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2963:
-	.long	_433
-	.long	897
+_2996:
+	.long	_437
+	.long	908
 	.long	4
 	.align	4
-_2964:
-	.long	_433
-	.long	898
+_2997:
+	.long	_437
+	.long	909
 	.long	4
 	.align	4
-_2967:
+_3000:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_2966:
-	.long	_433
-	.long	898
+_2999:
+	.long	_437
+	.long	909
 	.long	18
 	.align	4
 _76:
@@ -17015,136 +17186,136 @@ _76:
 	.short	67,97,110,110,111,116,32,114,101,97,100,47,119,114,105,116
 	.short	101,32
 	.align	4
-_2968:
-	.long	_433
-	.long	899
-	.long	4
-	.align	4
-_2969:
-	.long	_433
-	.long	900
-	.long	4
-	.align	4
-_2971:
-	.long	_433
-	.long	903
-	.long	3
-	.align	4
-_2979:
-	.long	_433
-	.long	905
-	.long	3
-	.align	4
-_2981:
-	.long	_433
-	.long	906
-	.long	3
-	.align	4
-_2983:
-	.long	_433
-	.long	908
-	.long	3
-	.align	4
-_2985:
-	.long	_433
-	.long	909
-	.long	3
-	.align	4
 _3001:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2986:
-	.long	_433
+	.long	_437
 	.long	910
 	.long	4
 	.align	4
-_2990:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2988:
-	.long	_433
+_3002:
+	.long	_437
 	.long	911
-	.long	5
-	.align	4
-_2989:
-	.long	_433
-	.long	912
-	.long	5
-	.align	4
-_3000:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2992:
-	.long	_433
-	.long	913
 	.long	4
 	.align	4
-_2999:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_2994:
-	.long	_433
+_3004:
+	.long	_437
 	.long	914
-	.long	5
+	.long	3
 	.align	4
-_2995:
-	.long	_433
-	.long	915
-	.long	5
-	.align	4
-_2996:
-	.long	_433
+_3012:
+	.long	_437
 	.long	916
-	.long	5
+	.long	3
 	.align	4
-_3002:
-	.long	_433
+_3014:
+	.long	_437
+	.long	917
+	.long	3
+	.align	4
+_3016:
+	.long	_437
 	.long	919
 	.long	3
 	.align	4
+_3018:
+	.long	_437
+	.long	920
+	.long	3
+	.align	4
 _3034:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_3019:
+	.long	_437
+	.long	921
+	.long	4
+	.align	4
+_3023:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_3021:
+	.long	_437
+	.long	922
+	.long	5
+	.align	4
+_3022:
+	.long	_437
+	.long	923
+	.long	5
+	.align	4
+_3033:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_3025:
+	.long	_437
+	.long	924
+	.long	4
+	.align	4
+_3032:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_3027:
+	.long	_437
+	.long	925
+	.long	5
+	.align	4
+_3028:
+	.long	_437
+	.long	926
+	.long	5
+	.align	4
+_3029:
+	.long	_437
+	.long	927
+	.long	5
+	.align	4
+_3035:
+	.long	_437
+	.long	930
+	.long	3
+	.align	4
+_3067:
 	.long	1
-	.long	_181
+	.long	_182
 	.long	2
-	.long	_467
+	.long	_471
 	.long	_95
 	.long	-4
 	.long	2
-	.long	_1906
+	.long	_1926
 	.long	_113
 	.long	-8
 	.long	2
-	.long	_2916
-	.long	_833
+	.long	_2949
+	.long	_1098
 	.long	-12
 	.long	0
 	.align	4
-_3006:
-	.long	_433
-	.long	923
+_3039:
+	.long	_437
+	.long	934
 	.long	3
 	.align	4
-_3008:
-	.long	_433
-	.long	924
+_3041:
+	.long	_437
+	.long	935
 	.long	3
 	.align	4
-_3011:
+_3044:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_3010:
-	.long	_433
-	.long	924
+_3043:
+	.long	_437
+	.long	935
 	.long	17
 	.align	4
 _80:
@@ -17153,184 +17324,325 @@ _80:
 	.long	13
 	.short	67,97,110,110,111,116,32,119,114,105,116,101,32
 	.align	4
-_3012:
-	.long	_433
-	.long	926
+_3045:
+	.long	_437
+	.long	937
 	.long	3
 	.align	4
-_3032:
+_3065:
 	.long	3
 	.long	0
 	.long	2
-	.long	_1117
-	.long	_1118
+	.long	_1071
+	.long	_1072
 	.long	-16
 	.long	0
 	.align	4
-_3024:
-	.long	_433
-	.long	927
+_3057:
+	.long	_437
+	.long	938
 	.long	4
 	.align	4
-_3027:
-	.long	_433
-	.long	928
+_3060:
+	.long	_437
+	.long	939
 	.long	4
 	.align	4
-_3033:
-	.long	_433
-	.long	931
+_3066:
+	.long	_437
+	.long	942
 	.long	3
-_3039:
+_3072:
 	.asciz	":Favorites"
 	.align	4
-_3038:
+_3071:
 	.long	1
 	.long	_122
 	.long	2
-	.long	_467
-	.long	_3039
+	.long	_471
+	.long	_3072
 	.long	-4
 	.long	0
 	.align	4
-_3037:
+_3070:
 	.long	3
 	.long	0
 	.long	0
-_3068:
+_3101:
 	.asciz	"aPathName"
-_3069:
+_3102:
 	.asciz	"f"
 	.align	4
-_3067:
+_3100:
 	.long	1
 	.long	_125
 	.long	2
-	.long	_3068
+	.long	_3101
 	.long	_113
 	.long	-4
 	.long	2
-	.long	_3069
-	.long	_3039
+	.long	_3102
+	.long	_3072
 	.long	-8
 	.long	0
 	.align	4
-_3045:
-	.long	_433
-	.long	941
+_3078:
+	.long	_437
+	.long	952
 	.long	3
 	.align	4
-_3047:
-	.long	_433
-	.long	942
+_3080:
+	.long	_437
+	.long	953
 	.long	3
 	.align	4
-_3055:
-	.long	_433
-	.long	943
+_3088:
+	.long	_437
+	.long	954
 	.long	3
 	.align	4
-_3063:
-	.long	_433
-	.long	944
+_3096:
+	.long	_437
+	.long	955
 	.long	3
 	.align	4
-_3066:
-	.long	_433
-	.long	946
+_3099:
+	.long	_437
+	.long	957
 	.long	3
 	.align	4
-_3093:
+_3126:
 	.long	1
-	.long	_187
+	.long	_188
 	.long	2
-	.long	_467
-	.long	_3039
+	.long	_471
+	.long	_3072
 	.long	-4
 	.long	2
-	.long	_832
-	.long	_833
+	.long	_1161
+	.long	_1098
 	.long	-8
 	.long	2
-	.long	_834
+	.long	_1162
 	.long	_113
 	.long	-12
 	.long	0
 	.align	4
-_3070:
-	.long	_433
-	.long	951
+_3103:
+	.long	_437
+	.long	962
 	.long	3
 	.align	4
-_3079:
+_3112:
 	.long	3
 	.long	0
 	.long	0
 	.align	4
-_3078:
-	.long	_433
-	.long	951
+_3111:
+	.long	_437
+	.long	962
 	.long	60
 	.align	4
-_3080:
-	.long	_433
-	.long	953
+_3113:
+	.long	_437
+	.long	964
 	.long	3
 	.align	4
-_3084:
-	.long	_433
-	.long	954
-	.long	3
-	.align	4
-_3086:
-	.long	_433
-	.long	955
-	.long	3
-	.align	4
-_3091:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_3087:
-	.long	_433
-	.long	956
-	.long	4
-	.align	4
-_3088:
-	.long	_433
-	.long	957
-	.long	4
-	.align	4
-_3090:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_3092:
-	.long	_433
+_3117:
+	.long	_437
 	.long	965
 	.long	3
 	.align	4
-_3094:
+_3119:
+	.long	_437
+	.long	966
+	.long	3
+	.align	4
+_3124:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_3120:
+	.long	_437
+	.long	967
+	.long	4
+	.align	4
+_3121:
+	.long	_437
+	.long	968
+	.long	4
+	.align	4
+_3123:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_3125:
+	.long	_437
+	.long	976
+	.long	3
+	.align	4
+_3127:
 	.long	1
-	.long	_188
+	.long	_189
 	.long	2
-	.long	_467
-	.long	_3039
+	.long	_471
+	.long	_3072
 	.long	-4
 	.long	2
-	.long	_1345
+	.long	_1365
 	.long	_113
 	.long	-8
 	.long	0
 	.align	4
-_3095:
+_3128:
 	.long	1
-	.long	_189
+	.long	_190
 	.long	2
-	.long	_467
-	.long	_3039
+	.long	_471
+	.long	_3072
+	.long	-4
+	.long	2
+	.long	_196
+	.long	_113
+	.long	-8
+	.long	0
+	.align	4
+_3129:
+	.long	1
+	.long	_191
+	.long	2
+	.long	_471
+	.long	_3072
+	.long	-4
+	.long	0
+	.align	4
+_3130:
+	.long	1
+	.long	_192
+	.long	2
+	.long	_471
+	.long	_3072
+	.long	-4
+	.long	0
+	.align	4
+_3134:
+	.long	1
+	.long	_122
+	.long	2
+	.long	_471
+	.long	_1157
+	.long	-4
+	.long	0
+	.align	4
+_3133:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_3159:
+	.long	1
+	.long	_125
+	.long	2
+	.long	_1365
+	.long	_113
+	.long	-4
+	.long	2
+	.long	_3102
+	.long	_1157
+	.long	-8
+	.long	0
+	.align	4
+_3140:
+	.long	_437
+	.long	1008
+	.long	3
+	.align	4
+_3142:
+	.long	_437
+	.long	1009
+	.long	3
+	.align	4
+_3150:
+	.long	_437
+	.long	1010
+	.long	3
+	.align	4
+_3158:
+	.long	_437
+	.long	1011
+	.long	3
+	.align	4
+_3164:
+	.long	1
+	.long	_122
+	.long	2
+	.long	_471
+	.long	_201
+	.long	-4
+	.long	0
+	.align	4
+_3163:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_3174:
+	.long	1
+	.long	_122
+	.long	2
+	.long	_471
+	.long	_97
+	.long	-4
+	.long	0
+	.align	4
+_3173:
+	.long	3
+	.long	0
+	.long	0
+_3200:
+	.asciz	"nav"
+	.align	4
+_3199:
+	.long	1
+	.long	_125
+	.long	2
+	.long	_195
+	.long	_113
+	.long	-4
+	.long	2
+	.long	_3200
+	.long	_97
+	.long	-8
+	.long	0
+	.align	4
+_3178:
+	.long	_437
+	.long	1029
+	.long	3
+	.align	4
+_3180:
+	.long	_437
+	.long	1030
+	.long	3
+	.align	4
+_3188:
+	.long	_437
+	.long	1031
+	.long	3
+	.align	4
+_3198:
+	.long	_437
+	.long	1032
+	.long	3
+	.align	4
+_3249:
+	.long	1
+	.long	_207
+	.long	2
+	.long	_471
+	.long	_97
 	.long	-4
 	.long	2
 	.long	_195
@@ -17338,287 +17650,146 @@ _3095:
 	.long	-8
 	.long	0
 	.align	4
-_3096:
-	.long	1
-	.long	_190
-	.long	2
-	.long	_467
-	.long	_3039
-	.long	-4
-	.long	0
-	.align	4
-_3097:
-	.long	1
-	.long	_191
-	.long	2
-	.long	_467
-	.long	_3039
-	.long	-4
-	.long	0
-	.align	4
-_3101:
-	.long	1
-	.long	_122
-	.long	2
-	.long	_467
-	.long	_828
-	.long	-4
-	.long	0
-	.align	4
-_3100:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_3126:
-	.long	1
-	.long	_125
-	.long	2
-	.long	_1345
-	.long	_113
-	.long	-4
-	.long	2
-	.long	_3069
-	.long	_828
-	.long	-8
-	.long	0
-	.align	4
-_3107:
-	.long	_433
-	.long	997
+_3201:
+	.long	_437
+	.long	1036
 	.long	3
 	.align	4
-_3109:
-	.long	_433
-	.long	998
+_3211:
+	.long	_437
+	.long	1037
 	.long	3
 	.align	4
-_3117:
-	.long	_433
-	.long	999
+_3223:
+	.long	_437
+	.long	1038
 	.long	3
 	.align	4
-_3125:
-	.long	_433
-	.long	1000
-	.long	3
-	.align	4
-_3131:
-	.long	1
-	.long	_122
-	.long	2
-	.long	_467
-	.long	_200
-	.long	-4
-	.long	0
-	.align	4
-_3130:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_3141:
-	.long	1
-	.long	_122
-	.long	2
-	.long	_467
-	.long	_97
-	.long	-4
-	.long	0
-	.align	4
-_3140:
-	.long	3
-	.long	0
-	.long	0
-_3167:
-	.asciz	"nav"
-	.align	4
-_3166:
-	.long	1
-	.long	_125
-	.long	2
-	.long	_194
-	.long	_113
-	.long	-4
-	.long	2
-	.long	_3167
-	.long	_97
-	.long	-8
-	.long	0
-	.align	4
-_3145:
-	.long	_433
-	.long	1018
-	.long	3
-	.align	4
-_3147:
-	.long	_433
-	.long	1019
-	.long	3
-	.align	4
-_3155:
-	.long	_433
-	.long	1020
-	.long	3
-	.align	4
-_3165:
-	.long	_433
-	.long	1021
-	.long	3
-	.align	4
-_3216:
-	.long	1
-	.long	_206
-	.long	2
-	.long	_467
-	.long	_97
-	.long	-4
-	.long	2
-	.long	_194
-	.long	_113
-	.long	-8
-	.long	0
-	.align	4
-_3168:
-	.long	_433
-	.long	1025
-	.long	3
-	.align	4
-_3178:
-	.long	_433
-	.long	1026
-	.long	3
-	.align	4
-_3190:
-	.long	_433
-	.long	1027
-	.long	3
-	.align	4
-_3204:
-	.long	_433
-	.long	1028
-	.long	3
-	.align	4
-_3265:
-	.long	1
-	.long	_207
-	.long	2
-	.long	_467
-	.long	_97
-	.long	-4
-	.long	2
-	.long	_194
-	.long	_113
-	.long	-8
-	.long	0
-	.align	4
-_3217:
-	.long	_433
-	.long	1032
-	.long	3
-	.align	4
-_3227:
-	.long	_433
-	.long	1033
-	.long	3
-	.align	4
-_3239:
-	.long	_433
-	.long	1034
-	.long	3
-	.align	4
-_3253:
-	.long	_433
-	.long	1035
-	.long	3
-	.align	4
-_3287:
-	.long	1
-	.long	_208
-	.long	2
-	.long	_467
-	.long	_97
-	.long	-4
-	.long	0
-	.align	4
-_3266:
-	.long	_433
+_3237:
+	.long	_437
 	.long	1039
 	.long	3
 	.align	4
-_3285:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_3272:
-	.long	_433
-	.long	1040
-	.long	4
-	.align	4
-_3284:
-	.long	_433
-	.long	1041
-	.long	4
-	.align	4
-_3286:
-	.long	_433
-	.long	1043
-	.long	3
-	.align	4
-_3315:
+_3298:
 	.long	1
-	.long	_209
+	.long	_208
 	.long	2
-	.long	_467
+	.long	_471
 	.long	_97
 	.long	-4
 	.long	2
-	.long	_1345
+	.long	_195
 	.long	_113
 	.long	-8
 	.long	0
 	.align	4
-_3288:
-	.long	_433
-	.long	1047
+_3250:
+	.long	_437
+	.long	1043
 	.long	3
 	.align	4
-_3295:
-	.long	3
-	.long	0
-	.long	0
-	.align	4
-_3294:
-	.long	_433
-	.long	1047
-	.long	37
-	.align	4
-_3296:
-	.long	_433
-	.long	1049
+_3260:
+	.long	_437
+	.long	1044
 	.long	3
 	.align	4
-_3314:
+_3272:
+	.long	_437
+	.long	1045
 	.long	3
-	.long	0
-	.long	0
 	.align	4
-_3304:
-	.long	_433
-	.long	1050
-	.long	4
+_3286:
+	.long	_437
+	.long	1046
+	.long	3
 	.align	4
-_3321:
+_3320:
 	.long	1
-	.long	_210
+	.long	_209
 	.long	2
-	.long	_467
+	.long	_471
 	.long	_97
 	.long	-4
 	.long	0
 	.align	4
-_3316:
-	.long	_433
-	.long	1055
+_3299:
+	.long	_437
+	.long	1050
+	.long	3
+	.align	4
+_3318:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_3305:
+	.long	_437
+	.long	1051
+	.long	4
+	.align	4
+_3317:
+	.long	_437
+	.long	1052
+	.long	4
+	.align	4
+_3319:
+	.long	_437
+	.long	1054
+	.long	3
+	.align	4
+_3348:
+	.long	1
+	.long	_210
+	.long	2
+	.long	_471
+	.long	_97
+	.long	-4
+	.long	2
+	.long	_1365
+	.long	_113
+	.long	-8
+	.long	0
+	.align	4
+_3321:
+	.long	_437
+	.long	1058
+	.long	3
+	.align	4
+_3328:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_3327:
+	.long	_437
+	.long	1058
+	.long	37
+	.align	4
+_3329:
+	.long	_437
+	.long	1060
+	.long	3
+	.align	4
+_3347:
+	.long	3
+	.long	0
+	.long	0
+	.align	4
+_3337:
+	.long	_437
+	.long	1061
+	.long	4
+	.align	4
+_3354:
+	.long	1
+	.long	_211
+	.long	2
+	.long	_471
+	.long	_97
+	.long	-4
+	.long	0
+	.align	4
+_3349:
+	.long	_437
+	.long	1066
 	.long	3

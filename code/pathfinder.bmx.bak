@@ -8,10 +8,10 @@ Notes:
 - Allows creation and deletion of files and folders.
 - Allows editing of files.
 - Allows execution of programs and files.
+- Allows storing favorite files/folders.
 
 To do:
-- Create a custom Confirm window since default one can mislead user.
-- Allow navigation using Cmd + ijkl when file opened.
+- Deal with deletion of files in relation to favorites.
 EndRem
 
 SuperStrict
@@ -86,10 +86,11 @@ Type TGui
 		g.pnlFiles = SplitterPanel(g.splitter, SPLITPANEL_SIDEPANE)
 		
 		Local lbl:TGadget = CreateLabel("Favorites", 0, btnHeight/4, 100, btnHeight, g.pnlFavorites)
+			SetGadgetLayout(lbl, EDGE_ALIGNED, EDGE_CENTERED, EDGE_ALIGNED, EDGE_CENTERED)
 		g.lstFavorites = CreateListBox(0, btnHeight, ClientWidth(g.pnlFavorites), ClientHeight(g.pnlFavorites) - btnHeight, g.pnlFavorites)
 			SetGadgetLayout(g.lstFavorites, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED)
 			g.favoritesFileName = "favorites.txt"
-			g.favorites = CreateMap()
+			'g.favorites = CreateMap()
 				
 		g.lstFiles = CreateListBox(0, 0, ClientWidth(g.pnlFiles), ClientHeight(g.pnlFiles), g.pnlFiles)
 			SetGadgetLayout(g.lstFiles, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED)		
@@ -132,23 +133,8 @@ Type TGui
 	
 	Method Run()
 		' Add favorites to list
-		If (FileType(favoritesFileName) = FILETYPE_FILE)
-			Local fileIn:TStream = ReadFile(favoritesFileName)
-			Local line:String
-			While( Not Eof(fileIn) )
-				line = ReadLine(fileIn)
-				'If (Len(line)>0) ListAddLast(extensionsList, line)
-				If (Len(line)>0 And FileType(line) > 0)
-					Local fn:FavoriteNode = FavoriteNode.Create(line)
-					If (Not (MapContains(favorites, fn.name)) )
-						MapInsert(favorites, fn.name, fn.path)
-						AddGadgetItem(lstFavorites, fn.name)
-					EndIf
-				EndIf
-			Wend
-			CloseFile(fileIn)
-		EndIf
-	
+		LoadFavorites()
+			
 		' Initialize the right node (if possible)
 		If (CountGadgetItems(lstFiles)>0)
 			SelectGadgetItem(lstFiles, 0)
@@ -228,6 +214,30 @@ Type TGui
 			Next
 		CloseFile(fileOut)
 	EndMethod
+	
+	Method LoadFavorites()
+		If (FileType(favoritesFileName) = FILETYPE_FILE)
+			If (favorites <> Null) ClearMap(favorites)
+			ClearGadgetItems(lstFavorites)
+			
+			favorites = CreateMap()
+			Local fileIn:TStream = ReadFile(favoritesFileName)
+			Local line:String
+			While( Not Eof(fileIn) )
+				line = ReadLine(fileIn)
+				'If (Len(line)>0) ListAddLast(extensionsList, line)
+				If (Len(line)>0 And FileType(line) > 0)
+					Local fn:FavoriteNode = FavoriteNode.Create(line)
+					If (Not (MapContains(favorites, fn.name)) )
+						MapInsert(favorites, fn.name, fn.path)
+						AddGadgetItem(lstFavorites, fn.name)
+					EndIf
+				EndIf
+			Wend
+			CloseFile(fileIn)
+		EndIf
+	EndMethod
+	
 	
 	Method AddFavorite()
 		Local selectedIndex:Int = SelectedGadgetItem(lstFiles)
@@ -686,7 +696,7 @@ Type TGui
 			If (FileType(pathName) = FILETYPE_FILE)
 				SelectFile(name)
 				ActivateGadget(lstFiles)
-				lastActiveListGadget = lstFIles
+				lastActiveListGadget = lstFiles
 			EndIf
 		Else
 			DoRight()
