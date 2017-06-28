@@ -1,6 +1,5 @@
-.bmx/
-*.app/
-*.bak
-*.bmx.bak
-*.app
+**/.bmx/
+pathfinder.app
+pathfinder.bmx
+pathfinder.bmx.bak
 favorites.txt
