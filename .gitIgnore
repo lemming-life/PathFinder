@@ -1,6 +1,6 @@
 **/.bmx/
 **/.DS_Store
+**/*.bak
 /code/pathfinder.app
 /code/pathfinder.debug.app/
-/code/pathfinder.bmx.bak
 /code/favorites.txt
