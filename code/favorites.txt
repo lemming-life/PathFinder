@@ -1,4 +1,0 @@
-/op/_ideas.txt
-/op/apps/PathFinder/code/favorites.txt
-/op/apps/PathFinder/code/test.txt
-/op/websites
