@@ -160,6 +160,7 @@ Type TGui
 						Case btnRight				DoRight()
 						Case btnGo					DoGo(GadgetText(txtPath))		
 						'Case lstFiles				DoSelectAction()
+						Case lstFiles				DoRightViaKeys()
 					End Select
 				Case EVENT_HOTKEYHIT
 					If (EventMods() = MODIFIER_COMMAND)
@@ -647,6 +648,7 @@ Type TGui
 			Local found:Int = 0
 			For Local aWindow:TWindow = EachIn tWindows
 				If (aWindow.path = path)
+					ActivateGadget(aWindow.window)
 					found = 1
 					Exit
 				EndIf
