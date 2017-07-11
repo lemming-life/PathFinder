@@ -1,17 +1,12 @@
 Rem
 Project: PathFinder
 Author: http://lemming.life
-Updated: June 27, 2017
-License: zlib/libpng
 Notes:
 - Allows quick navigation of folders/directories and files.
 - Allows creation and deletion of files and folders.
 - Allows editing of files.
 - Allows execution of programs and files.
 - Allows storing favorite files/folders.
-
-To do:
-- Deal with deletion of files in relation to favorites.
 EndRem
 
 SuperStrict

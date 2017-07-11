@@ -1,7 +1,4 @@
-License:
-PathFinder is released under the zlib/libpng license.
-
-The zlib/libpng License
+zlib/libpng License
 
 Copyright (c) 2017 http://lemming.life
 
