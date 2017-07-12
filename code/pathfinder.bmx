@@ -85,7 +85,7 @@ Type TGui
 		g.lstFavorites = CreateListBox(0, btnHeight, ClientWidth(g.pnlFavorites), ClientHeight(g.pnlFavorites) - btnHeight, g.pnlFavorites)
 			SetGadgetLayout(g.lstFavorites, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED)
 			g.favoritesFileName = "favorites.txt"
-			'g.favorites = CreateMap()
+			g.favorites = CreateMap()
 				
 		g.lstFiles = CreateListBox(0, 0, ClientWidth(g.pnlFiles), ClientHeight(g.pnlFiles), g.pnlFiles)
 			SetGadgetLayout(g.lstFiles, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED)		
@@ -205,6 +205,7 @@ Type TGui
 	
 	Method SaveFavorites()
 		Local fileOut:TStream = WriteFile(favoritesFileName)
+		If (Not fileOut) RuntimeError("Could not create favorites file.");
 			For Local value:Object = EachIn MapValues(favorites)
 				WriteLine(fileOut, String(value))
 			Next
@@ -240,11 +241,9 @@ Type TGui
 		If (selectedIndex = -1) Return
 		Local selectedName:String = GadgetItemText(lstFiles, selectedIndex)
 		If ( MapContains(favorites, selectedName) ) Return
-		
 		Local fn:FavoriteNode = FavoriteNode.Create(navManager.path() + selectedName)
 		MapInsert(favorites, fn.name, fn.path)
 		AddGadgetItem(lstFavorites, fn.name)
-		
 		SaveFavorites()
 	End Method
 	
