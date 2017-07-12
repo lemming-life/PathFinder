@@ -3,4 +3,4 @@
 **/*.bak
 /code/pathfinder.app
 /code/pathfinder.debug.app/
-/code/favorites.txt
+**/favorites.txt
