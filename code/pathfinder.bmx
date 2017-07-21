@@ -90,7 +90,6 @@ Type TGui
 			?win32
 				g.favoritesFileName = "favorites.txt"
 			?
-			
 			g.favorites = CreateMap()
 				
 		g.lstFiles = CreateListBox(0, 0, ClientWidth(g.pnlFiles), ClientHeight(g.pnlFiles), g.pnlFiles)
@@ -98,8 +97,6 @@ Type TGui
 			g.PopulateList(GadgetText(g.txtPath))
 		
 		g.navManager = NavigationManager.Create(GadgetText(g.txtPath))
-
-		
 		
 		SetHotKeyEvent(KEY_EQUALS, MODIFIER_COMMAND)	' Add to favorite
 		SetHotKeyEvent(KEY_MINUS, MODIFIER_COMMAND)	' Remove favorite
@@ -115,30 +112,29 @@ Type TGui
 		SetHotKeyEvent(KEY_8, MODIFIER_COMMAND)
 		SetHotKeyEvent(KEY_9, MODIFIER_COMMAND)
 		
+		' Favorites navigation
+		SetHotKeyEvent(KEY_U, MODIFIER_COMMAND)	' Up
+		SetHotKeyEvent(KEY_O, MODIFIER_COMMAND)	' Down
 		
-		SetHotKeyEvent(KEY_U, MODIFIER_COMMAND)	' For favorite up
-		SetHotKeyEvent(KEY_O, MODIFIER_COMMAND)	' For favorite down
+		' Folders/Files List Operations
+		SetHotKeyEvent(KEY_I, MODIFIER_COMMAND)	' Up
+		SetHotKeyEvent(KEY_K, MODIFIER_COMMAND)	' Down
+		SetHotKeyEvent(KEY_J, MODIFIER_COMMAND)	' Left
+		SetHotKeyEvent(KEY_L, MODIFIER_COMMAND)	' Right
 		
-		SetHotKeyEvent(KEY_I, MODIFIER_COMMAND)	' For up operations
-		SetHotKeyEvent(KEY_K, MODIFIER_COMMAND)	' For down operations
-		SetHotKeyEvent(KEY_J, MODIFIER_COMMAND)	' For left operations
-		SetHotKeyEvent(KEY_L, MODIFIER_COMMAND)	' For right operations
-		
-		'SetHotKeyEvent(KEY_E, MODIFIER_COMMAND) ' For Executing
-		SetHotKeyEvent(KEY_SEMICOLON, MODIFIER_COMMAND) ' For Executing
-		SetHotKeyEvent(Key_S, MODIFIER_COMMAND) ' For saving
-		SetHotKeyEvent(KEY_A, MODIFIER_COMMAND) ' For select all
-		SetHotKeyEvent(KEY_W, MODIFIER_COMMAND) ' For closing windows
-		SetHotKeyEvent(KEY_X, MODIFIER_COMMAND) ' For cutting operations
-		SetHotKeyEvent(KEY_C, MODIFIER_COMMAND) ' For copying operations
-		SetHotKeyEvent(KEY_V, MODIFIER_COMMAND) ' For pasting operations
-		SetHotKeyEvent(KEY_R, MODIFIER_COMMAND) ' For renaming
-		SetHotKeyEvent(KEY_N, MODIFIER_COMMAND) ' For new file
-		SetHotKeyEvent(KEY_F, MODIFIER_COMMAND) ' For new folder
-		SetHotKeyEvent(KEY_BACKSPACE, MODIFIER_COMMAND) ' For deleting
-		SetHotKeyEvent(KEY_DELETE, MODIFIER_COMMAND) ' For deleting
-		SetHotKeyEvent(KEY_W, MODIFIER_COMMAND)
-		
+		' Operations
+		SetHotKeyEvent(KEY_SEMICOLON, MODIFIER_COMMAND) ' Execute
+		SetHotKeyEvent(Key_S, MODIFIER_COMMAND) ' Saving
+		SetHotKeyEvent(KEY_A, MODIFIER_COMMAND) ' Select all
+		SetHotKeyEvent(KEY_W, MODIFIER_COMMAND) ' Close windows
+		SetHotKeyEvent(KEY_X, MODIFIER_COMMAND) ' Cutting
+		SetHotKeyEvent(KEY_C, MODIFIER_COMMAND) ' Copying
+		SetHotKeyEvent(KEY_V, MODIFIER_COMMAND) ' Pasting
+		SetHotKeyEvent(KEY_R, MODIFIER_COMMAND) ' Renaming
+		SetHotKeyEvent(KEY_N, MODIFIER_COMMAND) ' New file
+		SetHotKeyEvent(KEY_F, MODIFIER_COMMAND) ' New folder
+		SetHotKeyEvent(KEY_BACKSPACE, MODIFIER_COMMAND) ' Deleting
+		SetHotKeyEvent(KEY_DELETE, MODIFIER_COMMAND) ' Deleting	
 		
 		g.tWindows = CreateList()
 		Return g
