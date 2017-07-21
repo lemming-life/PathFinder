@@ -7,6 +7,7 @@ Notes:
 - Allows editing of files.
 - Allows execution of programs and files.
 - Allows storing favorite files/folders.
+- Allows switching windows via shortcuts
 EndRem
 
 SuperStrict
@@ -84,7 +85,7 @@ Type TGui
 			SetGadgetLayout(lbl, EDGE_ALIGNED, EDGE_CENTERED, EDGE_ALIGNED, EDGE_CENTERED)
 		g.lstFavorites = CreateListBox(0, btnHeight, ClientWidth(g.pnlFavorites), ClientHeight(g.pnlFavorites) - btnHeight, g.pnlFavorites)
 			SetGadgetLayout(g.lstFavorites, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED)
-			g.favoritesFileName = "favorites.txt"
+			g.favoritesFileName = "pathfinder.app/favorites.txt"
 			g.favorites = CreateMap()
 				
 		g.lstFiles = CreateListBox(0, 0, ClientWidth(g.pnlFiles), ClientHeight(g.pnlFiles), g.pnlFiles)
@@ -95,8 +96,21 @@ Type TGui
 
 		
 		
-		SetHotKeyEvent(KEY_1, MODIFIER_COMMAND)	' Add to favorite
-		SetHotKeyEvent(KEY_2, MODIFIER_COMMAND)	' Remove favorite
+		SetHotKeyEvent(KEY_EQUALS, MODIFIER_COMMAND)	' Add to favorite
+		SetHotKeyEvent(KEY_MINUS, MODIFIER_COMMAND)	' Remove favorite
+		
+		' Keys for switching among windows
+		SetHotKeyEvent(KEY_1, MODIFIER_COMMAND)
+		SetHotKeyEvent(KEY_2, MODIFIER_COMMAND)
+		SetHotKeyEvent(KEY_3, MODIFIER_COMMAND)
+		SetHotKeyEvent(KEY_4, MODIFIER_COMMAND)
+		SetHotKeyEvent(KEY_5, MODIFIER_COMMAND)
+		SetHotKeyEvent(KEY_6, MODIFIER_COMMAND)
+		SetHotKeyEvent(KEY_7, MODIFIER_COMMAND)
+		SetHotKeyEvent(KEY_8, MODIFIER_COMMAND)
+		SetHotKeyEvent(KEY_9, MODIFIER_COMMAND)
+		
+		
 		SetHotKeyEvent(KEY_U, MODIFIER_COMMAND)	' For favorite up
 		SetHotKeyEvent(KEY_O, MODIFIER_COMMAND)	' For favorite down
 		
@@ -160,8 +174,8 @@ Type TGui
 				Case EVENT_HOTKEYHIT
 					If (EventMods() = MODIFIER_COMMAND)
 						Select EventData()
-							Case KEY_1				AddFavorite()
-							Case KEY_2				RemoveFavorite()
+							Case KEY_EQUALS			AddFavorite()
+							Case KEY_MINUS			RemoveFavorite()
 							Case KEY_U				GoDirectionInList(lstFavorites, UP)
 							Case KEY_O				GoDirectionInList(lstFavorites, DOWN)
 							
@@ -185,6 +199,16 @@ Type TGui
 													DetermineType()
 							Case KEY_K				GoDirectionInList(lstFiles, DOWN)
 													DetermineType()
+													
+							Case KEY_1				SetWindowFocus(1)
+							Case KEY_2				SetWindowFocus(2)
+							Case KEY_3				SetWindowFocus(3)
+							Case KEY_4				SetWindowFocus(4)
+							Case KEY_5				SetWindowFocus(5)
+							Case KEY_6				SetWindowFocus(6)
+							Case KEY_7				SetWindowFocus(7)
+							Case KEY_8				SetWindowFocus(8)
+							Case KEY_9				SetWindowFocus(9)
 						End Select
 					EndIf
 				Case EVENT_KEYDOWN
@@ -195,6 +219,29 @@ Type TGui
 		    End Select
 		Wend
 	End Method
+	
+	Method SetWindowFocus(index:Int)
+		If (index = 1)
+			ActivateWindow(winMain)
+			Return
+		EndIf
+		
+		Local countIndex:Int = 2;
+		Local selectedWindow:TWindow = Null
+		
+		For Local tempWindow:TWindow = EachIn tWindows
+			selectedWindow = tempWindow
+			If (countIndex = index)
+				Exit
+			EndIf
+			countIndex = countIndex + 1
+		Next
+		
+		' Use the selected index or last most window
+		If (selectedWindow <> Null)
+			ActivateWindow( selectedWindow.window )
+		EndIf
+	EndMethod
 	
 	Method LastSelected(obj:Object)
 		Local gadget:TGadget = TGadget(obj)

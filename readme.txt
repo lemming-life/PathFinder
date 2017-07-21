@@ -33,9 +33,13 @@ Editing text
 - To Save: command + s
 
 Favorites
-- Add favorite: command + 1
-- Remove favorite: command + 2
+- Add favorite: command + =
+- Remove favorite: command + -
 - Select favorite up: command + u
 - Select favorite down: command + o
 - Execute file: command + ;
 - Open file / dir in file list: command + l
+
+Switching Windows
+- For the main window: command + 1
+- Other windows: command + (2 to 9)
