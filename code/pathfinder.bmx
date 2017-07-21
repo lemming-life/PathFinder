@@ -85,7 +85,12 @@ Type TGui
 			SetGadgetLayout(lbl, EDGE_ALIGNED, EDGE_CENTERED, EDGE_ALIGNED, EDGE_CENTERED)
 		g.lstFavorites = CreateListBox(0, btnHeight, ClientWidth(g.pnlFavorites), ClientHeight(g.pnlFavorites) - btnHeight, g.pnlFavorites)
 			SetGadgetLayout(g.lstFavorites, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED, EDGE_ALIGNED)
+			
 			g.favoritesFileName = "pathfinder.app/favorites.txt"
+			?win32
+				g.favoritesFileName = "favorites.txt"
+			?
+			
 			g.favorites = CreateMap()
 				
 		g.lstFiles = CreateListBox(0, 0, ClientWidth(g.pnlFiles), ClientHeight(g.pnlFiles), g.pnlFiles)
