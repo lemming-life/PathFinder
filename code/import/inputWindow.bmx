@@ -3,7 +3,6 @@ Rem
 Name: TInputWindow
 Author: http://lemming.life
 Updated: June 15, 2017
-License: zlib/libpng
 Notes of inputWindow.bmx: prompts the user for text input.
 EndRem
 

@@ -2,7 +2,6 @@ Rem
 Name: TWindow
 Author: http://lemming.life
 Updated: June 15, 2017
-License: zlib/libpng
 Notes: TWindow is. window with a text box.
 - For event handling use then handle returned.
 EndRem
